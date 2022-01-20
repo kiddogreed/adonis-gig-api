@@ -14,8 +14,6 @@ export default class SignUpController {
 			"first_name",
 			"middle_name",
 			"last_name",
-			"birth_date",
-			"gender"
 		])
 
 		const user = await UserRepository.query()
@@ -26,14 +24,10 @@ export default class SignUpController {
 			return apiResponse.unableToProcess("Email already taken")
 		}
 
-
-
 		const clients = new ClientRepository()
 		clients.first_name = data.first_name,
 			clients.middle_name = data.middle_name,
 			clients.last_name = data.last_name,
-			clients.birth_date = data.birth_date,
-			clients.gender = data.gender,
 			await clients.save()
 
 		const users = new UserRepository()

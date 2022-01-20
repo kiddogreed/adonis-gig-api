@@ -8,12 +8,6 @@ export default class Client extends BaseModel {
   @column()
   public verified: number
 
-  @column.dateTime()
-  public verification_sent_at: DateTime
-
-  @column()
-  public verification_sent_count: number
-
   @column()
   public country: string
 
@@ -34,9 +28,6 @@ export default class Client extends BaseModel {
 
   @column()
   public gender: string
-
-  @column()
-  public address: string
 
   @column.dateTime({ autoCreate: true })
   public createdAt: DateTime
