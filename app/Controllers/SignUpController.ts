@@ -26,8 +26,6 @@ export default class SignUpController {
 			return apiResponse.unableToProcess("Email already taken")
 		}
 
-
-
 		const clients = new ClientRepository()
 		clients.first_name = data.first_name,
 			clients.middle_name = data.middle_name,

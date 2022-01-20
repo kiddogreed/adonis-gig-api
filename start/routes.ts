@@ -24,4 +24,7 @@ Route.get('/', async () => {
   return { "message":"DOC GIG API" }
 })
 Route.post('auth', 'AuthController.login')
+Route.get('categories', 'CategoriesController.index')
+Route.post('categories', 'CategoriesController.set')
+Route.put('categories/:id', 'CategoriesController.update')
 Route.post('signup', 'SignUpController.store')
