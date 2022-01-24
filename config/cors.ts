@@ -44,7 +44,7 @@ const corsConfig: CorsConfig = {
   |                     one of the above values.
   |
   */
-  origin: true,
+  origin: 'http://localhost:3011,https://stg-gig-api.doconchain.io,https://gig-api.doconchain.io',
 
   /*
   |--------------------------------------------------------------------------
