@@ -17,11 +17,11 @@
 | import './routes/customer'
 |
 */
-
 import Route from '@ioc:Adonis/Core/Route'
+import Env from '@ioc:Adonis/Core/Env'
 
 Route.get('/', async () => {
-  return { "message":"DOC GIG API" }
+  return { messsage: `DOC GIG API (${Env.get('NODE_ENV')})`}
 })
 Route.post('auth', 'AuthController.login')
 Route.get('categories', 'CategoriesController.index')
