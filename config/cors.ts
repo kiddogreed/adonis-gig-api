@@ -20,7 +20,7 @@ const corsConfig: CorsConfig = {
   | you can define a function to enable/disable it on per request basis as well.
   |
   */
-  enabled: false,
+  enabled: true,
 
   // You can also use a function that return true or false.
   // enabled: (request) => request.url().startsWith('/api')
@@ -44,7 +44,11 @@ const corsConfig: CorsConfig = {
   |                     one of the above values.
   |
   */
+<<<<<<< HEAD
   origin: 'http://localhost:3011,https://stg-gig-api.doconchain.io,https://gig-api.doconchain.io',
+=======
+  origin: 'http://localhost:3011,https://stg-gig.doconchain.io,https://gig.doconchain.io',
+>>>>>>> 146074e665598bd370075f44042568a8ba13f39c
 
   /*
   |--------------------------------------------------------------------------
