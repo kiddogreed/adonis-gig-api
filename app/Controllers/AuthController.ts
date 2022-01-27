@@ -1,13 +1,13 @@
 import { DateTime } from "luxon"
 import Response from 'App/Helpers/Response'
-import AuthValidator from 'App/Validators/AuthValidator'
+//import AuthValidator from 'App/Validators/AuthValidator'
 import UserRepository from 'App/Repositories/UserRepository'
 import { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
 
 export default class AuthController {
 
 	public async login({ request, response, }: HttpContextContract) {
-		await request.validate(AuthValidator)
+
 
 		const apiResponse = new Response(response)
 		const data = request.only([
@@ -18,11 +18,12 @@ export default class AuthController {
 
 			const user = await UserRepository.query()
 				.where("email", data.email)
+				.orWhere("username",data.email)
 				.first()
 
 			if (!user) {
 				return apiResponse.notFound(
-					"Invalid email or password"
+					"Invalid email/username or password"
 				);
 			}
 
@@ -37,7 +38,7 @@ export default class AuthController {
 			return apiResponse.data(responseData, "Login successfully.")
 		}
 		catch (error) {
-			return apiResponse.badRequest("Invalid email or password.")
+			return apiResponse.badRequest("Invalid email/username or password")
 		}
 	}
 

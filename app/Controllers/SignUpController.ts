@@ -1,3 +1,4 @@
+import Hash from '@ioc:Adonis/Core/Hash'
 import Response from 'App/Helpers/Response'
 import UserRepository from 'App/Repositories/UserRepository'
 import ClientRepository from 'App/Repositories/ClientRepository'
