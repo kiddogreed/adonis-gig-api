@@ -64,9 +64,13 @@ declare module '@ioc:Adonis/Addons/Auth' {
     | the `user` provider for fetching user details.
     |
     */
-    basic: {
-      implementation: BasicAuthGuardContract<'user', 'basic'>
-      config: BasicAuthGuardConfig<'user'>
+    api: {
+      implementation: OATGuardContract<'user', 'api'>
+      config: OATGuardConfig<'user'>
     }
+    // basic: {
+    //   implementation: BasicAuthGuardContract<'user', 'basic'>
+    //   config: BasicAuthGuardConfig<'user'>
+    // }
   }
 }

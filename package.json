@@ -19,14 +19,31 @@
     "@adonisjs/auth": "^8.0.10",
     "@adonisjs/core": "^5.4.2",
     "@adonisjs/lucid": "^16.3.2",
+    "@adonisjs/redis": "^7.1.0",
     "@adonisjs/repl": "^3.1.8",
+    "@rocketseat/adonis-bull": "^1.0.4",
     "addons": "^0.1.2",
     "adonis-bumblebee-ts": "^1.0.0",
     "bcryptjs": "^2.4.3",
     "luxon": "^2.3.0",
+    "mjml": "^4.11.0",
     "mysql": "^2.18.1",
     "proxy-addr": "^2.0.7",
+    "randomstring": "^1.2.2",
     "reflect-metadata": "^0.1.13",
     "source-map-support": "^0.5.21"
-  }
+  },
+  "description": "",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://gitlab.com/doconchain/gig-api.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://gitlab.com/doconchain/gig-api/issues"
+  },
+  "homepage": "https://gitlab.com/doconchain/gig-api#readme"
 }
