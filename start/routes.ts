@@ -20,7 +20,6 @@
 import Route from '@ioc:Adonis/Core/Route'
 import Env from '@ioc:Adonis/Core/Env'
 
-// Route.group(() => {
   Route.get('/', async () => {
     return { messsage: `DOC GIG API (${Env.get('NODE_ENV')})` }
   })
@@ -28,8 +27,6 @@ import Env from '@ioc:Adonis/Core/Env'
   Route.get('categories', 'CategoriesController.index')
   Route.post('categories', 'CategoriesController.set')
   Route.put('categories/:id', 'CategoriesController.update')
-  Route.post('register', 'SignUpController.register')
+  Route.post('register/verify_email', 'SignUpController.register')
   Route.post('signup','SignupController.signup')
-// }).domain(Env.get("APP_API_DOMAIN"));
 
-//Route.post('signup', 'SignUpController.store')

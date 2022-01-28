@@ -1,5 +1,4 @@
 import Mail from 'App/Services/Mail'
-import Response from 'App/Helpers/Response'
 import RandomString from 'App/Services/RandomString'
 import UserRepository from 'App/Repositories/UserRepository'
 import TokenRepository from 'App/Repositories/TokenRepository'
@@ -9,7 +8,6 @@ import { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
 export default class SignUpController {
 
   public async signup({ request, response }: HttpContextContract) {
-    const apiResponse = new Response(response)
     const data = request.only([
       "email",
     ])
@@ -18,36 +16,40 @@ export default class SignUpController {
       .first()
 
     if (emails) {
-      return apiResponse.unableToProcess("Email already taken")
+      return response.badRequest("Email already taken")
     }
 
     const users = new UserRepository()
     users.email = data.email,
       await users.save()
 
-
     const token = await TokenRepository.create({
       user_id: users?.id,
       type: 'VERIFICATION',
       code: RandomString.generate(25)
     })
+
     const email = new Mail()
     await email.verification({
       email: users?.email,
-      code: token.code
-    })
+      code: token.code,
+    });
 
-    return apiResponse.ok("Please check your email to verified")
+    return response.ok("Please check your email to verified")
   }
 
   public async register({ request, response }: HttpContextContract) {
-    const apiResponse = new Response(response)
 
     const code = request.input("code");
     const token = await TokenRepository.query()
       .where("code", code)
       .first()
 
+
+    if (!token) {
+      return response.badRequest('Incorrect verification token.');
+    }
+   
     const client = await ClientRepository.create({
       first_name: request.input('first_name'),
       middle_name: request.input('middle_name'),
@@ -64,7 +66,7 @@ export default class SignUpController {
       password: request.input('password')
     }).save()
 
-    return apiResponse.ok('Successful signup')
+    return response.ok('Successful signup')
 
   }
 

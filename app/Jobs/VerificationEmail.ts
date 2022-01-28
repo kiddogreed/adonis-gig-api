@@ -13,8 +13,8 @@ import { JobContract } from '@ioc:Rocketseat/Bull'
 */
 
 export default class VerificationEmail implements JobContract {
-  public key = 'Verification'
-
+  public key = 'verification'
+  
   public async handle() {
     // Do somethign with you job data
   }
