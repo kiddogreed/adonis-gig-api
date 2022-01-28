@@ -20,7 +20,7 @@ export default Env.rules({
 	APP_KEY: Env.schema.string(),
 	APP_NAME: Env.schema.string(),
 	DRIVE_DISK: Env.schema.enum(['local'] as const),
-	NODE_ENV: Env.schema.enum(['development', 'production', 'testing'] as const),
+	NODE_ENV: Env.schema.enum(['development', 'production', 'staging'] as const),
 
 	DB_CONNECTION: Env.schema.string(),
 	MYSQL_HOST: Env.schema.string({ format: 'host' }),
@@ -28,4 +28,9 @@ export default Env.rules({
 	MYSQL_USER: Env.schema.string(),
 	MYSQL_PASSWORD: Env.schema.string.optional(),
 	MYSQL_DB_NAME: Env.schema.string(),
+
+	REDIS_CONNECTION: Env.schema.enum(['local'] as const),
+	REDIS_HOST: Env.schema.string({ format: 'host' }),
+	REDIS_PORT: Env.schema.number(),
+	REDIS_PASSWORD: Env.schema.string.optional(),
 })
