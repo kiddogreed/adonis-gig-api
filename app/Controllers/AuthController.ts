@@ -4,15 +4,15 @@ import { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
 
 export default class AuthController {
 
-  public async login({auth, request, response }: HttpContextContract) {
+  public async login({ auth, request, response }: HttpContextContract) {
     const data = request.only([
-      "email",
+      "username",
       "password"
     ])
     try {
       const user = await UserRepository.query()
-        .where("email", data.email)
-        .orWhere("username", data.email)
+        .where("email", data.username)
+        .orWhere("username", data.username)
         .first()
 
 
@@ -24,16 +24,18 @@ export default class AuthController {
 
       user.logged_in_at = DateTime.now()
       await user.save();
-
       const token = await auth.use('api').generate(user)
-      const responseData = {
-        id: user.id,
-        profile_type: user.profile_type,
-        client_id: user.profile_id,
-        token: token.token
-      }
 
-      return response.data(responseData, "Login successfully.")
+      return response.data({
+        'token': token.token,
+        'user': {
+          'id': user?.id,
+          'profile_type': user?.profile_type,
+          'client_id': user?.profile_id,
+          'email': user?.email,
+          'username': user?.username
+        }
+      }, 'Login successfully.')
     }
     catch (error) {
       return response.badRequest("Invalid email/username or password")
