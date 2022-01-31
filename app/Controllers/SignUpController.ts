@@ -66,6 +66,10 @@ export default class SignUpController {
     })
     await user?.save()
 
+
+    token.revoked = true;
+    token.save();
+
     return response.data({
       'token': token?.code,
       'email': user.email,
