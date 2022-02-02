@@ -30,3 +30,5 @@ import Env from '@ioc:Adonis/Core/Env'
   Route.post('signup','SignupController.signup')
   Route.post('verify', 'SignUpController.register')
 
+  Route.post('profile-type','ProfileSetupController.profile_type').middleware('auth');
+

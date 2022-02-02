@@ -1,7 +1,7 @@
 import { schema, rules } from '@ioc:Adonis/Core/Validator'
 import { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
 
-export default class RegisterValidator {
+export default class ProfileSetupValidator {
   constructor(protected ctx: HttpContextContract) { }
 
   /*
@@ -24,18 +24,21 @@ export default class RegisterValidator {
    *    ```
    */
   public schema = schema.create({
-
-    username: schema.string({
-      trim: true
-    }, [
-      rules.unique({ table: 'users', column: 'username' }),
-      rules.minLength(3),
-      rules.maxLength(35),
-      rules.regex(/^[a-zA-Z0-9]+$/)
+    first_name: schema.string({}, [
+      rules.required()
     ]),
-    // password: schema.string({}, [
-    //   rules.confirmed()
-    // ]),
+    last_name: schema.string({}, [
+      rules.required()
+    ]),
+    photo: schema.string({}, [
+      rules.required()
+    ]),
+    description: schema.string({}, [
+      rules.required()
+    ]),
+    language: schema.string({}, [
+      rules.required()
+    ]),
   })
 
   /**
@@ -50,11 +53,10 @@ export default class RegisterValidator {
    *
    */
   public messages = {
-    'username.required': 'Please input username.',
-    'username.unique': 'Your username is already associated to an existing account. Please choose a different username.',
-    'username.minLength': 'Your username should be not less thatn three characters.',
-    'username.maxLength': 'Your username is too long.',
-    'username.regex': 'Only alphanumeric character is allowed.',
-   
+    'first_name.required': 'Please input First name.',
+    'last_name.required': 'Please input Last name.',
+    'photo.required': 'Please upload your profile picture',
+    'description.required': 'Please input description.',
+    'language.required': 'Please input language.'
   }
 }

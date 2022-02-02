@@ -3,7 +3,6 @@ import RandomString from 'App/Services/RandomString'
 import LeadRepository from 'App/Repositories/LeadRepository'
 import UserRepository from 'App/Repositories/UserRepository'
 import TokenRepository from 'App/Repositories/TokenRepository'
-import ClientRepository from 'App/Repositories/ClientRepository'
 import SignUpValidator from 'App/Validators/SignUpValidator'
 import RegisterValidator from 'App/Validators/RegisterValidator'
 import { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
@@ -51,21 +50,12 @@ export default class SignUpController {
       return response.badRequest('Incorrect verification token.');
     }
 
-    const client = await ClientRepository.create({
-      first_name: request.input('first_name'),
-      last_name: request.input('last_name'),
-    })
-    await client?.save()
-
     const user = await UserRepository.create({
       email: email,
       username: request.input('username'),
       password: request.input('password'),
-      profile_type: request.input('profile_type'),
-      profile_id: client?.id,
     })
     await user?.save()
-
 
     token.revoked = true;
     token.save();
@@ -74,7 +64,6 @@ export default class SignUpController {
       'token': token?.code,
       'email': user.email,
       'password': user.password,
-      'profile_type': user.profile_type,
     }, 'Login Successfully')
   }
 

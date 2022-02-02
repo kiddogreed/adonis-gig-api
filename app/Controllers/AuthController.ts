@@ -4,7 +4,7 @@ import { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
 
 export default class AuthController {
 
-  public async login({ auth, request, response }: HttpContextContract) {
+  async login({ auth, request, response }: HttpContextContract) {
     const data = request.only([
       "username",
       "password"
