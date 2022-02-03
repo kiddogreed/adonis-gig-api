@@ -14,7 +14,7 @@ export default class ProfileSetupController {
   async profileSetupType({ auth, request, response }: HttpContextContract) {
     try {
       const user = auth.user
-      user.profile_type = request.input('profile_type')
+      user.profile_type = request.input('type')
       await user?.save()
 
       return response.ok('Profile type successfully created')
