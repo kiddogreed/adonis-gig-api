@@ -11,10 +11,9 @@ import PersonalWebsite from 'App/Models/PersonalWebsite'
 
 export default class ProfileSetupController {
 
-  async profile_type({ auth, request, response }: HttpContextContract) {
+  async profileSetupType({ auth, request, response }: HttpContextContract) {
     try {
       const user = auth.user
-      console.log('user')
       user.profile_type = request.input('profile_type')
       await user?.save()
 
