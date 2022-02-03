@@ -7,7 +7,8 @@ export default class Clients extends BaseSchema {
     this.schema.alterTable(this.tableName, (table) => {
       table.string('description', 500).after('photo')
       table.string('language').after('description')
-      table.integer('number').after('language')
+      table.string('level').after('language')
+      table.integer('number').after('level')
     })
   }
 
@@ -15,6 +16,7 @@ export default class Clients extends BaseSchema {
     this.schema.alterTable(this.tableName, (table) => {
       table.dropColumn('description')
       table.dropColumn('language')
+      table.dropColumn('level')
       table.dropColumn('number')
     })
   }

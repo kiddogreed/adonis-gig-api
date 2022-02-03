@@ -29,6 +29,12 @@ export default class Client extends BaseModel {
   @column()
   public language: string
 
+  @column()
+  public level: string
+
+  @column()
+  public number: number
+
   @column.date()
   public birth_date: DateTime
 

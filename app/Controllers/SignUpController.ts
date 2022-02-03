@@ -6,6 +6,7 @@ import TokenRepository from 'App/Repositories/TokenRepository'
 import SignUpValidator from 'App/Validators/SignUpValidator'
 import RegisterValidator from 'App/Validators/RegisterValidator'
 import { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
+import ClientRepository from 'App/Repositories/ClientRepository'
 
 export default class SignUpController {
 
@@ -41,30 +42,40 @@ export default class SignUpController {
     await request.validate(RegisterValidator)
     const code = request.input("code");
     const email = request.input("email");
-    const token = await TokenRepository.query()
-      .where("revoked", 0)
-      .where("code", code)
-      .first()
+    try {
+      const token = await TokenRepository.query()
+        .where("revoked", 0)
+        .where("code", code)
+        .first()
 
-    if (!token) {
-      return response.badRequest('Incorrect verification token.');
+      if (!token) {
+        return response.badRequest('Incorrect verification token.');
+      }
+
+      const client = await ClientRepository.create({
+        verified: 1
+      })
+      await client?.save()
+
+      const user = await UserRepository.create({
+        email: email,
+        username: request.input('username'),
+        password: request.input('password'),
+        profile_id: client.id,
+      })
+      await user?.save()
+
+      token.revoked = true;
+      token.user_id = user.id;
+      token.save();
+
+      return response.data({
+        'token': token?.code,
+        'email': user.email,
+        'password': user.password,
+      }, 'Login Successfully')
+    } catch (e) {
+      return response.badRequest('Invalid Verified Request')
     }
-
-    const user = await UserRepository.create({
-      email: email,
-      username: request.input('username'),
-      password: request.input('password'),
-    })
-    await user?.save()
-
-    token.revoked = true;
-    token.save();
-
-    return response.data({
-      'token': token?.code,
-      'email': user.email,
-      'password': user.password,
-    }, 'Login Successfully')
   }
-
 }
