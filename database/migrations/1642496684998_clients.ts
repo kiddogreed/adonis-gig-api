@@ -6,8 +6,12 @@ export default class Clients extends BaseSchema {
   public async up () {
     this.schema.createTable(this.tableName, (table) => {
       table.increments('id')
+      table.integer('verified')
+      table.string('country',75)
       table.string('first_name', 75)
       table.string('middle_name', 75)
+      table.string('photo',120)
+
       /**
        * Uses timestamptz for PostgreSQL and DATETIME2 for MSSQL
        */
