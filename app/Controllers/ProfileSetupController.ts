@@ -31,7 +31,6 @@ export default class ProfileSetupController {
     try {
 
       const user = auth.user
-      console.log('ehre', user?.profile_id)
       const client = await ClientRepository.findBy('id', user?.profile_id)
       client.first_name = data.first_name,
         client.last_name = data.last_name,
