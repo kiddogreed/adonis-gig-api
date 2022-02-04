@@ -33,9 +33,10 @@ export default class RegisterValidator {
       rules.maxLength(35),
       rules.regex(/^[a-zA-Z0-9]+$/)
     ]),
-    // password: schema.string({}, [
-    //   rules.confirmed()
-    // ]),
+    password: schema.string({}, [
+      rules.confirmed()
+    ]),
+    password_confirmation: schema.string({})
   })
 
   /**

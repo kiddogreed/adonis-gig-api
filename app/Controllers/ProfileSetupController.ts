@@ -29,8 +29,10 @@ export default class ProfileSetupController {
     const data = request.only(['first_name', 'last_name', 'photo', 'description', 'language', 'level'])
 
     try {
+
       const user = auth.user
-      const client = await ClientRepository.findByOrFail('id', user.client_id)
+      console.log('ehre', user?.profile_id)
+      const client = await ClientRepository.findBy('id', user?.profile_id)
       client.first_name = data.first_name,
         client.last_name = data.last_name,
         client.photo = data.photo,
@@ -42,6 +44,7 @@ export default class ProfileSetupController {
       return response.ok("Personal information successfully saved")
 
     } catch (e) {
+      console.log(e)
       return response.badRequest('Invalid Profile Request')
     }
   }

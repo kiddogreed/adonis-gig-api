@@ -24,13 +24,17 @@ import Env from '@ioc:Adonis/Core/Env'
     return { messsage: `DOC GIG API (${Env.get('NODE_ENV')})` }
   })
   Route.post('/auth', 'AuthController.login')
+  Route.post('/auth/logout', 'AuthController.logout')
+
   Route.get('/categories', 'CategoriesController.index')
   Route.post('/categories', 'CategoriesController.set')
   Route.put('/categories/:id', 'CategoriesController.update')
-  Route.post('/signup','SignupController.signup')
-  Route.post('/verify', 'SignUpController.register')
 
   Route.put('/profile/type','ProfileSetupController.profileSetupType').middleware('auth:api')
-  Route.post('/personal','ProfileSetupController.personal').middleware('auth:api')
-  Route.post('/professional','ProfileSetupController.professional').middleware('auth:api')
+  Route.put('/personal/information','ProfileSetupController.personal').middleware('auth:api')
+  Route.post('/professional/information','ProfileSetupController.professional').middleware('auth:api')
+
+  Route.post('/signup','SignupController.signup')
+
+  Route.post('/verify', 'SignUpController.register')
 
