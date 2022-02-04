@@ -32,7 +32,7 @@ import Env from '@ioc:Adonis/Core/Env'
 
   Route.put('/profile/type','ProfileSetupController.profileSetupType').middleware('auth:api')
   Route.put('/personal/information','ProfileSetupController.personal').middleware('auth:api')
-  Route.post('/professional/information','ProfileSetupController.professional').middleware('auth:api')
+  Route.get('/professional','ProfileSetupController.proInformation').middleware('auth:api')
 
   Route.post('/signup','SignupController.signup')
 
