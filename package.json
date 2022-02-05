@@ -26,6 +26,7 @@
     "addons": "^0.1.2",
     "adonis-bumblebee-ts": "^1.0.0",
     "adonis-kvn-response": "^2.0.2",
+    "axios": "^0.25.0",
     "bcryptjs": "^2.4.3",
     "luxon": "^2.3.0",
     "mjml": "^4.11.0",
