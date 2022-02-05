@@ -36,5 +36,5 @@ import Env from '@ioc:Adonis/Core/Env'
 
   Route.post('/signup','SignUpController.signup')
 
-  Route.post('/verify', 'SignUpController.register')
+  Route.post('signup/verify', 'SignUpController.register')
 
