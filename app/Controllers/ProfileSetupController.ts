@@ -50,21 +50,19 @@ export default class ProfileSetupController {
   }
 
   async proInformation({ auth, request, response }: HttpContextContract) {
-    const data = request.only(['company', 'date_from', 'date_to', 'skill', 'level',
-      'country', 'school', 'degree', 'year_graduated', 'certificate_name',
-      'certified_from', 'year', 'website'])
-      const array = [data.company]
-      console.log(array,'here')
+    const data = request.input([`data`])
+    console.log(data)
     try {
- 
-      for (let value of array) {
+      for (let value of data) {
         const user = auth.user
           const occupation = await OccupationRepository.create({
-            client_id: user.cliend_id,
-            company: value,
-           
+            client_id: user.profile_id,
+            company: value.company,
+            date_from: value.date_from,
+            date_to: value.date_to,
           })
           await occupation.save();
+
       }
       return response.ok("Professional information successfully saved")
     } catch (e) {
