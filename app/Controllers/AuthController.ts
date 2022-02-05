@@ -23,6 +23,7 @@ export default class AuthController {
       const token = await auth.use('api').attempt(user.email, data.password)
       user.logged_in_at = DateTime.now()
       await user.save();
+      
       return response.data({
         'token': token.token,
         'user': {

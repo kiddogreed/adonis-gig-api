@@ -48,66 +48,32 @@ export default class ProfileSetupController {
     }
   }
 
-  async proInformation({ auth, request, response }:HttpContextContract){
-      const data = request.only(['company', 'date_from', 'date_to', 'skill', 'level',
-        'country', 'school', 'degree', 'year_graduated', 'certificate_name',
-        'certified_from', 'year', 'website'])
-   
-      try {
+  async proInformation({ auth, request, response }: HttpContextContract) {
+    const data = request.only(['company', 'date_from', 'date_to', 'skill', 'level',
+      'country', 'school', 'degree', 'year_graduated', 'certificate_name',
+      'certified_from', 'year', 'website'])
+      const array = [data.company]
+      console.log(array,'here')
+    try {
+ 
+      for (let value of array) {
         const user = auth.user
-        for (let value of data) {
-          if (data.company) {
-            const occupation = await OccupationRepository.create({
-              client_id: user.client_id,
-              company: value.company,
-              date_from: value.date_from,
-              date_to: value.date_to
-            })
-            await occupation.save();
-          }
-          if (data.skill) {
-            const skill = await SkillRepository.create({
-              client_id: user.client_id,
-              skill: value.skill,
-              level: value.level
-            })
-            await skill.save();
-          }
-          if (data.country) {
-            const education = await EducationRepository.create({
-              cliend_id: user.client_id,
-              country: value.country,
-              school: value.school,
-              degree: value.degree,
-              year_graduated: value.year_graduated
-            })
-            await education.save()
-          }
-          if (data.certificate_name) {
-            const certification = await CertificationRepository.create({
-              cliend_id: user.client_id,
-              certificate_name: value.certificate_name,
-              certified_from: value.certified_from,
-              year: value.year
-            })
-            await certification.save()
-          }
-          if(data.website){
-            const website = await PersonalWebsite.create({
-              client_id: user.client_id,
-              website: value.website
-            })
-            await website.save()
-          }
-        }
-        return response.ok("Professional information successfully saved")
-      } catch (e) {
-        return response.badRequest('Invalid Profession Request')
+          const occupation = await OccupationRepository.create({
+            client_id: user.cliend_id,
+            company: value,
+           
+          })
+          await occupation.save();
       }
-    
+      return response.ok("Professional information successfully saved")
+    } catch (e) {
+      console.log(e)
+      return response.badRequest('Invalid Profession Request')
+    }
+
   }
 
- 
+
 
   async security({ auth, request, response }) {
     const user = auth.user

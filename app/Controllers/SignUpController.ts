@@ -1,4 +1,6 @@
+import Env from '@ioc:Adonis/Core/Env'
 import Mail from 'App/Services/Mail'
+import UrlShortener from 'App/Services/UrlShortener'
 import RandomString from 'App/Services/RandomString'
 import LeadRepository from 'App/Repositories/LeadRepository'
 import UserRepository from 'App/Repositories/UserRepository'
@@ -29,10 +31,13 @@ export default class SignUpController {
       type: 'REGISTRATION',
       code: RandomString.generate(25)
     })
+    const URLShortener = new UrlShortener();
     const email = new Mail()
     await email.verification({
       email: lead.email,
       code: token.code,
+      URL: await URLShortener.generate(Env.get("APP_FRONTEND_URL") + `/signup/verify?email=${lead.email}?token=${token.code}`,1
+      ),
     });
 
     return response.ok("Please check your email to verified")
