@@ -5,17 +5,14 @@ export default class Clients extends BaseSchema {
 
   public async up() {
     this.schema.alterTable(this.tableName, (table) => {
-      table.string('description', 500).after('photo')
-      table.string('language').after('description')
-      table.string('level').after('language')
+      table.string('contact',15).after('last_name')
+     
     })
   }
 
   public async down() {
     this.schema.alterTable(this.tableName, (table) => {
-      table.dropColumn('description')
-      table.dropColumn('language')
-      table.dropColumn('level')
+      table.dropColumn('contact')
     })
   }
 }

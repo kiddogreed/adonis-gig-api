@@ -30,11 +30,22 @@ import Env from '@ioc:Adonis/Core/Env'
   Route.post('/categories', 'CategoriesController.set')
   Route.put('/categories/:id', 'CategoriesController.update')
 
+  Route.get('/linked','linkAccountsController.index').middleware('auth:api')
+  Route.post('/linked','linkAccountsController.set').middleware('auth:api')
+
+  Route.get('/profile','ProfileSetupController.show').middleware('auth:api')
   Route.put('/profile/type','ProfileSetupController.profileSetupType').middleware('auth:api')
   Route.put('/personal/information','ProfileSetupController.personal').middleware('auth:api')
-  Route.post('/professional/information','ProfileSetupController.proInformation').middleware('auth:api')
+  Route.post('/professional/information','ProfileSetupController.prefessionalInformation').middleware('auth:api')
 
+<<<<<<< HEAD
   Route.post('/signup','SignUpController.signup')
+=======
+  Route.get('/security','SecurityController.show').middleware('auth:api')
+  Route.put('/security','SecurityController.update').middleware('auth:api')
+  Route.post('/signup','SignupController.signup')
+  Route.post('/signup/verify', 'SignUpController.register')
+  Route.get('/skill','SkillsController.show').middleware('auth:api')
+>>>>>>> DOC-1035-Profile-setup
 
-  Route.post('signup/verify', 'SignUpController.register')
 

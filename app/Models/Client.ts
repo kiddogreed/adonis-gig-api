@@ -2,6 +2,9 @@ import { DateTime } from 'luxon'
 import { BaseModel, column} from '@ioc:Adonis/Lucid/Orm'
 
 export default class Client extends BaseModel {
+  static get table (){
+    return ('clients')
+  }
   @column({ isPrimary: true })
   public id: number
 
@@ -33,7 +36,7 @@ export default class Client extends BaseModel {
   public level: string
 
   @column()
-  public number: number
+  public contact: string
 
   @column.date()
   public birth_date: DateTime

@@ -32,7 +32,8 @@
       "@adonisjs/auth",
       "@rocketseat/adonis-bull",
       "@adonisjs/redis",
-      "adonis-kvn-response"
+      "adonis-kvn-response",
+      "adonis-bumblebee-ts"
     ]
   }
 }

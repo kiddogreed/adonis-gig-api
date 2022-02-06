@@ -36,7 +36,7 @@ export default class SignUpController {
     await email.verification({
       email: lead.email,
       code: token.code,
-      URL: await URLShortener.generate(Env.get("APP_FRONTEND_URL") + `/signup/verify?email=${lead.email}?token=${token.code}`, 1
+      URL: await URLShortener.generate(Env.get("APP_FRONTEND_URL") + `/signup/verify?email=${lead.email}&code=${token.code}`, 1
       ),
     });
 

@@ -2,11 +2,14 @@ import { DateTime } from 'luxon'
 import { BaseModel, column } from '@ioc:Adonis/Lucid/Orm'
 
 export default class Certification extends BaseModel {
+  static get table (){
+    return ('certifications')
+  }
   @column({ isPrimary: true })
   public id: number
 
   @column()
-  public cliend_id: number
+  public client_id: number
 
   @column()
   public certificate_name: string

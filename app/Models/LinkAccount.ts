@@ -1,10 +1,7 @@
 import { DateTime } from 'luxon'
 import { BaseModel, column } from '@ioc:Adonis/Lucid/Orm'
 
-export default class PersonalWebsite extends BaseModel {
-  static get table (){
-    return ('websites')
-  }
+export default class LinkAccount extends BaseModel {
   @column({ isPrimary: true })
   public id: number
 
@@ -12,7 +9,10 @@ export default class PersonalWebsite extends BaseModel {
   public client_id: number
 
   @column()
-  public website: string
+  public email: string
+
+  @column()
+  public presence_name: string
 
   @column.dateTime({ autoCreate: true })
   public createdAt: DateTime
