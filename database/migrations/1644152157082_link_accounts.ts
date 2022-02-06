@@ -1,15 +1,14 @@
 import BaseSchema from '@ioc:Adonis/Lucid/Schema'
 
-export default class Skills extends BaseSchema {
-  protected tableName = 'skills'
+export default class LinkAccounts extends BaseSchema {
+  protected tableName = 'link_accounts'
 
   public async up () {
     this.schema.createTable(this.tableName, (table) => {
       table.increments('id')
       table.integer('client_id')
-      table.integer('skill_id')
-      table.string('level')
-
+      table.string('email',75)
+      table.string('presence_name',75)
       /**
        * Uses timestamptz for PostgreSQL and DATETIME2 for MSSQL
        */

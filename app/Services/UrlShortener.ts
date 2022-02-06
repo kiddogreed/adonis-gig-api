@@ -24,7 +24,6 @@ export default class UrlShortener {
           },
         }
       );
-        console.log(result)
       return result.data.data.link;
     } catch (error) {
       console.log("URL SHORTENER ERROR", error);

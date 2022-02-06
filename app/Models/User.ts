@@ -3,6 +3,9 @@ import Hash from '@ioc:Adonis/Core/Hash'
 import { BaseModel, column ,beforeSave} from '@ioc:Adonis/Lucid/Orm'
 
 export default class User extends BaseModel {
+  static get table (){
+    return ('users')
+  }
   @column({ isPrimary: true })
   public id: number
 
