@@ -33,6 +33,7 @@ import Env from '@ioc:Adonis/Core/Env'
   Route.put('/education/:Id/information', 'EducationsController.update').middleware('auth:api')
   Route.delete('/education/:Id/information', 'EducationsController.destroy').middleware('auth:api')
 
+  Route.get('/language','LanguagesController.show').middleware('auth:api')
   Route.post('/language','LanguagesController.set').middleware('auth:api')
   Route.put('/language/:Id','LanguagesController.update').middleware('auth:api')
   Route.delete('/language/:Id','LanguagesController.destroy').middleware('auth:api')

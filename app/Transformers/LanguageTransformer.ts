@@ -1,9 +1,9 @@
 import { TransformerAbstract } from '@ioc:Adonis/Addons/Bumblebee'
-import LanguageRepsitory from 'App/Repositories/LanguageRepository'
+import LanguageRepository from 'App/Repositories/LanguageRepository'
 
 
 export default class LanguageTransformer extends TransformerAbstract {
-  public async transform(language: LanguageRepsitory) {
+  public async transform(language: LanguageRepository) {
 
     return {
       id: language.id,

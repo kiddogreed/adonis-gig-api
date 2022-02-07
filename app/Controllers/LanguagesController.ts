@@ -1,6 +1,17 @@
 import { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
 import LanguageRepository from 'App/Repositories/LanguageRepository'
+import LanguageTransformer from 'App/Transformers/LanguageTransformer'
 export default class LanguagesController {
+
+  async show({ auth, transform, response }: HttpContextContract) {
+    const user = auth.user
+    try {
+      const language = await LanguageRepository.query().where('client_id', user.profile_id)
+      return response.resource(await transform.collection(language, LanguageTransformer))
+    } catch (e) {
+      return response.badRequest("Invalid language request")
+    }
+  }
 
   async set({ auth, request, response }: HttpContextContract) {
     const language = request.input([`data`])
