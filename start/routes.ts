@@ -38,14 +38,10 @@ import Env from '@ioc:Adonis/Core/Env'
   Route.put('/personal/information','ProfileSetupController.personal').middleware('auth:api')
   Route.post('/professional/information','ProfileSetupController.prefessionalInformation').middleware('auth:api')
 
-<<<<<<< HEAD
-  Route.post('/signup','SignUpController.signup')
-=======
   Route.get('/security','SecurityController.show').middleware('auth:api')
   Route.put('/security','SecurityController.update').middleware('auth:api')
   Route.post('/signup','SignupController.signup')
   Route.post('/signup/verify', 'SignUpController.register')
   Route.get('/skill','SkillsController.show').middleware('auth:api')
->>>>>>> DOC-1035-Profile-setup
 
 
