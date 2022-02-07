@@ -40,7 +40,7 @@ export default class SignUpController {
       ),
     });
 
-    return response.data({ 'email': lead?.email }, "Please check your email to verified")
+    return response.data({ 'email': lead?.email }, "Please check your email inbox")
   }
 
   public async register({ request, response }: HttpContextContract) {
