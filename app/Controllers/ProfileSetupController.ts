@@ -11,9 +11,9 @@ import PersonalWebsiteRepository from 'App/Repositories/PersonalWebsiteRepositor
 
 export default class ProfileSetupController {
 
-  async show({auth,response,transform}:HttpContextContract){
+  async show({ auth, response, transform }: HttpContextContract) {
     const user = auth.user
-    const client = await ClientRepository.query().where('id',user.profile_id).first()
+    const client = await ClientRepository.query().where('id', user.profile_id).first()
     return response.resource(await transform.item(client, UserTransformer))
   }
 
@@ -23,7 +23,9 @@ export default class ProfileSetupController {
       user.profile_type = request.input('type')
       await user?.save()
 
-      return response.ok('Profile type successfully created')
+      const token = await auth.use('api').generate(user)
+
+      return response.data({ token }, 'Profile type successfully created')
 
     } catch (e) {
       return response.badRequest('Invalid Type Request')
@@ -42,7 +44,6 @@ export default class ProfileSetupController {
         client.photo = data.photo,
         client.description = data.description,
         client.language = data.language,
-        client.level = data.level
       await client?.save()
 
       return response.ok("Personal information successfully saved")
