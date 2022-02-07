@@ -40,7 +40,7 @@ import Env from '@ioc:Adonis/Core/Env'
 
   Route.get('/security','SecurityController.show').middleware('auth:api')
   Route.put('/security','SecurityController.update').middleware('auth:api')
-  Route.post('/signup','SignupController.signup')
+  Route.post('/signup','SignUpController.signup')
   Route.post('/signup/verify', 'SignUpController.register')
   Route.get('/skill','SkillsController.show').middleware('auth:api')
 
