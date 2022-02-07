@@ -33,7 +33,7 @@ export default class AuthController {
           'email': user?.email,
           'username': user?.username
         }
-      }, 'Login successfully.')
+      }, 'You are now logged in.')
     }
     catch (error) {
       console.log('error', error)

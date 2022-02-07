@@ -1,5 +1,6 @@
-import Env from '@ioc:Adonis/Core/Env'
+import { DateTime } from "luxon"
 import Mail from 'App/Services/Mail'
+import Env from '@ioc:Adonis/Core/Env'
 import UrlShortener from 'App/Services/UrlShortener'
 import RandomString from 'App/Services/RandomString'
 import LeadRepository from 'App/Repositories/LeadRepository'
@@ -43,17 +44,18 @@ export default class SignUpController {
     return response.data({ 'email': lead?.email }, "Please check your email inbox")
   }
 
-  public async register({ request, response }: HttpContextContract) {
+  public async register({ auth, request, response }: HttpContextContract) {
     await request.validate(RegisterValidator)
+
     const code = request.input("code");
     const email = request.input("email");
     try {
-      const token = await TokenRepository.query()
+      const verification = await TokenRepository.query()
         .where("revoked", 0)
         .where("code", code)
         .first()
 
-      if (!token) {
+      if (!verification) {
         return response.badRequest('Incorrect verification token.');
       }
 
@@ -70,15 +72,20 @@ export default class SignUpController {
       })
       await user?.save()
 
-      token.revoked = true;
-      token.user_id = user.id;
-      token.save();
+   
+      verification.revoked = true;
+      verification.user_id = user.id;
+      user.logged_in_at = DateTime.now()
+      verification.save();
 
+      const token = await auth.use('api').generate(user)
+    
+    
       return response.data({
-        'token': token?.code,
+        'token': token,
         'email': user.email,
         'password': user.password,
-      }, 'Login Successfully')
+      }, 'You are now logged in.')
     } catch (e) {
       return response.badRequest('Invalid Verified Request')
     }
