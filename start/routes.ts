@@ -30,18 +30,34 @@ import Env from '@ioc:Adonis/Core/Env'
   Route.post('/categories', 'CategoriesController.set')
   Route.put('/categories/:id', 'CategoriesController.update')
 
+  Route.put('/education/:Id/information', 'EducationsController.update').middleware('auth:api')
+  Route.delete('/education/:Id/information', 'EducationsController.destroy').middleware('auth:api')
+
+  Route.post('/language','LanguagesController.set').middleware('auth:api')
+  Route.put('/language/:Id','LanguagesController.update').middleware('auth:api')
+  Route.delete('/language/:Id','LanguagesController.destroy').middleware('auth:api')
   Route.get('/linked','linkAccountsController.index').middleware('auth:api')
   Route.post('/linked','linkAccountsController.set').middleware('auth:api')
 
-  Route.get('/profile','ProfileSetupController.show').middleware('auth:api')
+  Route.put('/occupation/:Id/information', 'OccupationsController.update').middleware('auth:api')
+  Route.delete('/occupation/:Id/information', 'OccupationsController.destroy').middleware('auth:api')
+
+  Route.get('/personal/information','PersonalInformationsController.show').middleware('auth:api')
+  Route.put('/personal/information','PersonalInformationsController.set').middleware('auth:api')
+  Route.get('/professional/information','ProfessionalInformationsController.show').middleware('auth:api')
+  Route.post('/professional/information','ProfessionalInformationsController.set').middleware('auth:api')
   Route.put('/profile/type','ProfileSetupController.profileSetupType').middleware('auth:api')
-  Route.put('/personal/information','ProfileSetupController.personal').middleware('auth:api')
-  Route.post('/professional/information','ProfileSetupController.prefessionalInformation').middleware('auth:api')
 
   Route.get('/security','SecurityController.show').middleware('auth:api')
   Route.put('/security','SecurityController.update').middleware('auth:api')
   Route.post('/signup','SignUpController.signup')
   Route.post('/signup/verify', 'SignUpController.register')
   Route.get('/skill','SkillsController.show').middleware('auth:api')
+  Route.put('/skill/:Id','SkillsController.update').middleware('auth:api')
+  Route.delete('/skill/:Id','SkillsController.destroy').middleware('auth:api')
+
+  Route.put('/website/:Id/information', 'PersonalWebsitesController.update').middleware('auth:api')
+  Route.delete('/website/:Id/information', 'PersonalWebsitesController.destroy').middleware('auth:api')
+
 
 
