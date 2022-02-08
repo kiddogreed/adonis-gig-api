@@ -6,7 +6,7 @@ import CertificationTransformer from 'App/Transformers/CertificationTransformer'
 export default class CertificationsController {
   async index({ auth, response, transform }: HttpContextContract) {
     const user = auth.user
-    const certification = await CertificationRepository.findBy('client_id', user?.profile_id)
+    const certification = await CertificationRepository.query().where('client_id', user.profile_id)
     return response.resource(await transform.collection(certification, CertificationTransformer))
   }
 

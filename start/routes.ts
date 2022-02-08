@@ -30,6 +30,11 @@ import Env from '@ioc:Adonis/Core/Env'
   Route.post('/categories', 'CategoriesController.set')
   Route.put('/categories/:id', 'CategoriesController.update')
 
+  Route.get('/certification', 'CertificationsController.index').middleware('auth:api') 
+  Route.post('/certification', 'CertificationsController.set').middleware('auth:api') 
+  Route.put('/certification/:Id', 'CertificationsController.update').middleware('auth:api') 
+  Route.delete('/certification/:Id', 'CertificationsController.destroy').middleware('auth:api') 
+
   Route.get('/education/information', 'EducationsController.index').middleware('auth:api') 
   Route.post('/education/information', 'EducationsController.set').middleware('auth:api')  
   Route.put('/education/:Id/information', 'EducationsController.update').middleware('auth:api')
