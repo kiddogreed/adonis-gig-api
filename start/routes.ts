@@ -43,8 +43,8 @@ import Env from '@ioc:Adonis/Core/Env'
   Route.put('/occupation/:Id/information', 'OccupationsController.update').middleware('auth:api')
   Route.delete('/occupation/:Id/information', 'OccupationsController.destroy').middleware('auth:api')
 
-  Route.get('/personal/information','PersonalInformationsController.show').middleware('auth:api')
-  Route.put('/personal/information','PersonalInformationsController.set').middleware('auth:api')
+  Route.get('/profile','PersonalInformationsController.show').middleware('auth:api')
+  Route.put('/profile','PersonalInformationsController.set').middleware('auth:api')
   Route.get('/professional/information','ProfessionalInformationsController.show').middleware('auth:api')
   Route.post('/professional/information','ProfessionalInformationsController.set').middleware('auth:api')
   Route.put('/profile/type','ProfileSetupController.profileSetupType').middleware('auth:api')
