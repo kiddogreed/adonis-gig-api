@@ -36,9 +36,6 @@ export default class ProfileSetupValidator {
     description: schema.string({}, [
       rules.required()
     ]),
-    language: schema.string({}, [
-      rules.required()
-    ]),
   })
 
   /**
@@ -56,7 +53,6 @@ export default class ProfileSetupValidator {
     'first_name.required': 'Please input First name.',
     'last_name.required': 'Please input Last name.',
     'photo.required': 'Please upload your profile picture',
-    'description.required': 'Please input description.',
-    'language.required': 'Please input language.'
+    'description.required': 'Please input description.'
   }
 }
