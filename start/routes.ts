@@ -37,6 +37,8 @@ import Env from '@ioc:Adonis/Core/Env'
   Route.post('/language','LanguagesController.set').middleware('auth:api')
   Route.put('/language/:Id','LanguagesController.update').middleware('auth:api')
   Route.delete('/language/:Id','LanguagesController.destroy').middleware('auth:api')
+  Route.get('/language/name','LanguagesController.languageName').middleware('auth:api')
+  Route.get('/language/level','LanguagesController.languageLevel').middleware('auth:api')
   Route.get('/linked','linkAccountsController.index').middleware('auth:api')
   Route.post('/linked','linkAccountsController.set').middleware('auth:api')
 

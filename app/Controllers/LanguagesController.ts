@@ -1,6 +1,10 @@
 import { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
 import LanguageRepository from 'App/Repositories/LanguageRepository'
 import LanguageTransformer from 'App/Transformers/LanguageTransformer'
+import LanguageNameRepository from 'App/Repositories/LanguageNameRepository'
+import LanguageNameTransformer from 'App/Transformers/LanguageNameTransformer'
+import LanguageLevelRepository from 'App/Repositories/LanguageLevelRepository'
+import LanguageLevelTransformer from 'App/Transformers/LanguageLevelTransformer'
 export default class LanguagesController {
 
   async show({ auth, transform, response }: HttpContextContract) {
@@ -8,6 +12,24 @@ export default class LanguagesController {
     try {
       const language = await LanguageRepository.query().where('client_id', user.profile_id)
       return response.resource(await transform.collection(language, LanguageTransformer))
+    } catch (e) {
+      return response.badRequest("Invalid language request")
+    }
+  }
+
+  async languageName({ transform, response }: HttpContextContract) {
+    try {
+      const language = await LanguageNameRepository.all()
+      return response.resource(await transform.collection(language, LanguageNameTransformer))
+    } catch (e) {
+      return response.badRequest("Invalid language request")
+    }
+  }
+
+  async languageLevel({ transform, response }: HttpContextContract) {
+    try {
+      const language = await LanguageLevelRepository.all()
+      return response.resource(await transform.collection(language, LanguageLevelTransformer))
     } catch (e) {
       return response.badRequest("Invalid language request")
     }
