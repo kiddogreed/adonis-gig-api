@@ -16,7 +16,7 @@ export default class PersonalInformationsController {
 
   async set({ auth, request, response }: HttpContextContract) {
     await request.validate(ProfileSetupValidator)
-    const data = request.only(['first_name', 'last_name', 'photo', 'description', 'language', 'level'])
+    const data = request.only(['first_name', 'last_name', 'photo', 'description', 'level'])
 
     try {
       const user = auth.user

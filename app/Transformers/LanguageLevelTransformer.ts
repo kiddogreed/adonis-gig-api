@@ -2,7 +2,7 @@ import { TransformerAbstract } from '@ioc:Adonis/Addons/Bumblebee'
 import LanguageLevelRepository from 'App/Repositories/LanguageLevelRepository'
 
 
-export default class LanguageNameRepository extends TransformerAbstract {
+export default class LanguageLevelTransformer extends TransformerAbstract {
   public async transform(language: LanguageLevelRepository) {
 
     return {

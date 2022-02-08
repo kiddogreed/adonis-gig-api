@@ -26,15 +26,6 @@ export default class LanguagesController {
     }
   }
 
-  async getName({ transform, response }: HttpContextContract) {
-    try {
-      const language = await LanguageNameRepository.all()
-      return response.resource(await transform.collection(language, LanguageNameTransformer))
-    } catch (e) {
-      return response.badRequest("Invalid language request")
-    }
-  }
-
   async languageLevel({ transform, response }: HttpContextContract) {
     try {
       const language = await LanguageLevelRepository.all()
