@@ -30,7 +30,8 @@
     "@rocketseat/adonis-bull",
     "@adonisjs/redis",
     "adonis-kvn-response",
-    "adonis-bumblebee-ts"
+    "adonis-bumblebee-ts",
+    "@adonisjs/ally"
   ],
   "aceProviders": [
     "@adonisjs/repl"

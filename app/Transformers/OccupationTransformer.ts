@@ -7,7 +7,7 @@ export default class OccupationTransformer extends TransformerAbstract {
 
     return {
       id: occupation.id,
-      client_it: occupation.client_id,
+      client_id: occupation.client_id,
       company: occupation.company,
       date_from: occupation.date_from,
       date_to: occupation.date_to

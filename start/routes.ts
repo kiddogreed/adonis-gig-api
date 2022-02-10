@@ -94,4 +94,9 @@ Route.put('/website/:Id/information', 'PersonalWebsitesController.update').middl
 Route.delete('/website/:Id/information', 'PersonalWebsitesController.destroy').middleware('auth:api')
 
 
+Route.get('/facebook', 'linkAccountsController.facebook').middleware('auth:api')
+Route.get('/facebook/redirect', 'linkAccountsController.redirect').middleware('auth:api')
+Route.get('/facebook/callback', 'linkAccountsController.callback').middleware('auth:api')
+
+
 

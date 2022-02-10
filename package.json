@@ -16,6 +16,7 @@
     "youch-terminal": "^2.0.1"
   },
   "dependencies": {
+    "@adonisjs/ally": "^4.1.1",
     "@adonisjs/auth": "^8.0.10",
     "@adonisjs/core": "^5.4.2",
     "@adonisjs/lucid": "^16.3.2",
@@ -24,6 +25,7 @@
     "@adonisjs/repl": "^3.1.8",
     "@rocketseat/adonis-bull": "^1.0.4",
     "addons": "^0.1.2",
+    "adonis-ally": "^1.1.2",
     "adonis-bumblebee-ts": "^1.0.0",
     "adonis-kvn-response": "^2.0.2",
     "axios": "^0.25.0",

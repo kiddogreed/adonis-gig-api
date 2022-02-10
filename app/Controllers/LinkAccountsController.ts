@@ -31,4 +31,39 @@ export default class LinkAccountsController {
       return response.badRequest('Invalid Linked Request')
     }
   }
+
+  async facebook({ response }: HttpContextContract) {
+    return response.send('<a href="/facebook/redirect"> Login with facebook </a>')
+  }
+
+  async redirect({ ally }) {
+    return ally.use('facebook').redirect((request) => {
+      request.scopes(['email'])
+    })
+  }
+
+  async callback({ ally }) {
+    try {
+      const facebook = ally.use('facebook')
+      console.log(facebook,'fb')
+      if (facebook.accessDenied()) {
+        return 'Access was denied'
+      }
+
+      if (facebook.stateMisMatch()) {
+      
+        return 'Request expired. Retry again'
+      }
+
+      if (facebook.hasError()) {
+        return facebook.getError()
+      }
+
+      const user = await facebook.user()
+      return user
+    } catch (error) {
+      console.log({ error: error.response })
+      throw error
+    }
+  }
 }
