@@ -3,13 +3,13 @@ import BaseSchema from '@ioc:Adonis/Lucid/Schema'
 export default class Occupations extends BaseSchema {
   protected tableName = 'occupations'
 
-  public async up () {
+  public async up() {
     this.schema.createTable(this.tableName, (table) => {
       table.increments('id')
       table.integer('client_id')
-      table.string('company',150)
-      table.timestamp('date_from')
-      table.timestamp('date_to')
+      table.string('company', 150)
+      table.integer('date_from')
+      table.integer('date_to')
 
       /**
        * Uses timestamptz for PostgreSQL and DATETIME2 for MSSQL
@@ -19,7 +19,7 @@ export default class Occupations extends BaseSchema {
     })
   }
 
-  public async down () {
+  public async down() {
     this.schema.dropTable(this.tableName)
   }
 }

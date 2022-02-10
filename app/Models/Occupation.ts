@@ -14,11 +14,11 @@ export default class Occupation extends BaseModel {
   @column()
   public company: string
 
-  @column.dateTime()
-  public date_from: DateTime
+  @column()
+  public date_from: number
 
-  @column.dateTime()
-  public date_to: DateTime
+  @column()
+  public date_to: number
 
   @column.dateTime({ autoCreate: true })
   public createdAt: DateTime
