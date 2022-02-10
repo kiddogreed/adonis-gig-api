@@ -11,18 +11,16 @@ export default class CertificationsController {
   }
 
   async set({ auth, request, response }: HttpContextContract) {
-    const data = request.input([`data`])
     const user = auth.user
     try {
-      for (let value of data) {
-        const certification = await CertificationRepository.create({
-          client_id: user.profile_id,
-          certificate_name: value.certificate_name,
-          certified_from: value.certified_from,
-          year: value.year
-        })
-        await certification.save();
-      }
+      const certification = await CertificationRepository.create({
+        client_id: user.profile_id,
+        certificate_name: request.input('certificate_name'),
+        certified_from: request.input('certified_from'),
+        year: request.input('year')
+      })
+      await certification.save();
+
       return response.ok('Certification information saved')
 
     } catch (e) {

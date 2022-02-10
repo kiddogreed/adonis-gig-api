@@ -40,6 +40,19 @@ import Env from '@ioc:Adonis/Core/Env'
   Route.put('/education/:Id/information', 'EducationsController.update').middleware('auth:api')
   Route.delete('/education/:Id/information', 'EducationsController.destroy').middleware('auth:api')
 
+  Route.post('/gig', 'GigsController.set').middleware('auth:api')
+  Route.get('/gig/category', 'GigsController.gigCategory').middleware('auth:api') 
+  Route.get('/gig/sub-category', 'GigsController.subCategory').middleware('auth:api')
+
+  Route.get('/gig/description', 'GigDescriptionsController.show').middleware('auth:api')
+  Route.post('/gig/description', 'GigDescriptionsController.set').middleware('auth:api') 
+  Route.put('/gig/:Id/description', 'GigDescriptionsController.update').middleware('auth:api')
+
+  Route.get('/gig/faq', 'GigFaqsController.show').middleware('auth:api')
+  Route.post('/gig/faq', 'GigFaqsController.set').middleware('auth:api')
+  Route.put('/gig/:Id/faq', 'GigFaqsController.update').middleware('auth:api')
+  Route.delete('/gig/:Id/faq', 'GigFaqsController.destroy').middleware('auth:api')
+  
   Route.get('/language','LanguagesController.show').middleware('auth:api')
   Route.post('/language','LanguagesController.set').middleware('auth:api')
   Route.put('/language/:Id','LanguagesController.update').middleware('auth:api')
@@ -49,6 +62,7 @@ import Env from '@ioc:Adonis/Core/Env'
   Route.get('/language/level','LanguagesController.languageLevel').middleware('auth:api')
   Route.get('/linked','linkAccountsController.index').middleware('auth:api')
   Route.post('/linked','linkAccountsController.set').middleware('auth:api')
+  Route.post('/linked/sample','linkAccountsController.link').middleware('auth:api')
 
   Route.get('/occupation/information', 'OccupationsController.index').middleware('auth:api')
   Route.post('/occupation/information', 'OccupationsController.set').middleware('auth:api')

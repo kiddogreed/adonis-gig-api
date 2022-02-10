@@ -19,17 +19,14 @@ export default class SkillsController {
   }
 
   async set({ auth, request, response }: HttpContextContract) {
-    const data = request.input([`data`])
     const user = auth.user
     try {
-      for (let value of data) {
         const skill = await SkillRepository.create({
           client_id: user.profile_id,
-          skill_id: value.skill_id,
-          level: value.level
+          skill_id: request.input('skill_id'),
+          level: request.input('level')
         })
         await skill.save();
-      }
       return response.ok('Skill information saved')
     }
     catch (e) {

@@ -28,6 +28,8 @@
     "adonis-kvn-response": "^2.0.2",
     "axios": "^0.25.0",
     "bcryptjs": "^2.4.3",
+    "linkify-it": "^3.0.3",
+    "linkifyjs": "^3.0.5",
     "luxon": "^2.3.0",
     "mjml": "^4.11.0",
     "mysql": "^2.18.1",

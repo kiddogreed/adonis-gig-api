@@ -11,18 +11,16 @@ export default class OccupationsController {
   }
 
   async set({ auth, request, response }: HttpContextContract) {
-    const data = request.input([`data`])
     const user = auth.user
     try {
-      for (let value of data) {
-        const occupation = await OccupationRepository.create({
-          client_id: user.profile_id,
-          company: value.company,
-          date_from: value.date_from,
-          date_to: value.date_to,
-        })
-        await occupation.save();
-      }
+      const occupation = await OccupationRepository.create({
+        client_id: user.profile_id,
+        company: request.input('company'),
+        date_from: request.input('date_from'),
+        date_to: request.input('date_to')
+      })
+      await occupation.save();
+
       return response.ok('Occupation information saved')
 
     } catch (e) {
