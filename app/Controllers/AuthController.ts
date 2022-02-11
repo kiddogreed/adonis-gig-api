@@ -20,10 +20,17 @@ export default class AuthController {
           "Invalid email/username or password"
         );
       }
+      if (user.two_factor_auth == 1) {
+        return response.data(
+          user.profile_type = user.profile_type,
+          user.two_factor_auth = user.two_factor_auth,
+        );
+      }
+
       const token = await auth.use('api').attempt(user.email, data.password)
       user.logged_in_at = DateTime.now()
       await user.save();
-      
+
       return response.data({
         'token': token.token,
         'user': {
@@ -41,7 +48,7 @@ export default class AuthController {
     }
   }
 
-  async logout ({auth, response}: HttpContextContract) {
+  async logout({ auth, response }: HttpContextContract) {
     await auth.use('api').revoke()
 
     return response.ok('You have successfully logged out.')

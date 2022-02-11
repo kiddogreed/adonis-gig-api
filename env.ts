@@ -36,11 +36,13 @@ export default Env.rules({
 
 	APP_FRONTEND_URL: Env.schema.string(),
 
+	SESSION_DRIVER: Env.schema.string(),
+
 	DOC_LINK_URL: Env.schema.string(),
 	DOC_LINK_KEY: Env.schema.string(),
 
-	// GITHUB_CLIENT_ID: Env.schema.string(),
-	// GITHUB_CLIENT_SECRET: Env.schema.string(),
+	GITHUB_CLIENT_ID: Env.schema.string(),
+	GITHUB_CLIENT_SECRET: Env.schema.string(),
 
 	// GOOGLE_CLIENT_ID: Env.schema.string(),
 	// GOOGLE_CLIENT_SECRET: Env.schema.string(),
@@ -54,7 +56,7 @@ export default Env.rules({
 	// DISCORD_CLIENT_ID: Env.schema.string(),
 	// DISCORD_CLIENT_SECRET: Env.schema.string(),
 
-	FACEBOOK_CLIENT_ID: Env.schema.string(),
-	FACEBOOK_CLIENT_SECRET: Env.schema.string(),
+	// FACEBOOK_CLIENT_ID: Env.schema.string(),
+	// FACEBOOK_CLIENT_SECRET: Env.schema.string(),
 
 })

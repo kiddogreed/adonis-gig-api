@@ -1,15 +1,16 @@
 import BaseSchema from '@ioc:Adonis/Lucid/Schema'
 
-export default class Languages extends BaseSchema {
-  protected tableName = 'languages'
+export default class GigMultipleChoices extends BaseSchema {
+  protected tableName = 'gig_multiple_choices'
 
   public async up () {
     this.schema.createTable(this.tableName, (table) => {
       table.increments('id')
-      table.integer('client_id')
-      table.string('language_name',50),
-      table.string('level',40)
-
+      table.integer('requirement_id')
+      table.string('option',150)
+      /**
+       * Uses timestamptz for PostgreSQL and DATETIME2 for MSSQL
+       */
       table.timestamp('created_at', { useTz: true })
       table.timestamp('updated_at', { useTz: true })
     })

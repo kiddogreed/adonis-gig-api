@@ -27,7 +27,8 @@ const allyConfig: AllyConfig = {
 		driver: 'github',
 		clientId: Env.get('GITHUB_CLIENT_ID'),
 		clientSecret: Env.get('GITHUB_CLIENT_SECRET'),
-		callbackUrl: `http://localhost:${Env.get('PORT')}/discord/callback`,
+		callbackUrl: `http://localhost:${Env.get('PORT')}/github`,
+		scopes: ['user:email']
 	},
 	/*
 	|--------------------------------------------------------------------------

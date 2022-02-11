@@ -1,5 +1,7 @@
+
 import { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
 import LinkAcccountRepository from 'App/Repositories/LinkAccountRepository'
+import LinkAccountRepository from 'App/Repositories/LinkAccountRepository'
 
 export default class LinkAccountsController {
 
@@ -32,38 +34,63 @@ export default class LinkAccountsController {
     }
   }
 
-  async facebook({ response }: HttpContextContract) {
-    return response.send('<a href="/facebook/redirect"> Login with facebook </a>')
+  async redirect({ ally }) {
+    return ally.use('github').redirect()
   }
 
-  async redirect({ ally }) {
-    return ally.use('facebook').redirect((request) => {
-      request.scopes(['email'])
-    })
-  }
+  // async callback({ ally }) {
+  //   const github = ally.use('github')
+  //   console.log(github,'sample')
+  //   /**
+  //    * User has explicitly denied the login request
+  //    */
+  //   if (github.accessDenied()) {
+  //     return 'Access was denied'
+  //   }
+
+  //   /**
+  //    * Unable to verify the CSRF state
+  //    */
+  //   if (github.stateMisMatch()) {
+  //     return 'Request expired. Retry again'
+  //   }
+
+  //   if (github.hasError()) {
+  //     return github.getError()
+  //   }
+
+  //   const user = await github.user()
+  //   console.log(user,'user')
+  // }
 
   async callback({ ally }) {
-    try {
-      const facebook = ally.use('facebook')
-      console.log(facebook,'fb')
-      if (facebook.accessDenied()) {
-        return 'Access was denied'
-      }
+    const github = ally.use('github')
 
-      if (facebook.stateMisMatch()) {
-      
-        return 'Request expired. Retry again'
-      }
+    /**
+     * Managing error states here
+     */
 
-      if (facebook.hasError()) {
-        return facebook.getError()
-      }
+    const githubUser = await github.user()
 
-      const user = await facebook.user()
-      return user
-    } catch (error) {
-      console.log({ error: error.response })
-      throw error
-    }
+    console.log(githubUser.email,'here')
+
+    /**
+     * Find the user by email or create
+     * a new one
+     */
+    // const link = await LinkAccountRepository.firstOrCreate({
+    //   email: githubUser.email,
+    // }, {
+    //   name: githubUser.name,
+    //   token: githubUser.token.token,
+    //   verified: githubUser.emailVerificationState === 'verified'
+    // })
+
+    // /**
+    //  * Login user using the web guard
+    //  */
+    // await auth.use('api').login(user)
   }
+
+
 }
