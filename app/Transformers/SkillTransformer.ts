@@ -8,7 +8,8 @@ export default class SkillNameTransformer extends TransformerAbstract {
     return {
       id: skill.id,
       client_id: skill.client_id,
-      level: skill.level,
+      skill_id: skill.skill_id,
+      skill_name: skill.skill_name
     }
   }
 }

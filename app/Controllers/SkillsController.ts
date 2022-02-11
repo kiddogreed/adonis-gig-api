@@ -1,4 +1,3 @@
-import { Response } from '@adonisjs/core/build/standalone'
 import SkillRepository from 'App/Repositories/SkillRepository'
 import SkillTransformer from 'App/Transformers/SkillTransformer'
 import { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
@@ -20,13 +19,16 @@ export default class SkillsController {
 
   async set({ auth, request, response }: HttpContextContract) {
     const user = auth.user
+    const data = request.input([`data`])
     try {
+      for(let value of data){
         const skill = await SkillRepository.create({
           client_id: user.profile_id,
-          skill_id: request.input('skill_id'),
-          level: request.input('level')
-        })
+          skill_id: value.skill_id,
+          skill_name: value.skill_name
+        });
         await skill.save();
+      }
       return response.ok('Skill information saved')
     }
     catch (e) {

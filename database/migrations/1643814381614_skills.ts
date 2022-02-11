@@ -8,7 +8,7 @@ export default class Skills extends BaseSchema {
       table.increments('id')
       table.integer('client_id')
       table.integer('skill_id')
-      table.string('level')
+      table.string('skill_name',75)
 
       /**
        * Uses timestamptz for PostgreSQL and DATETIME2 for MSSQL
