@@ -1,7 +1,7 @@
 import { DateTime } from 'luxon'
 import { BaseModel, column } from '@ioc:Adonis/Lucid/Orm'
 
-export default class Language extends BaseModel {
+export default class GigRequirement extends BaseModel {
   @column({ isPrimary: true })
   public id: number
 
@@ -9,10 +9,7 @@ export default class Language extends BaseModel {
   public client_id: number
 
   @column()
-  public level: string
-
-  @column()
-  public language_name: string
+  public question: string
 
   @column.dateTime({ autoCreate: true })
   public createdAt: DateTime

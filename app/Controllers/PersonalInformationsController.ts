@@ -3,6 +3,7 @@ import ClientRepository from 'App/Repositories/ClientRepository'
 import { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
 import PersonalTransformer from 'App/Transformers/PersonalTransformer'
 import ProfileSetupValidator from 'App/Validators/ProfileSetupValidator'
+import PersonalWebsiteRepository from 'App/Repositories/PersonalWebsiteRepository'
 
 export default class PersonalInformationsController {
 
@@ -14,7 +15,7 @@ export default class PersonalInformationsController {
 
   }
 
-  async set({ auth, request, response }: HttpContextContract) {
+  async set({ auth, request, web_req, response }: HttpContextContract) {
     await request.validate(ProfileSetupValidator)
     const data = request.only(['first_name', 'last_name', 'photo', 'description', 'level'])
 
@@ -27,6 +28,29 @@ export default class PersonalInformationsController {
         client.description = data.description
       await client?.save()
 
+      return response.ok("Personal information successfully saved")
+    } catch (e) {
+      console.log(e)
+      return response.badRequest('Invalid Profile Request')
+    }
+  }
+
+  async update({ request, response, params }: HttpContextContract) {
+    const data = request.only(['first_name', 'last_name', 'photo', 'description', 'level', 'website'])
+
+    if (data.website) {
+      const website = await PersonalWebsiteRepository.findByOrFail('id', params.Id)
+      website.website = data.website
+      await website?.save()
+      return response.ok("Website information successfully saved")
+    }
+    try {
+      const client = await ClientRepository.findByOrFail('id', params.Id)
+      client.first_name = data.first_name,
+        client.last_name = data.last_name,
+        client.photo = data.photo,
+        client.description = data.description
+      await client?.save()
       return response.ok("Personal information successfully saved")
     } catch (e) {
       console.log(e)

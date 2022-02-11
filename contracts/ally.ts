@@ -6,26 +6,14 @@
  */
 
 declare module '@ioc:Adonis/Addons/Ally' {
-	interface SocialProviders {
-		github: {
-			config: GithubDriverConfig
-			implementation: GithubDriverContract
-		}
-    google: {
-      config: GoogleDriverConfig
-      implementation: GoogleDriverContract
+  interface SocialProviders {
+    github: {
+      config: GithubDriverConfig
+      implementation: GithubDriverContract
     }
-		twitter: {
-			config: TwitterDriverConfig
-			implementation: TwitterDriverContract
-		}
-    linkedin: {
-      config: LinkedInDriverConfig
-      implementation: LinkedInDriverContract
+    twitter: {
+      config: TwitterDriverConfig
+      implementation: TwitterDriverContract
     }
-    facebook: {
-      config: FacebookDriverConfig
-      implementation: FacebookDriverContract
-    }
-	}
+  }
 }

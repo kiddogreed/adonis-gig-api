@@ -34,7 +34,8 @@
       "@adonisjs/redis",
       "adonis-kvn-response",
       "adonis-bumblebee-ts",
-      "@adonisjs/ally"
+      "@adonisjs/ally",
+      "@adonisjs/session"
     ]
   }
 }

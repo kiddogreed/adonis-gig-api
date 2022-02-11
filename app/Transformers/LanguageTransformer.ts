@@ -8,8 +8,8 @@ export default class LanguageTransformer extends TransformerAbstract {
     return {
       id: language.id,
       client: language.client_id,
-      level_id: language.level_id,
-      language_id: language.language_id
+      level: language.level,
+      language: language.language_name
     }
   }
 }

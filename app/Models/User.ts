@@ -1,9 +1,9 @@
 import { DateTime } from 'luxon'
 import Hash from '@ioc:Adonis/Core/Hash'
-import { BaseModel, column ,beforeSave} from '@ioc:Adonis/Lucid/Orm'
+import { BaseModel, column, beforeSave } from '@ioc:Adonis/Lucid/Orm'
 
 export default class User extends BaseModel {
-  static get table (){
+  static get table() {
     return ('users')
   }
   @column({ isPrimary: true })
@@ -11,10 +11,16 @@ export default class User extends BaseModel {
 
   @column()
   public profile_id: number
+  
+  @column()
+  public two_factor_auth: number
+
+  @column()
+  public two_factor_secret: string
 
   @column()
   public profile_type: string
-  
+
   @column()
   public email: string
 

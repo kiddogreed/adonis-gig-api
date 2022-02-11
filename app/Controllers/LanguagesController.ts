@@ -1,10 +1,6 @@
 import { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
 import LanguageRepository from 'App/Repositories/LanguageRepository'
 import LanguageTransformer from 'App/Transformers/LanguageTransformer'
-import LanguageNameRepository from 'App/Repositories/LanguageNameRepository'
-import LanguageNameTransformer from 'App/Transformers/LanguageNameTransformer'
-import LanguageLevelRepository from 'App/Repositories/LanguageLevelRepository'
-import LanguageLevelTransformer from 'App/Transformers/LanguageLevelTransformer'
 export default class LanguagesController {
 
   async show({ auth, transform, response }: HttpContextContract) {
@@ -17,31 +13,13 @@ export default class LanguagesController {
     }
   }
 
-  async languageName({ transform, response }: HttpContextContract) {
-    try {
-      const language = await LanguageNameRepository.all()
-      return response.resource(await transform.collection(language, LanguageNameTransformer))
-    } catch (e) {
-      return response.badRequest("Invalid language request")
-    }
-  }
-
-  async languageLevel({ transform, response }: HttpContextContract) {
-    try {
-      const language = await LanguageLevelRepository.all()
-      return response.resource(await transform.collection(language, LanguageLevelTransformer))
-    } catch (e) {
-      return response.badRequest("Invalid language request")
-    }
-  }
-
   async set({ auth, request, response }: HttpContextContract) {
     const user = auth.user
     try {
       const language = await LanguageRepository.create({
         client_id: user?.profile_id,
-        level_id: request.input('level_id'),
-        language_id: request.input('language_id')
+        level: request.input('level'),
+        language_name: request.input('language')
       })
       await language.save();
 
@@ -55,8 +33,8 @@ export default class LanguagesController {
   async update({ params, request, response }: HttpContextContract) {
     try {
       const language = await LanguageRepository.find(params.Id)
-      language.level_id = request.input('level_id'),
-        language.language_id = request.input('language_id')
+      language.level = request.input('level'),
+        language.language_name = request.input('language')
       await language?.save()
 
       return response.ok('Language successfully updated')
