@@ -15,6 +15,12 @@ export default class Occupation extends BaseModel {
   public company: string
 
   @column()
+  public job_title: string
+
+  @column()
+  public job_description: string
+
+  @column()
   public date_from: number
 
   @column()

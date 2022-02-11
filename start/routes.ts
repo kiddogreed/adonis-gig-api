@@ -78,7 +78,7 @@ Route.delete('/occupation/:Id', 'OccupationsController.destroy').middleware('aut
 
 Route.get('/profile', 'PersonalInformationsController.show').middleware('auth:api')
 Route.post('/profile', 'PersonalInformationsController.set').middleware('auth:api')
-Route.put('/profile/:Id', 'PersonalInformationsController.update').middleware('auth:api')
+Route.put('/profile', 'PersonalInformationsController.update').middleware('auth:api')
 Route.put('/profile/type', 'ProfileSetupController.profileSetupType').middleware('auth:api')
 
 Route.get('/security', 'SecurityController.show').middleware('auth:api')
@@ -96,12 +96,6 @@ Route.post('two_factor/enable','TwoFactorAuthenticationsController.enable').midd
 Route.post('two_factor/disable','TwoFactorAuthenticationsController.disable').middleware('auth:api');
 Route.post('two_factor/verify','TwoFactorAuthenticationsController.verify').middleware('auth:api');
 Route.post('two_factor/auth','TwoFactorAuthenticationsController.authenticate').middleware('auth:api');
-
-Route.get('/website', 'PersonalWebsitesController.show').middleware('auth:api')
-Route.post('/website', 'PersonalWebsitesController.set').middleware('auth:api')
-Route.put('/website/:Id', 'PersonalWebsitesController.update').middleware('auth:api')
-Route.delete('/website/:Id', 'PersonalWebsitesController.destroy').middleware('auth:api')
-
 
 Route.get('/github/redirect', 'linkAccountsController.redirect').middleware('auth:api')
 //Route.get('/facebook/authenticated', 'linkAccountsController.redirect').middleware('auth:api')
