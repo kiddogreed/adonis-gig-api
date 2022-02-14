@@ -49,40 +49,26 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 exports.__esModule = true;
-var Schema_1 = require("@ioc:Adonis/Lucid/Schema");
-var Skills = /** @class */ (function (_super) {
-    __extends(Skills, _super);
-    function Skills() {
-        var _this = _super !== null && _super.apply(this, arguments) || this;
-        _this.tableName = 'skills';
-        return _this;
+var Bumblebee_1 = require("@ioc:Adonis/Addons/Bumblebee");
+var EducationTransformer = /** @class */ (function (_super) {
+    __extends(EducationTransformer, _super);
+    function EducationTransformer() {
+        return _super !== null && _super.apply(this, arguments) || this;
     }
-    Skills.prototype.up = function () {
+    EducationTransformer.prototype.transform = function (education) {
         return __awaiter(this, void 0, void 0, function () {
             return __generator(this, function (_a) {
-                this.schema.createTable(this.tableName, function (table) {
-                    table.increments('id');
-                    table.integer('client_id');
-                    table.integer('skill_id');
-                    table.string('skill_name', 75);
-                    /**
-                     * Uses timestamptz for PostgreSQL and DATETIME2 for MSSQL
-                     */
-                    table.timestamp('created_at', { useTz: true });
-                    table.timestamp('updated_at', { useTz: true });
-                });
-                return [2 /*return*/];
+                return [2 /*return*/, {
+                        id: education.id,
+                        client_id: education.client_id,
+                        country: education.country,
+                        school: education.school,
+                        degree: education.degree,
+                        year_graduated: education.year_graduated
+                    }];
             });
         });
     };
-    Skills.prototype.down = function () {
-        return __awaiter(this, void 0, void 0, function () {
-            return __generator(this, function (_a) {
-                this.schema.dropTable(this.tableName);
-                return [2 /*return*/];
-            });
-        });
-    };
-    return Skills;
-}(Schema_1["default"]));
-exports["default"] = Skills;
+    return EducationTransformer;
+}(Bumblebee_1.TransformerAbstract));
+exports["default"] = EducationTransformer;

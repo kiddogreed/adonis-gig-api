@@ -11,7 +11,7 @@ export default class EducationTransformer extends TransformerAbstract {
       country: education.country,
       school: education.school,
       degree: education.degree,
-      year_gratuated: education.year_graduated
+      year_graduated: education.year_graduated
     }
   }
 }
