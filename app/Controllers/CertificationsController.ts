@@ -1,7 +1,7 @@
 import { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
+import CerticationValidator from 'App/Validators/CertificationValidator'
 import CertificationRepository from 'App/Repositories/CertificationRepository'
 import CertificationTransformer from 'App/Transformers/CertificationTransformer'
-
 
 export default class CertificationsController {
   async index({ auth, response, transform }: HttpContextContract) {
@@ -11,6 +11,7 @@ export default class CertificationsController {
   }
 
   async set({ auth, request, response }: HttpContextContract) {
+    await request.validate(CerticationValidator)
     const user = auth.user
     try {
       const certification = await CertificationRepository.create({
@@ -29,6 +30,7 @@ export default class CertificationsController {
   }
 
   async update({ request, response, params }: HttpContextContract) {
+    await request.validate(CerticationValidator)
     try {
       const certifaction = await CertificationRepository.findByOrFail('id', params.Id)
       certifaction.certificate_name = request.input('certificate_name')

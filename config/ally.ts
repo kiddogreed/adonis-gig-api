@@ -27,8 +27,8 @@ const allyConfig: AllyConfig = {
 		driver: 'github',
 		clientId: Env.get('GITHUB_CLIENT_ID'),
 		clientSecret: Env.get('GITHUB_CLIENT_SECRET'),
-		callbackUrl: `http://localhost:${Env.get('PORT')}/github`,
-		scopes: ['user:email']
+		callbackUrl: `${Env.get('APP_FRONTEND_URL')}/github`,
+	
 	},
 	/*
 	|--------------------------------------------------------------------------
@@ -39,7 +39,7 @@ const allyConfig: AllyConfig = {
 		driver: 'google',
 		clientId: Env.get('GOOGLE_CLIENT_ID'),
 		clientSecret: Env.get('GOOGLE_CLIENT_SECRET'),
-		callbackUrl: `http://localhost:${Env.get('PORT')}/google/callback`
+		callbackUrl: `http://127.0.0.1:3333/google/callback`
 	},
 	/*
 	|--------------------------------------------------------------------------
@@ -50,7 +50,7 @@ const allyConfig: AllyConfig = {
 		driver: 'twitter',
 		clientId: Env.get('TWITTER_CLIENT_ID'),
 		clientSecret: Env.get('TWITTER_CLIENT_SECRET'),
-		callbackUrl: `http://localhost:${Env.get('PORT')}/twitter/callback`,
+		callbackUrl: `${Env.get('APP_FRONTEND_URL')}/twitter/callback`,
 	},
 	/*
 	|--------------------------------------------------------------------------
@@ -61,7 +61,7 @@ const allyConfig: AllyConfig = {
 		driver: 'linkedin',
 		clientId: Env.get('LINKEDIN_CLIENT_ID'),
 		clientSecret: Env.get('LINKEDIN_CLIENT_SECRET'),
-		callbackUrl: `http://localhost:${Env.get('PORT')}/linkedin/callback`,
+		callbackUrl: `${Env.get('APP_FRONTEND_URL')}/linkedin/callback`,
 	},
 	/*
 	|--------------------------------------------------------------------------
@@ -72,7 +72,7 @@ const allyConfig: AllyConfig = {
 		driver: 'facebook',
 		clientId: Env.get('FACEBOOK_CLIENT_ID'),
 		clientSecret: Env.get('FACEBOOK_CLIENT_SECRET'),
-		callbackUrl: `http://localhost:${Env.get('PORT')}/facebook/callback`,
+		callbackUrl: `${Env.get('APP_FRONTEND_URL')}/facebook/callback`,
 	},
 }
 
