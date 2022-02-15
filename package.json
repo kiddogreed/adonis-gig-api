@@ -33,6 +33,7 @@
     "adonis-kvn-response": "^2.0.2",
     "axios": "^0.25.0",
     "bcryptjs": "^2.4.3",
+    "google-auth-library": "^7.12.0",
     "linkify-it": "^3.0.3",
     "linkifyjs": "^3.0.5",
     "luxon": "^2.3.0",
@@ -43,6 +44,7 @@
     "proxy-addr": "^2.0.7",
     "randomstring": "^1.2.2",
     "reflect-metadata": "^0.1.13",
+    "slugify": "^1.6.5",
     "source-map-support": "^0.5.21"
   },
   "description": "",
