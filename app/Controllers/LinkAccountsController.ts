@@ -34,63 +34,32 @@ export default class LinkAccountsController {
     }
   }
 
-  async redirect({ ally }) {
-    return ally.use('github').redirect()
+  async redirect({ ally, params }) {
+    return ally.use('google').redirect()
   }
 
-  // async callback({ ally }) {
-  //   const github = ally.use('github')
-  //   console.log(github,'sample')
-  //   /**
-  //    * User has explicitly denied the login request
-  //    */
-  //   if (github.accessDenied()) {
-  //     return 'Access was denied'
-  //   }
-
-  //   /**
-  //    * Unable to verify the CSRF state
-  //    */
-  //   if (github.stateMisMatch()) {
-  //     return 'Request expired. Retry again'
-  //   }
-
-  //   if (github.hasError()) {
-  //     return github.getError()
-  //   }
-
-  //   const user = await github.user()
-  //   console.log(user,'user')
-  // }
-
-  async callback({ ally }) {
-    const github = ally.use('github')
-
-    /**
-     * Managing error states here
-     */
-
-    const githubUser = await github.user()
-
-    console.log(githubUser.email,'here')
-
-    /**
-     * Find the user by email or create
-     * a new one
-     */
-    // const link = await LinkAccountRepository.firstOrCreate({
-    //   email: githubUser.email,
-    // }, {
-    //   name: githubUser.name,
-    //   token: githubUser.token.token,
-    //   verified: githubUser.emailVerificationState === 'verified'
-    // })
-
-    // /**
-    //  * Login user using the web guard
-    //  */
-    // await auth.use('api').login(user)
+  async callback({ally,auth}){
+    const google = ally.use('google')
+    console.log(google,'here')
+  
+    if (google.accessDenied()) {
+      return 'Access was denied'
+    }
+  
+    if (google.stateMisMatch()) {
+      return 'Request expired. Retry again'
+    }
+  
+    if (google.hasError()) {
+      console.log(google.getError)
+      return google.getError()
+    }
+    const user = await google.user()
+    console.log(user)
   }
+  
 
+
+  
 
 }

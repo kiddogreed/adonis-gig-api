@@ -97,9 +97,9 @@ Route.post('two_factor/disable','TwoFactorAuthenticationsController.disable').mi
 Route.post('two_factor/verify','TwoFactorAuthenticationsController.verify').middleware('auth:api');
 Route.post('two_factor/auth','TwoFactorAuthenticationsController.authenticate').middleware('auth:api');
 
-Route.get('/github/redirect', 'linkAccountsController.redirect').middleware('auth:api')
+Route.get('/google/redirect', 'linkAccountsController.redirect').middleware('auth:api')
 //Route.get('/facebook/authenticated', 'linkAccountsController.redirect').middleware('auth:api')
-Route.get('/github/authenticated', 'linkAccountsController.callback').middleware('auth:api')
+Route.get('/google/callback', 'linkAccountsController.callback').middleware('auth:api')
 
 
 

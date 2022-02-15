@@ -4,7 +4,7 @@
  * Feel free to let us know via PR, if you find something broken in this config
  * file.
  */
-
+import Env from '@ioc:Adonis/Core/Env'
 import { CorsConfig } from '@ioc:Adonis/Core/Cors'
 
 const corsConfig: CorsConfig = {
@@ -44,8 +44,8 @@ const corsConfig: CorsConfig = {
   |                     one of the above values.
   |
   */
-  origin: 'http://localhost:3011,https://stg-gig.doconchain.io,https://gig.doconchain.io,https://stg-gig-mobile.doconchain.io',
-
+  // origin: 'http://localhost:3011,https://stg-gig.doconchain.io,https://gig.doconchain.io//https://stg-gig-mobile.doconchain.io',
+  origin: Env.get("APP_ALLOWED_ORIGINS").split(","),
   /*
   |--------------------------------------------------------------------------
   | Methods
