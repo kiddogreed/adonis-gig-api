@@ -1,7 +1,10 @@
 import { DateTime } from 'luxon'
-import { BaseModel, column } from '@ioc:Adonis/Lucid/Orm'
+import { BaseModel, column} from '@ioc:Adonis/Lucid/Orm'
 
 export default class Client extends BaseModel {
+  static get table (){
+    return ('clients')
+  }
   @column({ isPrimary: true })
   public id: number
 
@@ -23,6 +26,18 @@ export default class Client extends BaseModel {
   @column()
   public photo: string
 
+  @column()
+  public description: string
+
+  @column()
+  public language: string
+
+  @column()
+  public level: string
+
+  @column()
+  public contact: string
+
   @column.date()
   public birth_date: DateTime
 
@@ -34,4 +49,5 @@ export default class Client extends BaseModel {
 
   @column.dateTime({ autoCreate: true, autoUpdate: true })
   public updatedAt: DateTime
+
 }

@@ -29,7 +29,8 @@
     "./providers/LegacyHasherProvider",
     "@rocketseat/adonis-bull",
     "@adonisjs/redis",
-    "adonis-kvn-response"
+    "adonis-kvn-response",
+    "adonis-bumblebee-ts"
   ],
   "aceProviders": [
     "@adonisjs/repl"

@@ -6,7 +6,7 @@ export default class tokens extends BaseSchema {
   public async up() {
     this.schema.createTable(this.tableName, (table) => {
       table.increments('id')
-      table.integer('user_id').notNullable()
+      table.integer('user_id')
       table.string('code', 255).notNullable()
       table.string('type', 75).notNullable()
       table.boolean('revoked').defaultTo(false)
