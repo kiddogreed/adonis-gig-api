@@ -36,9 +36,9 @@ export default class OccupationsController {
     try {
       const occupation = await OccupationRepository.findByOrFail('id', params.Id)
       occupation.company = request.input('company')
-      occupation.job_title =request.input('job_title'),
-      occupation.job_description = request.input('job_description'),
-      occupation.date_from = request.input('date_from')
+      occupation.job_title = request.input('job_title'),
+        occupation.job_description = request.input('job_description'),
+        occupation.date_from = request.input('date_from')
       occupation.date_to = request.input('date_to')
       await occupation?.save()
 

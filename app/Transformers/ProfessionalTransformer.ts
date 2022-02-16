@@ -6,18 +6,18 @@ import OccupationRepository from 'App/Repositories/OccupationRepository'
 import CertificationRepository from 'App/Repositories/CertificationRepository'
 
 export default class PersonalTransformer extends TransformerAbstract {
-	public async transform(info: ClientRepository) {
-		const skill = await SkillRepository.query().where('client_id', info.id)
-		const education = await EducationRepository.query().where('client_id', info.id)
-		const occupation = await OccupationRepository.query().where('client_id', info.id)
-		const certification = await CertificationRepository.query().where('client_id', info.id)
-		
-		return {
-			skill,
-			education,
-			occupation,
-			certification
-		}
-		
-	}
+  public async transform(info: ClientRepository) {
+    const skill = await SkillRepository.query().where('client_id', info.id)
+    const education = await EducationRepository.query().where('client_id', info.id)
+    const occupation = await OccupationRepository.query().where('client_id', info.id)
+    const certification = await CertificationRepository.query().where('client_id', info.id)
+
+    return {
+      skill,
+      education,
+      occupation,
+      certification
+    }
+
+  }
 }
