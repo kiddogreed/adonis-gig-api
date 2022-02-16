@@ -27,7 +27,7 @@ const allyConfig: AllyConfig = {
 		driver: 'github',
 		clientId: Env.get('GITHUB_CLIENT_ID'),
 		clientSecret: Env.get('GITHUB_CLIENT_SECRET'),
-		callbackUrl: `${Env.get('APP_FRONTEND_URL')}/github`,
+		callbackUrl: `${Env.get('APP_FRONTEND_URL')}/github/callback`,
 	
 	},
 	/*
@@ -56,14 +56,6 @@ const allyConfig: AllyConfig = {
 	|--------------------------------------------------------------------------
 	| LinkedIn driver
 	|--------------------------------------------------------------------------
-	*/
-	linkedin: {
-		driver: 'linkedin',
-		clientId: Env.get('LINKEDIN_CLIENT_ID'),
-		clientSecret: Env.get('LINKEDIN_CLIENT_SECRET'),
-		callbackUrl: `${Env.get('APP_FRONTEND_URL')}/linkedin/callback`,
-	},
-	/*
 	|--------------------------------------------------------------------------
 	| Facebook driver
 	|--------------------------------------------------------------------------
@@ -73,6 +65,13 @@ const allyConfig: AllyConfig = {
 		clientId: Env.get('FACEBOOK_CLIENT_ID'),
 		clientSecret: Env.get('FACEBOOK_CLIENT_SECRET'),
 		callbackUrl: `${Env.get('APP_FRONTEND_URL')}/facebook/callback`,
+	},
+
+	stackoverflow: {
+		driver: 'stackoverflow',
+		clientId: Env.get('STACKOVERFLOW_CLIENT_ID'),
+		clientSecret: Env.get('STACKOVERFLOW_CLIENT_SERCRET'),
+		callbackUrl: `${Env.get('APP_FRONTEND_URL')}/stockoverflow/callback`,
 	},
 }
 

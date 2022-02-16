@@ -79,6 +79,7 @@ Route.delete('/occupation/:Id', 'OccupationsController.destroy').middleware('aut
 Route.get('/profile', 'PersonalInformationsController.show').middleware('auth:api')
 Route.post('/profile', 'PersonalInformationsController.set').middleware('auth:api')
 Route.put('/profile', 'PersonalInformationsController.update').middleware('auth:api')
+Route.get('/profile/status', 'ProfileStatusesController.show').middleware('auth:api')
 Route.put('/profile/type', 'ProfileSetupController.profileSetupType').middleware('auth:api')
 
 Route.get('/security', 'SecurityController.show').middleware('auth:api')
@@ -97,9 +98,17 @@ Route.post('two_factor/disable','TwoFactorAuthenticationsController.disable').mi
 Route.post('two_factor/verify','TwoFactorAuthenticationsController.verify').middleware('auth:api');
 Route.post('two_factor/auth','TwoFactorAuthenticationsController.authenticate').middleware('auth:api');
 
-Route.get('/google/redirect', 'linkAccountsController.redirect').middleware('auth:api')
-//Route.get('/facebook/authenticated', 'linkAccountsController.redirect').middleware('auth:api')
-Route.get('/google/callback', 'linkAccountsController.callback').middleware('auth:api')
+Route.get('/:social', 'linkAccountsController.social')
+Route.get('/google/callback', 'linkAccountsController.google')
+Route.get('/github/callback', 'linkAccountsController.github')
+Route.get('/twitter/callback', 'linkAccountsController.twitter')
+Route.get('/facebook/callback', 'linkAccountsController.twitter')
+Route.get('/stackoverflow/callback', 'linkAccountsController.stackoverflow')
+
+
+
+
+
 
 
 

@@ -1,8 +1,9 @@
 import { DateTime } from 'luxon'
-import { BaseModel, column } from '@ioc:Adonis/Lucid/Orm'
+import { BaseModel, column, hasMany, HasMany } from '@ioc:Adonis/Lucid/Orm'
+import ProfileStatusRepository from 'App/Repositories/ProfileStatusRepository'
 
 export default class Occupation extends BaseModel {
-  static get table (){
+  static get table() {
     return ('occupations')
   }
   @column({ isPrimary: true })
@@ -31,4 +32,5 @@ export default class Occupation extends BaseModel {
 
   @column.dateTime({ autoCreate: true, autoUpdate: true })
   public updatedAt: DateTime
+
 }
