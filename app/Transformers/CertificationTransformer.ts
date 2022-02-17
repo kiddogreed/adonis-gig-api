@@ -7,7 +7,7 @@ export default class CertificationTransformer extends TransformerAbstract {
 
     return {
       id: certificate.id,
-      client_it: certificate.client_id,
+      client_id: certificate.client_id,
       certificate_name: certificate.certificate_name,
       certified_from: certificate.certified_from,
       year: certificate.year

@@ -7,8 +7,8 @@ export default class Languages extends BaseSchema {
     this.schema.createTable(this.tableName, (table) => {
       table.increments('id')
       table.integer('client_id')
-      table.integer('level_id'),
-      table.integer('language_id')
+      table.string('language_name',50),
+      table.string('level',40)
 
       table.timestamp('created_at', { useTz: true })
       table.timestamp('updated_at', { useTz: true })

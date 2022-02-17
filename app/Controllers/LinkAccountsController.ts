@@ -1,34 +1,67 @@
-import { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
+
 import LinkAcccountRepository from 'App/Repositories/LinkAccountRepository'
 
 export default class LinkAccountsController {
 
-  async index({ auth, response }: HttpContextContract) {
-    const user = auth.user
-    try {
-      const linkAccount = await LinkAcccountRepository.findBy('client_id', user?.profile_id)
-      console.log(linkAccount?.email)
-
-      return response.data(linkAccount)
-
-    } catch (e) {
-      console.log(e)
-      return response.badRequest('Invalid Linked Request')
-    }
+  async social({ ally, params }) {
+    return ally.use(params.social).redirect()
   }
 
-  async set({ auth, request, response }: HttpContextContract) {
-    const user = auth.user
-    try {
-      const linkAccount = await LinkAcccountRepository.create({
-        client_id: user.profile_id,
-        email: request.input('email'),
-        presence_name: request.input('presence_name'),
-      });
-      await linkAccount.save();
-      return response.ok('Linked account successfully saved')
-    } catch (e) {
-      return response.badRequest('Invalid Linked Request')
-    }
+  async google({ ally, auth }) {
+    const connection = ally.use('google')
+    const connectionUser = await connection.user()
+
+    const user = await LinkAcccountRepository.firstOrCreate({
+      email: connectionUser.email,
+    }, {
+      name: connectionUser.name,
+      token: connectionUser.token.token,
+      verified: connectionUser.emailVerificationState === 'verified'
+    })
+    await auth.use('api').login(user)
   }
+
+  async github({ ally, auth }) {
+    const connection = ally.use('github')
+    const connectionUser = await connection.user()
+
+    const user = await LinkAcccountRepository.firstOrCreate({
+      email: connectionUser.email,
+    }, {
+      name: connectionUser.name,
+      token: connectionUser.token.token,
+      verified: connectionUser.emailVerificationState === 'verified'
+    })
+
+    await auth.use('api').login(user)
+  }
+
+  async twitter({ ally, auth }) {
+    const connection = ally.use('twitter')
+    const connectionUser = await connection.user()
+
+    const user = await LinkAcccountRepository.firstOrCreate({
+      email: connectionUser.email,
+    }, {
+      name: connectionUser.name,
+      token: connectionUser.token.token,
+      verified: connectionUser.emailVerificationState === 'verified'
+    })
+    await auth.use('api').login(user)
+  }
+
+  async stackoverflow({ ally, auth }) {
+    const connection = ally.use('stackoverflow')
+    const connectionUser = await connection.user()
+
+    const user = await LinkAcccountRepository.firstOrCreate({
+      email: connectionUser.email,
+    }, {
+      name: connectionUser.name,
+      token: connectionUser.token.token,
+      verified: connectionUser.emailVerificationState === 'verified'
+    })
+    await auth.use('api').login(user)
+  }
+
 }

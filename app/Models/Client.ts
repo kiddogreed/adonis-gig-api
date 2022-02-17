@@ -30,6 +30,9 @@ export default class Client extends BaseModel {
   public description: string
 
   @column()
+  public personal_website: string
+
+  @column()
   public language: string
 
   @column()

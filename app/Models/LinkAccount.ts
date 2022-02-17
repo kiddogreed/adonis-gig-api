@@ -12,6 +12,15 @@ export default class LinkAccount extends BaseModel {
   public email: string
 
   @column()
+  public token: string
+
+  @column()
+  public verified: boolean
+
+  @column()
+  public name: string
+
+  @column()
   public presence_name: string
 
   @column.dateTime({ autoCreate: true })

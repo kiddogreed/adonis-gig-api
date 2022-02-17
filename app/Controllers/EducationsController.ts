@@ -11,19 +11,16 @@ export default class EducationsController {
   }
 
   async set({ auth, request, response }: HttpContextContract) {
-    const data = request.input([`data`])
     const user = auth.user
     try {
-      for (let value of data) {
-        const education = await EducationRepository.create({
-          client_id: user.profile_id,
-          country: value.country,
-          school: value.school,
-          degree: value.degree,
-          year_graduated: value.year_graduated
-        })
-        await education.save()
-      }
+      const education = await EducationRepository.create({
+        client_id: user.profile_id,
+        country: request.input('country'),
+        school: request.input('school'),
+        degree: request.input('degree'),
+        year_graduated: request.input('year_graduated')
+      })
+      await education.save()
       return response.ok('Education information saved')
     } catch (e) {
       return response.badRequest('Invalid Education Request')

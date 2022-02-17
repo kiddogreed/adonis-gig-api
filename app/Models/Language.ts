@@ -9,10 +9,10 @@ export default class Language extends BaseModel {
   public client_id: number
 
   @column()
-  public level_id: number
+  public level: string
 
   @column()
-  public language_id: number
+  public language_name: string
 
   @column.dateTime({ autoCreate: true })
   public createdAt: DateTime

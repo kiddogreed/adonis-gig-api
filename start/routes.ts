@@ -20,60 +20,95 @@
 import Route from '@ioc:Adonis/Core/Route'
 import Env from '@ioc:Adonis/Core/Env'
 
-  Route.get('/', async () => {
-    return { messsage: `DOC GIG API (${Env.get('NODE_ENV')})` }
-  })
-  Route.post('/auth', 'AuthController.login')
-  Route.post('/auth/logout', 'AuthController.logout')
+Route.get('/', async () => {
+  return { messsage: `DOC GIG API (${Env.get('NODE_ENV')})` }
+})
+Route.post('/auth', 'AuthController.login')
+Route.post('/auth/logout', 'AuthController.logout')
 
-  Route.get('/categories', 'CategoriesController.index')
-  Route.post('/categories', 'CategoriesController.set')
-  Route.put('/categories/:id', 'CategoriesController.update')
+Route.get('/categories', 'CategoriesController.index')
+Route.post('/categories', 'CategoriesController.set')
+Route.put('/categories/:id', 'CategoriesController.update')
 
-  Route.get('/certification', 'CertificationsController.index').middleware('auth:api') 
-  Route.post('/certification', 'CertificationsController.set').middleware('auth:api') 
-  Route.put('/certification/:Id', 'CertificationsController.update').middleware('auth:api') 
-  Route.delete('/certification/:Id', 'CertificationsController.destroy').middleware('auth:api') 
+Route.get('/certification', 'CertificationsController.index').middleware('auth:api')
+Route.post('/certification', 'CertificationsController.set').middleware('auth:api')
+Route.put('/certification/:Id', 'CertificationsController.update').middleware('auth:api')
+Route.delete('/certification/:Id', 'CertificationsController.destroy').middleware('auth:api')
 
-  Route.get('/education/information', 'EducationsController.index').middleware('auth:api') 
-  Route.post('/education/information', 'EducationsController.set').middleware('auth:api')  
-  Route.put('/education/:Id/information', 'EducationsController.update').middleware('auth:api')
-  Route.delete('/education/:Id/information', 'EducationsController.destroy').middleware('auth:api')
+Route.get('/education', 'EducationsController.index').middleware('auth:api')
+Route.post('/education', 'EducationsController.set').middleware('auth:api')
+Route.put('/education/:Id', 'EducationsController.update').middleware('auth:api')
+Route.delete('/education/:Id', 'EducationsController.destroy').middleware('auth:api')
 
-  Route.get('/language','LanguagesController.show').middleware('auth:api')
-  Route.post('/language','LanguagesController.set').middleware('auth:api')
-  Route.put('/language/:Id','LanguagesController.update').middleware('auth:api')
-  Route.delete('/language/:Id','LanguagesController.destroy').middleware('auth:api')
+Route.post('/gig', 'GigsController.set').middleware('auth:api')
+Route.get('/gig/category', 'GigsController.gigCategory').middleware('auth:api')
+Route.get('/gig/sub-category', 'GigsController.subCategory').middleware('auth:api')
 
-  Route.get('/language/name','LanguagesController.languageName').middleware('auth:api')
-  Route.get('/language/level','LanguagesController.languageLevel').middleware('auth:api')
-  Route.get('/linked','linkAccountsController.index').middleware('auth:api')
-  Route.post('/linked','linkAccountsController.set').middleware('auth:api')
+Route.get('/gig/description', 'GigDescriptionsController.show').middleware('auth:api')
+Route.post('/gig/description', 'GigDescriptionsController.set').middleware('auth:api')
+Route.put('/gig/:Id/description', 'GigDescriptionsController.update').middleware('auth:api')
 
-  Route.get('/occupation/information', 'OccupationsController.index').middleware('auth:api')
-  Route.post('/occupation/information', 'OccupationsController.set').middleware('auth:api')
-  Route.put('/occupation/:Id/information', 'OccupationsController.update').middleware('auth:api')
-  Route.delete('/occupation/:Id/information', 'OccupationsController.destroy').middleware('auth:api')
+Route.get('/gig/faq', 'GigFaqsController.show').middleware('auth:api')
+Route.post('/gig/faq', 'GigFaqsController.set').middleware('auth:api')
+Route.put('/gig/:Id/faq', 'GigFaqsController.update').middleware('auth:api')
+Route.delete('/gig/:Id/faq', 'GigFaqsController.destroy').middleware('auth:api')
 
-  Route.get('/profile','PersonalInformationsController.show').middleware('auth:api')
-  Route.put('/profile','PersonalInformationsController.set').middleware('auth:api')
-  Route.get('/professional/information','ProfessionalInformationsController.show').middleware('auth:api')
-  Route.post('/professional/information','ProfessionalInformationsController.set').middleware('auth:api')
-  Route.put('/profile/type','ProfileSetupController.profileSetupType').middleware('auth:api')
+Route.get('/gig/requirement', 'GigRequirementsController.index').middleware('auth:api')
+Route.post('/gig/requirement', 'GigRequirementsController.set').middleware('auth:api')
+Route.put('/gig/question/:Id/requirement', 'GigRequirementsController.question').middleware('auth:api')
+Route.put('/gig/answer/:Id/requirement', 'GigRequirementsController.choice').middleware('auth:api')
 
-  Route.get('/security','SecurityController.show').middleware('auth:api')
-  Route.put('/security','SecurityController.update').middleware('auth:api')
-  Route.post('/signup','SignUpController.signup')
-  Route.post('/signup/verify', 'SignUpController.register')
+Route.post('/gig/faq/answer', 'GigFaqAnswerController.set').middleware('auth:api')
+Route.put('/gig/:Id/faq/answer', 'GigFaqAnswerController.update').middleware('auth:api')
+Route.delete('/gig/:Id/faq/answer', 'GigFaqAnswerController.destroy').middleware('auth:api')
 
-  Route.get('/skill','SkillsController.index').middleware('auth:api')
-  Route.post('/skill','SkillsController.set').middleware('auth:api')
-  Route.put('/skill/:Id','SkillsController.update').middleware('auth:api')
-  Route.delete('/skill/:Id','SkillsController.destroy').middleware('auth:api')
-  Route.get('/skill/name','SkillsController.show').middleware('auth:api')
+Route.get('/language', 'LanguagesController.show').middleware('auth:api')
+Route.post('/language', 'LanguagesController.set').middleware('auth:api')
+Route.put('/language/:Id', 'LanguagesController.update').middleware('auth:api')
+Route.delete('/language/:Id', 'LanguagesController.destroy').middleware('auth:api')
 
-  Route.put('/website/:Id/information', 'PersonalWebsitesController.update').middleware('auth:api')
-  Route.delete('/website/:Id/information', 'PersonalWebsitesController.destroy').middleware('auth:api')
+Route.get('/linked', 'linkAccountsController.index').middleware('auth:api')
+Route.post('/linked', 'linkAccountsController.set').middleware('auth:api')
+Route.post('/linked/sample', 'linkAccountsController.link').middleware('auth:api')
+
+Route.get('/occupation', 'OccupationsController.index').middleware('auth:api')
+Route.post('/occupation', 'OccupationsController.set').middleware('auth:api')
+Route.put('/occupation/:Id', 'OccupationsController.update').middleware('auth:api')
+Route.delete('/occupation/:Id', 'OccupationsController.destroy').middleware('auth:api')
+
+Route.get('/profile', 'PersonalInformationsController.show').middleware('auth:api')
+Route.post('/profile', 'PersonalInformationsController.set').middleware('auth:api')
+Route.put('/profile', 'PersonalInformationsController.update').middleware('auth:api')
+Route.get('/profile/status', 'ProfileStatusesController.show').middleware('auth:api')
+Route.put('/profile/type', 'ProfileSetupController.profileSetupType').middleware('auth:api')
+
+Route.get('/security', 'SecurityController.show').middleware('auth:api')
+Route.put('/security', 'SecurityController.update').middleware('auth:api')
+Route.post('/signup', 'SignUpController.signup')
+Route.post('/signup/verify', 'SignUpController.register')
+
+Route.get('/skill', 'SkillsController.index').middleware('auth:api')
+Route.post('/skill', 'SkillsController.set').middleware('auth:api')
+Route.put('/skill/:Id', 'SkillsController.update').middleware('auth:api')
+Route.delete('/skill/:Id', 'SkillsController.destroy').middleware('auth:api')
+Route.get('/skill/name', 'SkillsController.show').middleware('auth:api')
+
+Route.post('two_factor/enable','TwoFactorAuthenticationsController.enable').middleware('auth:api');
+Route.post('two_factor/disable','TwoFactorAuthenticationsController.disable').middleware('auth:api');
+Route.post('two_factor/verify','TwoFactorAuthenticationsController.verify').middleware('auth:api');
+Route.post('two_factor/auth','TwoFactorAuthenticationsController.authenticate').middleware('auth:api');
+
+Route.get('/:social', 'linkAccountsController.social')
+Route.get('/google/callback', 'linkAccountsController.google')
+Route.get('/github/callback', 'linkAccountsController.github')
+Route.get('/twitter/callback', 'linkAccountsController.twitter')
+Route.get('/facebook/callback', 'linkAccountsController.twitter')
+Route.get('/stackoverflow/callback', 'linkAccountsController.stackoverflow')
+
+
+
+
+
 
 
 

@@ -15,7 +15,7 @@ export default class Skill extends BaseModel {
   public skill_id: string
 
   @column()
-  public level: string
+  public skill_name: string
 
   @column.dateTime({ autoCreate: true })
   public createdAt: DateTime

@@ -34,9 +34,28 @@ export default Env.rules({
 	REDIS_PORT: Env.schema.number(),
 	REDIS_PASSWORD: Env.schema.string.optional(),
 
+	APP_ALLOWED_ORIGINS: Env.schema.string(),
 	APP_FRONTEND_URL: Env.schema.string(),
+
+
+	SESSION_DRIVER: Env.schema.string(),
 
 	DOC_LINK_URL: Env.schema.string(),
 	DOC_LINK_KEY: Env.schema.string(),
+
+	GITHUB_CLIENT_ID: Env.schema.string(),
+	GITHUB_CLIENT_SECRET: Env.schema.string(),
+
+	GOOGLE_CLIENT_ID: Env.schema.string(),
+	GOOGLE_CLIENT_SECRET: Env.schema.string(),
+
+	TWITTER_CLIENT_ID: Env.schema.string(),
+	TWITTER_CLIENT_SECRET: Env.schema.string(),
+
+	FACEBOOK_CLIENT_ID: Env.schema.string(),
+	FACEBOOK_CLIENT_SECRET: Env.schema.string(),
+
+	STACKOVERFLOW_CLIENT_ID: Env.schema.string(),
+	STACKOVERFLOW_CLIENT_SECRET: Env.schema.string(),
 
 })

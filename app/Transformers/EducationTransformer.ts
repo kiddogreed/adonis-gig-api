@@ -7,11 +7,11 @@ export default class EducationTransformer extends TransformerAbstract {
 
     return {
       id: education.id,
-      client_it: education.client_id,
+      client_id: education.client_id,
       country: education.country,
       school: education.school,
       degree: education.degree,
-      year_gratuated: education.year_graduated
+      year_graduated: education.year_graduated
     }
   }
 }
