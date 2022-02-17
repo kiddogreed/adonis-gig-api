@@ -18,6 +18,7 @@ export default class CertificationsController {
         client_id: user.profile_id,
         certificate_name: request.input('certificate_name'),
         certified_from: request.input('certified_from'),
+        certification_link: request.input('certification_link'),
         year: request.input('year')
       })
       await certification.save();
@@ -35,6 +36,7 @@ export default class CertificationsController {
       const certifaction = await CertificationRepository.findByOrFail('id', params.Id)
       certifaction.certificate_name = request.input('certificate_name')
       certifaction.certified_from = request.input('certified_from')
+      certifaction.certification_link = request.input('certification_link')
       certifaction.year = request.input('year')
       await certifaction?.save()
 

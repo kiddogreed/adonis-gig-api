@@ -18,6 +18,9 @@ export default class Certification extends BaseModel {
   public certified_from: string
 
   @column()
+  public certification_link: string
+
+  @column()
   public year: number
 
   @column.dateTime({ autoCreate: true })
