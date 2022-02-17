@@ -10,9 +10,6 @@ export default class Skills extends BaseSchema {
       table.integer('skill_id')
       table.string('skill_name',75)
 
-      /**
-       * Uses timestamptz for PostgreSQL and DATETIME2 for MSSQL
-       */
       table.timestamp('created_at', { useTz: true })
       table.timestamp('updated_at', { useTz: true })
     })

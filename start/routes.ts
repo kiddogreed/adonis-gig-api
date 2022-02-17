@@ -35,6 +35,8 @@ Route.post('/certification', 'CertificationsController.set').middleware('auth:ap
 Route.put('/certification/:Id', 'CertificationsController.update').middleware('auth:api')
 Route.delete('/certification/:Id', 'CertificationsController.destroy').middleware('auth:api')
 
+Route.get('/country', 'CountriesController.show').middleware('auth:api')
+
 Route.get('/education', 'EducationsController.index').middleware('auth:api')
 Route.post('/education', 'EducationsController.set').middleware('auth:api')
 Route.put('/education/:Id', 'EducationsController.update').middleware('auth:api')
@@ -81,6 +83,7 @@ Route.post('/profile', 'PersonalInformationsController.set').middleware('auth:ap
 Route.put('/profile', 'PersonalInformationsController.update').middleware('auth:api')
 Route.get('/profile/status', 'ProfileStatusesController.show').middleware('auth:api')
 Route.put('/profile/type', 'ProfileSetupController.profileSetupType').middleware('auth:api')
+Route.put('/profile/role', 'ProfileSetupController.profileSetupRole').middleware('auth:api')
 
 Route.get('/security', 'SecurityController.show').middleware('auth:api')
 Route.put('/security', 'SecurityController.update').middleware('auth:api')
