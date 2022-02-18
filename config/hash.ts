@@ -69,6 +69,11 @@ const hashConfig: HashConfig = {
       driver: 'bcrypt',
       rounds: 10,
     },
+
+    legacy: {
+      driver: 'legacy',
+    },
+    
   },
 }
 

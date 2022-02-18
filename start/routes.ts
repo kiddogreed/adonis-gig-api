@@ -26,6 +26,8 @@ Route.get('/', async () => {
 Route.post('/auth', 'AuthController.login')
 Route.post('/auth/logout', 'AuthController.logout')
 
+Route.post('doc/auth','AuthDoconchainController.login')
+
 Route.get('/categories', 'CategoriesController.index')
 Route.post('/categories', 'CategoriesController.set')
 Route.put('/categories/:id', 'CategoriesController.update')
