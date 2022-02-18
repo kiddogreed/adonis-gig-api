@@ -22,6 +22,9 @@ export default class User extends BaseModel {
   public profile_type: string
 
   @column()
+  public profile_role: string
+
+  @column()
   public email: string
 
   @column()

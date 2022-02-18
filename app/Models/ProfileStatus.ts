@@ -1,10 +1,7 @@
 import { DateTime } from 'luxon'
 import { BaseModel, column } from '@ioc:Adonis/Lucid/Orm'
 
-export default class Certification extends BaseModel {
-  static get table (){
-    return ('certifications')
-  }
+export default class ProfileStatus extends BaseModel {
   @column({ isPrimary: true })
   public id: number
 
@@ -12,16 +9,16 @@ export default class Certification extends BaseModel {
   public client_id: number
 
   @column()
-  public certificate_name: string
+  public section: string
 
   @column()
-  public certified_from: string
+  public under: string
 
   @column()
-  public certification_link: string
+  public section_percent: number
 
   @column()
-  public year: number
+  public section_status: string
 
   @column.dateTime({ autoCreate: true })
   public createdAt: DateTime
