@@ -1,10 +1,11 @@
-import EducationRepository from "App/Repositories/EducationRepository"
 import { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
+import EducationRepository from "App/Repositories/EducationRepository"
 import EducationTransformer from 'App/Transformers/EducationTransformer'
+import ProfileStatusRepository from 'App/Repositories/ProfileStatusRepository'
 
 export default class EducationsController {
 
-  async index({ auth, response, transform }: HttpContextContract) {
+  async index({ auth, response, transform }) {
     const user = auth.user
     const education = await EducationRepository.query().where('client_id', user.profile_id)
     return response.resource(await transform.collection(education, EducationTransformer))
@@ -21,6 +22,16 @@ export default class EducationsController {
         year_graduated: request.input('year_graduated')
       })
       await education.save()
+
+      const status = await ProfileStatusRepository.create({
+        client_id: user.profile_id,
+        section: 'Professional',
+        under: 'Education',
+        section_percent: 100,
+        section_status: 'Completed',
+      })
+      await status.save();
+
       return response.ok('Education information saved')
     } catch (e) {
       return response.badRequest('Invalid Education Request')

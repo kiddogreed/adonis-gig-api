@@ -2,6 +2,9 @@ import { DateTime } from 'luxon'
 import { BaseModel, column } from '@ioc:Adonis/Lucid/Orm'
 
 export default class ProfileStatus extends BaseModel {
+  static get table() {
+    return ('profile_statuses')
+  }
   @column({ isPrimary: true })
   public id: number
 

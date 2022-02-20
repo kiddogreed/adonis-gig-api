@@ -3,21 +3,22 @@ import SkillTransformer from 'App/Transformers/SkillTransformer'
 import { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
 import SkillNameRepository from 'App/Repositories/SkillNameRepository'
 import SkillNameTransformer from 'App/Transformers/SkillNameTransformer'
+import ProfileStatusRepository from 'App/Repositories/ProfileStatusRepository'
 
 export default class SkillsController {
 
-  async show({ response, transform }: HttpContextContract) {
+  async show({ response, transform }) {
     const skill = await SkillNameRepository.all()
     return response.resource(await transform.collection(skill, SkillNameTransformer))
   }
 
-  async index({auth,response,transform}: HttpContextContract){
+  async index({auth,response,transform}){
     const user = auth.user
     const skill = await SkillRepository.query().where('client_id',user.profile_id)
     return response.resource(await transform.collection(skill,SkillTransformer))
   }
 
-  async set({ auth, request, response }: HttpContextContract) {
+  async set({ auth, request, response }) {
     const user = auth.user
     const data = request.input([`data`])
     try {
@@ -28,6 +29,15 @@ export default class SkillsController {
           skill_name: value.skill_name
         });
         await skill.save();
+        
+        const status = await ProfileStatusRepository.create({
+          client_id: user.profile_id,
+          section: 'Professional',
+          under: 'Skill',
+          section_percent: 100,
+          section_status: 'Completed',
+        })
+        await status.save();
       }
       return response.ok('Skill information saved')
     }

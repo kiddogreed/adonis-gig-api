@@ -8,7 +8,7 @@ import SubCategoryTransformer from 'App/Transformers/SubCategoryTransformer'
 
 export default class GigsController {
 
-  async gigCategory({ response, request, transform }: HttpContextContract) {
+  async gigCategory({ response, request, transform }) {
     try {
       const filter = request.only('name')
       const query = GigCategoryRepository.query()
@@ -24,7 +24,7 @@ export default class GigsController {
     }
   }
 
-  async subCategory({ response, request, transform }: HttpContextContract) {
+  async subCategory({ response, request, transform }) {
     try {
       const filter = request.only('name')
       const query = SubCategorieRepository.query()
@@ -46,7 +46,7 @@ export default class GigsController {
     try {
       const gig = await GigRepository.create({
         client_id: user.profile_id,
-        name: request.input('title'),
+        name: request.input(','),
         category_id: request.input('category_id'),
         subcategory_id: request.input('subcategory_id'),
         tag: request.input('tag')

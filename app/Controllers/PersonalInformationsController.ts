@@ -7,7 +7,7 @@ import ProfileSetupValidator from 'App/Validators/ProfileSetupValidator'
 import ProfileStatusRepository from 'App/Repositories/ProfileStatusRepository'
 export default class PersonalInformationsController {
 
-  async show({ auth, response, transform }: HttpContextContract) {
+  async show({ auth, response, transform }) {
     const user = auth.user
     const client = await ClientRepository.query().where('id', user.profile_id).first()
     return response.resource(await transform.item(client, PersonalTransformer))
@@ -27,14 +27,18 @@ export default class PersonalInformationsController {
 
       const language = await LanguageRepository.query().where('client_id', user.profile_id)
 
-      if(language){
+      if (language) {
         const status = await ProfileStatusRepository.create({
           client_id: user.profile_id,
-          section: 'Personal',
+          section: 'Professional',
+          under: 'Occupation',
           section_percent: 100,
           section_status: 'Completed',
         })
         await status.save();
+
+        client.profile_status = 'inProgress-professional'
+        await client?.save()
       }
 
       if (!language) {
@@ -51,20 +55,32 @@ export default class PersonalInformationsController {
     const data = request.only(['first_name', 'last_name', 'photo', 'description', 'website'])
     try {
       const user = auth.user
+
       const client = await ClientRepository.findByOrFail('id', user.profile_id)
-      if (data.website) {
-        client.personal_website = data.website
+
+      if (!data.website) {
+        client.first_name = data.first_name,
+          client.last_name = data.last_name,
+          client.photo = data.photo,
+          client.description = data.description
         await client?.save()
-        return response.ok("Website information successfully saved")
+        return response.ok("Personal information successfully saved")
       }
 
-      client.first_name = data.first_name,
-        client.last_name = data.last_name,
-        client.photo = data.photo,
-        client.description = data.description
-      await client?.save()
-      return response.ok("Personal information successfully saved")
+      if (data.website) {
+        const unders = ['occupation','skill','education']
+        for(let value of unders){
+          const status = await ProfileStatusRepository.query().where('client_id', user.profile_id).where('under', value).first()
+          if(!status){
+          return response.badRequest('Please fillup' + ' ' + `${value}` + ' ' +  'information')
+         }
+        }
+        client.profile_status = 'inProgress-linkedAccounts'
+        client.personal_website = data.website
+        await client?.save()
 
+        return response.ok("Website information successfully saved")
+      }
     } catch (e) {
       return response.badRequest('Invalid Profile Request')
     }
