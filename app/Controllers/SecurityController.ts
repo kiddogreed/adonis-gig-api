@@ -18,6 +18,7 @@ export default class SecurityController {
     try {
       const client = await ClientRepository.findByOrFail('id', user.profile_id)
       client.contact = request.input('contact')
+      client.profile_status = 'Completed'
       await client?.save()
 
       return response.ok('Security information saved')

@@ -13,7 +13,7 @@ import ClientRepository from 'App/Repositories/ClientRepository'
 
 export default class SignUpController {
 
-  public async signup({ request, response }: HttpContextContract) {
+  public async signup({ request, response }) {
     await request.validate(SignUpValidator)
     const data = request.only([
       "email",
@@ -44,7 +44,7 @@ export default class SignUpController {
     return response.data({ 'email': lead?.email }, "Please check your email inbox")
   }
 
-  public async register({ auth, request, response }: HttpContextContract) {
+  public async register({ auth, request, response }) {
     await request.validate(RegisterValidator)
 
     const code = request.input("code");
@@ -58,7 +58,9 @@ export default class SignUpController {
       if (!verification) {
         return response.badRequest('Incorrect verification token.');
       }
-
+      if(request.input('password') != request.input('password_confirmation')){
+        return response.badRequest('Your password confirmation should match your password.');
+      }
       const client = await ClientRepository.create({
         verified: 1
       })

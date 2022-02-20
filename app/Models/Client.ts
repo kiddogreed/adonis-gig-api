@@ -1,8 +1,8 @@
 import { DateTime } from 'luxon'
-import { BaseModel, column} from '@ioc:Adonis/Lucid/Orm'
+import { BaseModel, column } from '@ioc:Adonis/Lucid/Orm'
 
 export default class Client extends BaseModel {
-  static get table (){
+  static get table() {
     return ('clients')
   }
   @column({ isPrimary: true })
@@ -10,6 +10,9 @@ export default class Client extends BaseModel {
 
   @column()
   public verified: number
+
+  @column()
+  public profile_status: string
 
   @column()
   public country: string

@@ -2,10 +2,11 @@ import { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
 import OccupationValidator from 'App/Validators/OccupationValidator'
 import OccupationRepository from 'App/Repositories/OccupationRepository'
 import OccupationTransformer from 'App/Transformers/OccupationTransformer'
+import ProfileStatusRepository from 'App/Repositories/ProfileStatusRepository'
 
 export default class OccupationsController {
 
-  async index({ auth, response, transform }: HttpContextContract) {
+  async index({ auth, response, transform }) {
     const user = auth.user
     const occupation = await OccupationRepository.query().where('client_id', user.profile_id)
     return response.resource(await transform.collection(occupation, OccupationTransformer))
@@ -24,6 +25,15 @@ export default class OccupationsController {
         date_to: request.input('date_to')
       })
       await occupation.save();
+
+      const status = await ProfileStatusRepository.create({
+        client_id: user.profile_id,
+        section: 'Professional',
+        under: 'Occupation',
+        section_percent: 100,
+        section_status: 'Completed',
+      })
+      await status.save();
 
       return response.ok('Occupation information saved')
 

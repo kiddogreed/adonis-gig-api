@@ -1,10 +1,11 @@
 import { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
 import CerticationValidator from 'App/Validators/CertificationValidator'
+import ProfileStatusRepository from 'App/Repositories/ProfileStatusRepository'
 import CertificationRepository from 'App/Repositories/CertificationRepository'
 import CertificationTransformer from 'App/Transformers/CertificationTransformer'
 
 export default class CertificationsController {
-  async index({ auth, response, transform }: HttpContextContract) {
+  async index({ auth, response, transform }) {
     const user = auth.user
     const certification = await CertificationRepository.query().where('client_id', user.profile_id)
     return response.resource(await transform.collection(certification, CertificationTransformer))
@@ -22,6 +23,15 @@ export default class CertificationsController {
         year: request.input('year')
       })
       await certification.save();
+
+      const status = await ProfileStatusRepository.create({
+        client_id: user.profile_id,
+        section: 'Professional',
+        under: 'Certification',
+        section_percent: 100,
+        section_status: 'Completed',
+      })
+      await status.save();
 
       return response.ok('Certification information saved')
 

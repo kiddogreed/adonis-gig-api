@@ -1,10 +1,11 @@
 import { DateTime } from "luxon"
 import UserRepository from 'App/Repositories/UserRepository'
 import { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
+import ClientRepository from "App/Repositories/ClientRepository"
 
 export default class AuthController {
 
-  async login({ auth, request, response }: HttpContextContract) {
+  async login({ auth, request, response }) {
     const data = request.only([
       "username",
       "password"
@@ -27,6 +28,8 @@ export default class AuthController {
         );
       }
 
+      const client = await ClientRepository.findByOrFail('id',user.profile_id)
+      
       const token = await auth.use('api').attempt(user.email, data.password)
       user.logged_in_at = DateTime.now()
       await user.save();
@@ -37,6 +40,7 @@ export default class AuthController {
           'id': user?.id,
           'profile_type': user?.profile_type,
           'client_id': user?.profile_id,
+          'profile_stauts': client.profile_status,
           'email': user?.email,
           'username': user?.username
         }
