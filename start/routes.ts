@@ -105,7 +105,7 @@ Route.post('two_factor/auth','TwoFactorAuthenticationsController.authenticate').
 
 Route.get('/social', 'linkAccountsController.show').middleware('auth:api');
 Route.post('/social/:Id', 'linkAccountsController.set').middleware('auth:api');
-Route.get('/:social', 'linkAccountsController.social')
+Route.get('/google', 'linkAccountsController.social')
 Route.get('/google/callback', 'linkAccountsController.google')
 Route.get('/github/callback', 'linkAccountsController.github')
 Route.get('/twitter/callback', 'linkAccountsController.twitter')
