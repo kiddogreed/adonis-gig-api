@@ -13,6 +13,7 @@ export default class PersonalTransformer extends TransformerAbstract {
     const certification = await CertificationRepository.query().where('client_id', info.id)
 
     return {
+      profile_status: info.profile_status,
       skill,
       education,
       occupation,

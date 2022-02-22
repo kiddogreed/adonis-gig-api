@@ -15,6 +15,14 @@ export default class LinkAccountsController {
     }
   }
 
+  async draft({auth,response}){
+    const user = auth.user
+    const client = await ClientRepository.findBy('id', user?.profile_id)
+    client.profile_status = 'inProgress-linkedAccounts'
+    await client?.save()
+    return response.ok("Linked account information successfully saved into draft")
+  }
+
   async set({ auth, params, response }) {
     const user = auth.user
     const account = await LinkAcccountRepository.find(params.Id)
@@ -37,7 +45,7 @@ export default class LinkAccountsController {
   }
 
   async social({ ally }) {
-    return ally.use('google').redirect()
+    await ally.use('google').redirect()
   }
 
   async google({ ally, auth }) {

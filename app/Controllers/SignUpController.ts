@@ -8,7 +8,6 @@ import UserRepository from 'App/Repositories/UserRepository'
 import TokenRepository from 'App/Repositories/TokenRepository'
 import SignUpValidator from 'App/Validators/SignUpValidator'
 import RegisterValidator from 'App/Validators/RegisterValidator'
-import { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
 import ClientRepository from 'App/Repositories/ClientRepository'
 
 export default class SignUpController {

@@ -34,8 +34,13 @@ Route.get('/certification', 'CertificationsController.index').middleware('auth:a
 Route.post('/certification', 'CertificationsController.set').middleware('auth:api')
 Route.put('/certification/:Id', 'CertificationsController.update').middleware('auth:api')
 Route.delete('/certification/:Id', 'CertificationsController.destroy').middleware('auth:api')
-
 Route.get('/country', 'CountriesController.show').middleware('auth:api')
+
+Route.put('/draft/professional', 'PersonalInformationsController.draftProfessional').middleware('auth:api')
+Route.put('/draft/profile', 'PersonalInformationsController.draftProfile').middleware('auth:api')
+Route.put('/draft/linkAccount', 'LinkAccountsController.draft').middleware('auth:api')
+Route.put('/draft/security', 'SecurityController.draft').middleware('auth:api')
+
 
 Route.get('/education', 'EducationsController.index').middleware('auth:api')
 Route.post('/education', 'EducationsController.set').middleware('auth:api')
@@ -103,7 +108,7 @@ Route.post('two_factor/auth','TwoFactorAuthenticationsController.authenticate').
 
 Route.get('/social', 'linkAccountsController.show').middleware('auth:api');
 Route.post('/social/:Id', 'linkAccountsController.set').middleware('auth:api');
-Route.get('/google', 'linkAccountsController.social')
+Route.get('/google', 'linkAccountsController.social').middleware('auth:api');
 Route.get('/google/callback', 'linkAccountsController.google')
 Route.get('/github/callback', 'linkAccountsController.github')
 Route.get('/twitter/callback', 'linkAccountsController.twitter')

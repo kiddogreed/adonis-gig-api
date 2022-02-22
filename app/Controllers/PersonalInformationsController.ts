@@ -68,12 +68,12 @@ export default class PersonalInformationsController {
       }
 
       if (data.website) {
-        const unders = ['occupation','skill','education']
-        for(let value of unders){
+        const unders = ['occupation', 'skill', 'education']
+        for (let value of unders) {
           const status = await ProfileStatusRepository.query().where('client_id', user.profile_id).where('under', value).first()
-          if(!status){
-          return response.badRequest('Please fillup' + ' ' + `${value}` + ' ' +  'information')
-         }
+          if (!status) {
+            return response.badRequest('Please fillup' + ' ' + `${value}` + ' ' + 'information')
+          }
         }
         client.profile_status = 'inProgress-linkedAccounts'
         client.personal_website = data.website
@@ -85,4 +85,46 @@ export default class PersonalInformationsController {
       return response.badRequest('Invalid Profile Request')
     }
   }
+
+  async draftProfile({ auth, request, response }) {
+    const data = request.only(['first_name', 'last_name', 'photo', 'description'])
+    try {
+      const user = auth.user
+      const client = await ClientRepository.findBy('id', user?.profile_id)
+      client.first_name = data.first_name,
+        client.last_name = data.last_name,
+        client.photo = data.photo,
+        client.description = data.description
+      client.profile_status = 'inProgress-personal'
+      await client?.save()
+
+      return response.ok("Personal information successfully saved to draft")
+    } catch (e) {
+      return response.badRequest('Invalid Profile Request')
+    }
+  }
+
+  async draftProfessional(auth, request, response) {
+    const data = request.only(['website'])
+    try {
+      const user = auth.user
+      const client = await ClientRepository.findBy('id', user?.profile_id)
+      
+      if (!data.website) {
+        client.profile_status = 'inProgress-professional'
+        await client?.save()
+        return response.ok("Professional information successfully saved into draft")
+      }
+
+      client.personal_website = data.website,
+        client.profile_status = 'inProgress-professional'
+      await client?.save()
+      return response.ok("Professional information successfully saved into draft")
+    }
+    catch (e) {
+      return response.badRequest('Invalid Professional Request')
+    }
+  }
+
 }
+
