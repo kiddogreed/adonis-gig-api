@@ -108,14 +108,14 @@ Route.post('two_factor/disable','TwoFactorAuthenticationsController.disable').mi
 Route.post('two_factor/verify','TwoFactorAuthenticationsController.verify').middleware('auth:api');
 Route.post('two_factor/auth','TwoFactorAuthenticationsController.authenticate').middleware('auth:api');
 
-Route.get('/social', 'linkAccountsController.show').middleware('auth:api');
-Route.post('/social/:Id', 'linkAccountsController.set').middleware('auth:api');
-Route.get('/google', 'linkAccountsController.social').middleware('auth:api');
-Route.get('/google/callback', 'linkAccountsController.google')
-Route.get('/github/callback', 'linkAccountsController.github')
-Route.get('/twitter/callback', 'linkAccountsController.twitter')
-Route.get('/facebook/callback', 'linkAccountsController.twitter')
-Route.get('/stackoverflow/callback', 'linkAccountsController.stackoverflow')
+Route.get('/social', 'LinkAccountsController.show').middleware('auth:api');
+Route.post('/social/:Id', 'LinkAccountsController.set').middleware('auth:api');
+Route.get('/google', 'LinkAccountsController.social')
+Route.get('/google/callback', 'LinkAccountsController.google')
+Route.get('/github/callback', 'LinkAccountsController.github')
+Route.get('/twitter/callback', 'LinkAccountsController.twitter')
+Route.get('/facebook/callback', 'LinkAccountsController.twitter')
+Route.get('/stackoverflow/callback', 'LinkAccountsController.stackoverflow')
 
 
 
