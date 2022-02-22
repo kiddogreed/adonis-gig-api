@@ -3,10 +3,11 @@ import LinkAcccountRepository from 'App/Repositories/LinkAccountRepository'
 import LinkAccountTransformer from 'App/Transformers/LinkAccountTransformer'
 import ProfileStatusRepository from 'App/Repositories/ProfileStatusRepository'
 import ClientRepository from 'App/Repositories/ClientRepository'
+import allyConfig from 'Config/ally'
 
 export default class LinkAccountsController {
 
-  async show({auth,response,transform}){
+  async show({ auth, response, transform }) {
     const user = auth.user
     try {
       const account = await LinkAcccountRepository.query().where('client_id', user.profile_id)
@@ -16,6 +17,17 @@ export default class LinkAccountsController {
     }
   }
 
+<<<<<<< HEAD
+=======
+  async draft({ auth, response }) {
+    const user = auth.user
+    const client = await ClientRepository.findBy('id', user?.profile_id)
+    client.profile_status = 'inProgress-linkedAccounts'
+    await client?.save()
+    return response.ok("Linked account information successfully saved into draft")
+  }
+
+>>>>>>> DOC-1035-Profile-setup
   async set({ auth, params, response }) {
     const user = auth.user
     const account = await LinkAcccountRepository.find(params.Id)
@@ -37,8 +49,8 @@ export default class LinkAccountsController {
     return response.ok("Your account successfully connected")
   }
 
-  async social({response }) {
-    return response.ok(`${Env.get('APP_FRONTEND_URL')}/google`).redirect()
+  async social({ ally }) {
+   return ally.use('google').redirect()
   }
 
   async google({ ally, auth }) {
