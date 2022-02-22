@@ -17,8 +17,6 @@ export default class LinkAccountsController {
     }
   }
 
-<<<<<<< HEAD
-=======
   async draft({ auth, response }) {
     const user = auth.user
     const client = await ClientRepository.findBy('id', user?.profile_id)
@@ -27,7 +25,6 @@ export default class LinkAccountsController {
     return response.ok("Linked account information successfully saved into draft")
   }
 
->>>>>>> DOC-1035-Profile-setup
   async set({ auth, params, response }) {
     const user = auth.user
     const account = await LinkAcccountRepository.find(params.Id)
