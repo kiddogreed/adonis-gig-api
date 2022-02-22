@@ -1,4 +1,3 @@
-import Env from '@ioc:Adonis/Core/Env'
 import LinkAcccountRepository from 'App/Repositories/LinkAccountRepository'
 import LinkAccountTransformer from 'App/Transformers/LinkAccountTransformer'
 import ProfileStatusRepository from 'App/Repositories/ProfileStatusRepository'
@@ -14,14 +13,6 @@ export default class LinkAccountsController {
     } catch (e) {
       return response.badRequest("Invalid Account request")
     }
-  }
-
-  async draft({auth,response}){
-    const user = auth.user
-    const client = await ClientRepository.findBy('id', user?.profile_id)
-    client.profile_status = 'inProgress-linkedAccounts'
-    await client?.save()
-    return response.ok("Linked account information successfully saved into draft")
   }
 
   async set({ auth, params, response }) {
@@ -45,8 +36,8 @@ export default class LinkAccountsController {
     return response.ok("Your account successfully connected")
   }
 
-  async social({response }) {
-    return response.ok(`${Env.get('APP_FRONTEND_URL')}/google`)
+  async social({ ally }) {
+    return ally.use('google').redirect()
   }
 
   async google({ ally, auth }) {
