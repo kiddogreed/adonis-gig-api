@@ -4,9 +4,6 @@ import { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
 import UserRepository from 'App/Repositories/UserRepository';
 import ClientRepository from 'App/Repositories/ClientRepository';
 
-import Hash from '@ioc:Adonis/Core/Hash'
-
-
 
 
 export default class AuthFacebooksController {
@@ -22,10 +19,7 @@ export default class AuthFacebooksController {
           'authorization': `bearer ${authToken}`
         }
       });
- 
-      let inputEmail = result.data.data.email
-      let inputPass = result.data.data.password
-     
+    
       const user = await UserRepository.findBy('email', inputEmail)
         if(!user){
 
