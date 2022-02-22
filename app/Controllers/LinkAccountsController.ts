@@ -3,7 +3,6 @@ import LinkAcccountRepository from 'App/Repositories/LinkAccountRepository'
 import LinkAccountTransformer from 'App/Transformers/LinkAccountTransformer'
 import ProfileStatusRepository from 'App/Repositories/ProfileStatusRepository'
 import ClientRepository from 'App/Repositories/ClientRepository'
-import allyConfig from 'Config/ally'
 
 export default class LinkAccountsController {
 
@@ -46,9 +45,8 @@ export default class LinkAccountsController {
     return response.ok("Your account successfully connected")
   }
 
-  async social({ ally, response }) {
-    const link = ally.use('google').redirect()
-    return response.ok(link)
+  async social({ ally, }) {
+    await ally.use('google').redirect()
   }
 
   async google({ ally, auth }) {
