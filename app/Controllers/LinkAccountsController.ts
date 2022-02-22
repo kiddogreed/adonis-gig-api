@@ -1,7 +1,7 @@
+import ClientRepository from 'App/Repositories/ClientRepository'
 import LinkAcccountRepository from 'App/Repositories/LinkAccountRepository'
 import LinkAccountTransformer from 'App/Transformers/LinkAccountTransformer'
 import ProfileStatusRepository from 'App/Repositories/ProfileStatusRepository'
-import ClientRepository from 'App/Repositories/ClientRepository'
 export default class LinkAccountsController {
 
   async show({ auth, response, transform }) {
@@ -22,91 +22,36 @@ export default class LinkAccountsController {
     return response.ok("Linked account information successfully saved into draft")
   }
 
-  async set({ auth, params, response }) {
+  async set({ auth,request, response }) {
     const user = auth.user
-    const account = await LinkAcccountRepository.find(params.Id)
-    account.client_id = user.profile_id
-    await account?.save()
-
-    const status = await ProfileStatusRepository.create({
-      client_id: user.profile_id,
-      section: 'LinkedAccount',
-      section_percent: 100,
-      section_status: 'Completed',
+    const account = await LinkAcccountRepository.create({
+      client_id : user.profile_id,
+      email : request.input('email'),
+      name: request.input('name'),
+      presence_name: request.input('social'),
+      token: request.input('token'),
+      verified: true
     })
-    await status.save();
-
-    const client = await ClientRepository.findBy('id', user?.profile_id)
-    client.profile_status = 'inProgress-accountSecurity'
-    await client?.save()
-
+    await account.save()
     return response.ok("Your account successfully connected")
   }
 
-  async social({ ally }) {
-    return ally.use('google').redirect()
-  }
+  // async social({ ally }) {
+  //   return ally.use('google').redirect()
+  // }
 
-  async google({ ally, auth }) {
-    const connection = ally.use('google')
-    const connectionUser = await connection.user()
+  // async google({ ally ,response}) {
+  //   const connection = ally.use('google')
+  //   const connectionUser = await connection.user()
 
-    const user = await LinkAcccountRepository.firstOrCreate({
-      email: connectionUser.email,
-    }, {
-      name: connectionUser.name,
-      token: connectionUser.token.token,
-      verified: connectionUser.emailVerificationState === 'verified',
-      presence_name: 'google'
-    })
+  //     const name = connectionUser.name
+  //     const token = connectionUser.token.token
+  //     const  verified = connectionUser.emailVerificationState === 'verified'
+ 
+  //   const link = `${Env.get('APP_FRONTEND_URL')}/profile/link?name=${name}&token=${token}&verified=${verified}&presence_name=google`
+  //   return response.redirect().toPath(link)
+   
+  // }
 
-    await auth.use('api').login(user)
-  }
-
-  async github({ ally, auth }) {
-    const connection = ally.use('github')
-    const connectionUser = await connection.user()
-
-    const user = await LinkAcccountRepository.firstOrCreate({
-      email: connectionUser.email,
-    }, {
-      name: connectionUser.name,
-      token: connectionUser.token.token,
-      verified: connectionUser.emailVerificationState === 'verified',
-      presence_name: 'github'
-    })
-
-    await auth.use('api').login(user)
-  }
-
-  async twitter({ ally, auth }) {
-    const connection = ally.use('twitter')
-    const connectionUser = await connection.user()
-
-    const user = await LinkAcccountRepository.firstOrCreate({
-      email: connectionUser.email,
-    }, {
-      name: connectionUser.name,
-      token: connectionUser.token.token,
-      verified: connectionUser.emailVerificationState === 'verified',
-      presence_name: 'twitter'
-    })
-    await auth.use('api').login(user)
-  }
-
-  async stackoverflow({ ally, auth }) {
-    const connection = ally.use('stackoverflow')
-    const connectionUser = await connection.user()
-
-    const user = await LinkAcccountRepository.firstOrCreate({
-      email: connectionUser.email,
-    }, {
-      name: connectionUser.name,
-      token: connectionUser.token.token,
-      verified: connectionUser.emailVerificationState === 'verified',
-      presence_name: 'stackoverflow'
-    })
-    await auth.use('api').login(user)
-  }
 
 }

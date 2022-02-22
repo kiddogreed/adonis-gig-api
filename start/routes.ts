@@ -76,9 +76,8 @@ Route.post('/language', 'LanguagesController.set').middleware('auth:api')
 Route.put('/language/:Id', 'LanguagesController.update').middleware('auth:api')
 Route.delete('/language/:Id', 'LanguagesController.destroy').middleware('auth:api')
 
-Route.get('/linked', 'linkAccountsController.index').middleware('auth:api')
+Route.get('/linked', 'linkAccountsController.show').middleware('auth:api')
 Route.post('/linked', 'linkAccountsController.set').middleware('auth:api')
-Route.post('/linked/sample', 'linkAccountsController.link').middleware('auth:api')
 
 Route.get('/occupation', 'OccupationsController.index').middleware('auth:api')
 Route.post('/occupation', 'OccupationsController.set').middleware('auth:api')
@@ -109,13 +108,10 @@ Route.post('two_factor/verify','TwoFactorAuthenticationsController.verify').midd
 Route.post('two_factor/auth','TwoFactorAuthenticationsController.authenticate').middleware('auth:api');
 
 Route.get('/social', 'LinkAccountsController.show').middleware('auth:api');
-Route.post('/social/:Id', 'LinkAccountsController.set').middleware('auth:api');
+Route.post('/social', 'LinkAccountsController.set').middleware('auth:api');
 Route.get('/google', 'LinkAccountsController.social')
 Route.get('/google/callback', 'LinkAccountsController.google')
-Route.get('/github/callback', 'LinkAccountsController.github')
-Route.get('/twitter/callback', 'LinkAccountsController.twitter')
-Route.get('/facebook/callback', 'LinkAccountsController.twitter')
-Route.get('/stackoverflow/callback', 'LinkAccountsController.stackoverflow')
+
 
 
 

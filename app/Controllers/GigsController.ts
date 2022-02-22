@@ -46,7 +46,7 @@ export default class GigsController {
     try {
       const gig = await GigRepository.create({
         client_id: user.profile_id,
-        name: request.input(','),
+        name: request.input('name'),
         category_id: request.input('category_id'),
         subcategory_id: request.input('subcategory_id'),
         tag: request.input('tag')
