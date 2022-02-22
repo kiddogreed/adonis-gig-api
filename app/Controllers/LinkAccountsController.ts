@@ -44,7 +44,7 @@ export default class LinkAccountsController {
   }
 
   async social({ ally }) {
-    return ally.use('github').redirect()
+    return ally.use('google').redirect()
   }
 
   async google({ ally, auth }) {
