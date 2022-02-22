@@ -1,9 +1,7 @@
-import Env from '@ioc:Adonis/Core/Env'
 import LinkAcccountRepository from 'App/Repositories/LinkAccountRepository'
 import LinkAccountTransformer from 'App/Transformers/LinkAccountTransformer'
 import ProfileStatusRepository from 'App/Repositories/ProfileStatusRepository'
 import ClientRepository from 'App/Repositories/ClientRepository'
-
 export default class LinkAccountsController {
 
   async show({ auth, response, transform }) {
@@ -45,8 +43,8 @@ export default class LinkAccountsController {
     return response.ok("Your account successfully connected")
   }
 
-  async social({ ally, }) {
-    await ally.use('google').redirect()
+  async social({ ally }) {
+    return ally.use('github').redirect()
   }
 
   async google({ ally, auth }) {
@@ -61,6 +59,7 @@ export default class LinkAccountsController {
       verified: connectionUser.emailVerificationState === 'verified',
       presence_name: 'google'
     })
+
     await auth.use('api').login(user)
   }
 
