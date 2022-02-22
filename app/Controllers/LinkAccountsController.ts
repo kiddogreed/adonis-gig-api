@@ -46,7 +46,7 @@ export default class LinkAccountsController {
   }
 
   async social({response }) {
-    return response.ok(`${Env.get('APP_FRONTEND_URL')}/google`)
+    return response.ok(`${Env.get('APP_FRONTEND_URL')}/google`).redirect()
   }
 
   async google({ ally, auth }) {
