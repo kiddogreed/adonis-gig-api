@@ -46,8 +46,9 @@ export default class LinkAccountsController {
     return response.ok("Your account successfully connected")
   }
 
-  async social({ ally }) {
-   return ally.use('google').redirect()
+  async social({ ally, response }) {
+    const link = ally.use('google').redirect()
+    return response.ok(link)
   }
 
   async google({ ally, auth }) {
