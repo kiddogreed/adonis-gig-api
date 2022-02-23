@@ -57,9 +57,6 @@ export default class SignUpController {
       if (!verification) {
         return response.badRequest('Incorrect verification token.');
       }
-      if(request.input('password') != request.input('password_confirmation')){
-        return response.badRequest('Your password confirmation should match your password.');
-      }
       const client = await ClientRepository.create({
         verified: 1
       })

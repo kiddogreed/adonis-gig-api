@@ -43,7 +43,6 @@ Route.put('/draft/profile', 'PersonalInformationsController.draftProfile').middl
 Route.put('/draft/linkAccount', 'LinkAccountsController.draft').middleware('auth:api')
 Route.put('/draft/security', 'SecurityController.draft').middleware('auth:api')
 
-
 Route.get('/education', 'EducationsController.index').middleware('auth:api')
 Route.post('/education', 'EducationsController.set').middleware('auth:api')
 Route.put('/education/:Id', 'EducationsController.update').middleware('auth:api')
@@ -70,6 +69,13 @@ Route.put('/gig/answer/:Id/requirement', 'GigRequirementsController.choice').mid
 Route.post('/gig/faq/answer', 'GigFaqAnswerController.set').middleware('auth:api')
 Route.put('/gig/:Id/faq/answer', 'GigFaqAnswerController.update').middleware('auth:api')
 Route.delete('/gig/:Id/faq/answer', 'GigFaqAnswerController.destroy').middleware('auth:api')
+
+Route.post('/gig/pricing', 'GigPricingsController.set').middleware('auth:api')
+Route.post('/gig/pricing/extra-service', 'GigPricingsController.extraService').middleware('auth:api')
+Route.delete('/gig/pricing/:Id/extra-service', 'GigPricingsController.destroy').middleware('auth:api')
+
+
+Route.post('/gig/gallery', 'GigGalleriesController.set').middleware('auth:api')
 
 Route.get('/language', 'LanguagesController.show').middleware('auth:api')
 Route.post('/language', 'LanguagesController.set').middleware('auth:api')

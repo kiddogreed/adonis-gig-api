@@ -56,6 +56,8 @@ export default class RegisterValidator {
     'username.minLength': 'Your username should be not less thatn three characters.',
     'username.maxLength': 'Your username is too long.',
     'username.regex': 'Only alphanumeric character is allowed.',
+    'password.required': 'Please provide your password.',
+    'password_confirmation.confirmed': 'Your password confirmation should match your password.'
    
   }
 }
