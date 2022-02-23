@@ -74,7 +74,6 @@ Route.post('/gig/pricing', 'GigPricingsController.set').middleware('auth:api')
 Route.post('/gig/pricing/extra-service', 'GigPricingsController.extraService').middleware('auth:api')
 Route.delete('/gig/pricing/:Id/extra-service', 'GigPricingsController.destroy').middleware('auth:api')
 
-
 Route.post('/gig/gallery', 'GigGalleriesController.set').middleware('auth:api')
 
 Route.get('/language', 'LanguagesController.show').middleware('auth:api')
@@ -82,8 +81,8 @@ Route.post('/language', 'LanguagesController.set').middleware('auth:api')
 Route.put('/language/:Id', 'LanguagesController.update').middleware('auth:api')
 Route.delete('/language/:Id', 'LanguagesController.destroy').middleware('auth:api')
 
-Route.get('/linked', 'linkAccountsController.show').middleware('auth:api')
-Route.post('/linked', 'linkAccountsController.set').middleware('auth:api')
+Route.get('/linked', 'LinkAccountController.show').middleware('auth:api')
+Route.post('/linked', 'LinkAccountController.set').middleware('auth:api')
 
 Route.get('/occupation', 'OccupationsController.index').middleware('auth:api')
 Route.post('/occupation', 'OccupationsController.set').middleware('auth:api')
