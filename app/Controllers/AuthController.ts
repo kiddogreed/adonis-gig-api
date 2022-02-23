@@ -40,7 +40,7 @@ export default class AuthController {
           'id': user?.id,
           'profile_type': user?.profile_type,
           'client_id': user?.profile_id,
-          'profile_stauts': client.profile_status,
+          'profile_status': client.profile_status,
           'email': user?.email,
           'username': user?.username
         }
