@@ -15,6 +15,7 @@ export default class LinkAccountTransformer extends TransformerAbstract {
       email: link.email,
       presence_name: link.presence_name,
       verified: link.verified,
+      social_id: link.social_id
     }
   }
 }
