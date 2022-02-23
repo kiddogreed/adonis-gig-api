@@ -15,6 +15,7 @@ export default class PersonalInformationsController {
   async set({ auth, request, response }: HttpContextContract) {
     await request.validate(ProfileSetupValidator)
     const data = request.only(['first_name', 'last_name', 'photo', 'description'])
+
     try {
       const user = auth.user
       const client = await ClientRepository.findBy('id', user?.profile_id)
@@ -25,9 +26,11 @@ export default class PersonalInformationsController {
       client.profile_status = 'inProgress-professional'
       await client?.save()
       return response.ok("Personal information successfully saved")
+
     } catch (e) {
       return response.badRequest('Invalid Profile Request')
     }
+
   }
 
   async update({ auth, request, response }: HttpContextContract) {
@@ -47,7 +50,7 @@ export default class PersonalInformationsController {
       }
 
       if (data.website) {
-        const unders = ['occupation', 'skill', 'education']
+        const unders = ['Occupation', 'Skill', 'Education']
         for (let value of unders) {
           const status = await ProfileStatusRepository.query().where('client_id', user.profile_id).where('under', value).first()
           if (!status) {
