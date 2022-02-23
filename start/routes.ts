@@ -112,10 +112,10 @@ Route.post('two_factor/disable','TwoFactorAuthenticationsController.disable').mi
 Route.post('two_factor/verify','TwoFactorAuthenticationsController.verify').middleware('auth:api');
 Route.post('two_factor/auth','TwoFactorAuthenticationsController.authenticate').middleware('auth:api');
 
-Route.get('/social', 'LinkAccountsController.show').middleware('auth:api');
-Route.post('/social', 'LinkAccountsController.set').middleware('auth:api');
-Route.get('/google', 'LinkAccountsController.social')
-Route.get('/google/callback', 'LinkAccountsController.google')
+// Route.get('/social', 'LinkAccountsController.show').middleware('auth:api');
+// Route.post('/social', 'LinkAccountsController.set').middleware('auth:api');
+// Route.get('/google', 'LinkAccountsController.social')
+// Route.get('/google/callback', 'LinkAccountsController.google')
 
 
 
