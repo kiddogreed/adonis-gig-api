@@ -74,7 +74,6 @@ Route.post('/gig/pricing', 'GigPricingsController.set').middleware('auth:api')
 Route.post('/gig/pricing/extra-service', 'GigPricingsController.extraService').middleware('auth:api')
 Route.delete('/gig/pricing/:Id/extra-service', 'GigPricingsController.destroy').middleware('auth:api')
 
-
 Route.post('/gig/gallery', 'GigGalleriesController.set').middleware('auth:api')
 
 Route.get('/language', 'LanguagesController.show').middleware('auth:api')
@@ -113,10 +112,10 @@ Route.post('two_factor/disable','TwoFactorAuthenticationsController.disable').mi
 Route.post('two_factor/verify','TwoFactorAuthenticationsController.verify').middleware('auth:api');
 Route.post('two_factor/auth','TwoFactorAuthenticationsController.authenticate').middleware('auth:api');
 
-Route.get('/social', 'LinkAccountsController.show').middleware('auth:api');
-Route.post('/social', 'LinkAccountsController.set').middleware('auth:api');
-Route.get('/google', 'LinkAccountsController.social')
-Route.get('/google/callback', 'LinkAccountsController.google')
+// Route.get('/social', 'LinkAccountsController.show').middleware('auth:api');
+// Route.post('/social', 'LinkAccountsController.set').middleware('auth:api');
+// Route.get('/google', 'LinkAccountsController.social')
+// Route.get('/google/callback', 'LinkAccountsController.google')
 
 
 
