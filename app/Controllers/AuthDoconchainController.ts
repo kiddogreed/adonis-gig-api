@@ -7,6 +7,7 @@ import LeadRepository from 'App/Repositories/LeadRepository';
 import UserRepository from 'App/Repositories/UserRepository';
 import TokenRepository from 'App/Repositories/TokenRepository';
 import { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
+import ClientRepository from 'App/Repositories/ClientRepository';
 
 
 export default class AuthFacebooksController {
@@ -27,23 +28,52 @@ export default class AuthFacebooksController {
 
       if(!user){
 
-        const lead = await LeadRepository.firstOrCreate({ email: inputEmail })
-        const leadToken = await TokenRepository.create({
-          type: 'DOC REGISTRATION',
-          code: RandomString.generate(25)
-        })
-        
-        const URLShortener = new UrlShortener();
-        const email = new Mail()
-        let testmail = await URLShortener.generate(Env.get("APP_FRONTEND_URL") + `/signup/verify?email=${lead.email}&code=${leadToken.code}`,1)
-        await email.verification({
-          email: lead.email,
-          code: leadToken.code,
-          URL: testmail,
-        });
+        const clientProfile = await ClientRepository.create({
+          "verified": 1,
 
+        })
+
+        await UserRepository.create({
+          "email": inputEmail,
+          "profile_id": clientProfile.id,
+          "password": "D3F4ULTP455W0RD",
+          
+        })
+
+        const newUser = await UserRepository.findBy('email',inputEmail)
+        const newToken = await auth.use('api').generate(newUser)
+
+        return response.data({
+          'token':  newToken.token,
+          'user': {
+            'id': newUser?.id,
+            'profile_type': newUser?.profile_type, 
+            'client_id': newUser?.profile_id,
+            'email': newUser?.email,
+            'username': newUser?.username, 
         
-      return response.data({ 'email': lead?.email }, "Please check your email inbox")
+          }
+        }, 'You are now logged in.')
+
+
+        //----------------------------------------
+        // const lead = await LeadRepository.firstOrCreate({ email: inputEmail })
+        // const leadToken = await TokenRepository.create({
+        //   type: 'DOC REGISTRATION',
+        //   code: RandomString.generate(25)
+        // })
+        
+        // const URLShortener = new UrlShortener();
+        // const email = new Mail()
+       
+        // await email.verification({
+        //   email: lead.email,
+        //   code: leadToken.code,
+        //   URL: await URLShortener.generate(Env.get("APP_FRONTEND_URL") + `/signup/verify?email=${lead.email}&code=${leadToken.code}`, 1
+        //   ),
+        // });
+        // return response.data({ 'email': lead?.email }, "Please check your email inbox")
+        //--------------------------------------
       }
 
       const token = await auth.use('api').generate(user)

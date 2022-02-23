@@ -43,6 +43,10 @@ export default Env.rules({
 	DOC_LINK_URL: Env.schema.string(),
 	DOC_LINK_KEY: Env.schema.string(),
 
+	DOC_APP_URL: Env.schema.string(),
+	DOC_API_URL: Env.schema.string(),
+	DOC_API_KEY: Env.schema.string(),
+	
 	GITHUB_CLIENT_ID: Env.schema.string(),
 	GITHUB_CLIENT_SECRET: Env.schema.string(),
 
