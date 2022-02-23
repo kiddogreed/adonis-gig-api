@@ -33,6 +33,10 @@ export default class LinkAccountsController {
     })
     await account.save()
 
+    const client = await ClientRepository.findBy('id', user?.profile_id)
+    client.profile_status = 'inProgress-security'
+    await client?.save()
+
     return response.ok("Your account successfully connected")
   }
 
