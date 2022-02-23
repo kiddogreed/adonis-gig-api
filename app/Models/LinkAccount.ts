@@ -12,7 +12,7 @@ export default class LinkAccount extends BaseModel {
   public email: string
 
   @column()
-  public token: string
+  public social_id: string
 
   @column()
   public verified: boolean
