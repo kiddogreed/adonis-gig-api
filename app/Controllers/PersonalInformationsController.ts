@@ -1,7 +1,6 @@
 
 import ClientRepository from 'App/Repositories/ClientRepository'
 import { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
-import LanguageRepository from 'App/Repositories/LanguageRepository'
 import PersonalTransformer from 'App/Transformers/PersonalTransformer'
 import ProfileSetupValidator from 'App/Validators/ProfileSetupValidator'
 import ProfileStatusRepository from 'App/Repositories/ProfileStatusRepository'
