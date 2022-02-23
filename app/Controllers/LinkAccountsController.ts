@@ -28,7 +28,7 @@ export default class LinkAccountsController {
       email: request.input('email'),
       name: request.input('name'),
       presence_name: request.input('social'),
-      social_id: request.input('token'),
+      social_id: request.input('social_id'),
       verified: true
     })
     await account.save()
