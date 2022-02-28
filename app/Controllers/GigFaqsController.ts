@@ -5,7 +5,7 @@ import GigFaqAnswerRepository from 'App/Repositories/GigFaqAnswerRepository'
 
 export default class GigFaqsController {
 
-  async show({auth,response,transform}:HttpContextContract){
+  async show({auth,response,transform}){
     const user = auth.user
     try{
       const description = await GigFaqRepository.query().where('client_id', user.profile_id)
@@ -50,7 +50,7 @@ export default class GigFaqsController {
     try {
       const gigFaq = await GigFaqRepository.findOrFail(params.Id)
       await gigFaq.delete()
-      const gigAnswer = await GigFaqAnswerRepository.findBy('faq_id', params.id)
+      const gigAnswer = await GigFaqAnswerRepository.findBy('faq_id', params.Id)
       await gigAnswer.delete()
 
       return response.ok('Gig FAQ successfully deleted')

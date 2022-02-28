@@ -66,9 +66,9 @@ Route.post('/gig/requirement', 'GigRequirementsController.set').middleware('auth
 Route.put('/gig/question/:Id/requirement', 'GigRequirementsController.question').middleware('auth:api')
 Route.put('/gig/answer/:Id/requirement', 'GigRequirementsController.choice').middleware('auth:api')
 
-Route.post('/gig/faq/answer', 'GigFaqAnswerController.set').middleware('auth:api')
-Route.put('/gig/:Id/faq/answer', 'GigFaqAnswerController.update').middleware('auth:api')
-Route.delete('/gig/:Id/faq/answer', 'GigFaqAnswerController.destroy').middleware('auth:api')
+Route.post('/gig/faq/answer', 'GigFaqAnswersController.set').middleware('auth:api')
+Route.put('/gig/:Id/faq/answer', 'GigFaqAnswersController.update').middleware('auth:api')
+Route.delete('/gig/:Id/faq/answer', 'GigFaqAnswersController.destroy').middleware('auth:api')
 
 Route.post('/gig/pricing', 'GigPricingsController.set').middleware('auth:api')
 Route.post('/gig/pricing/extra-service', 'GigPricingsController.extraService').middleware('auth:api')
@@ -112,10 +112,6 @@ Route.post('two_factor/disable','TwoFactorAuthenticationsController.disable').mi
 Route.post('two_factor/verify','TwoFactorAuthenticationsController.verify').middleware('auth:api');
 Route.post('two_factor/auth','TwoFactorAuthenticationsController.authenticate').middleware('auth:api');
 
-// Route.get('/social', 'LinkAccountsController.show').middleware('auth:api');
-// Route.post('/social', 'LinkAccountsController.set').middleware('auth:api');
-// Route.get('/google', 'LinkAccountsController.social')
-// Route.get('/google/callback', 'LinkAccountsController.google')
 
 
 
