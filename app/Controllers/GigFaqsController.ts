@@ -5,13 +5,13 @@ import GigFaqAnswerRepository from 'App/Repositories/GigFaqAnswerRepository'
 
 export default class GigFaqsController {
 
-  async show({auth,response,transform}){
+  async show({ auth, response, transform }) {
     const user = auth.user
-    try{
+    try {
       const description = await GigFaqRepository.query().where('client_id', user.profile_id)
       return response.resource(await transform.collection(description, GigFaqTransformer))
     }
-    catch(e){
+    catch (e) {
       return response.badRequest('Invalid FAQ request')
     }
   }
@@ -48,11 +48,13 @@ export default class GigFaqsController {
 
   async destroy({ response, params }: HttpContextContract) {
     try {
-      const gigFaq = await GigFaqRepository.findOrFail(params.Id)
+      const gigFaq = await GigFaqRepository.findBy('id', params.Id)
       await gigFaq.delete()
-      const gigAnswer = await GigFaqAnswerRepository.findBy('faq_id', params.Id)
-      await gigAnswer.delete()
 
+      const gigAnswer = await GigFaqAnswerRepository.findBy('faq_id', params.Id)
+      if (gigAnswer) {
+        await gigAnswer.delete()
+      }
       return response.ok('Gig FAQ successfully deleted')
     } catch (e) {
       return response.badRequest('Invalid FAQ request')

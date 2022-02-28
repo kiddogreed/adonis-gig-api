@@ -5,7 +5,7 @@ import GigMultipleChoiceRepository from 'App/Repositories/GigMultipleChoiceRepos
 
 export default class GigRequirementsController {
 
-  async index({ auth, response, transform }: HttpContextContract) {
+  async index({ auth, response, transform }) {
     try {
       const user = auth.user
       const certification = await GigRequirementRepository.query().where('client_id', user.profile_id)
@@ -75,6 +75,18 @@ export default class GigRequirementsController {
       return response.ok('Gig option updated')
     } catch (e) {
       return response.badRequest('Gig option invalid')
+    }
+  }
+
+  async destroy({response,params}:HttpContextContract){
+    try {
+      const requirement = await GigRequirementRepository.findByOrFail('id', params.Id)
+      await requirement.delete()
+
+      return response.ok('Requirement successfully deleted')
+
+    } catch (e) {
+      return response.badRequest('Invalid Requirement request')
     }
   }
 
