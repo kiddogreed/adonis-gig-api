@@ -7,7 +7,7 @@ export default class GigFaqAnswersController {
     const user = auth.user
     try {
       const FaqAnswer = await GigFaqAnswerRepository.create({
-        client_id: user.profile_id,i
+        client_id: user.profile_id,
         faq_id: request.input('faq_id'),
         answer: request.input('answer')
       })

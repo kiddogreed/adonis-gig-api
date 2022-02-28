@@ -40,14 +40,11 @@ export default class PersonalInformationsController {
 
       const client = await ClientRepository.findByOrFail('id', user.profile_id)
 
-      if (!data.website) {
-        client.first_name = data.first_name,
-          client.last_name = data.last_name,
-          client.photo = data.photo,
-          client.description = data.description
-        await client?.save()
-        return response.ok("Personal information successfully saved")
-      }
+      client.first_name = data.first_name,
+        client.last_name = data.last_name,
+        client.photo = data.photo,
+        client.description = data.description
+      await client?.save()
 
       if (data.website) {
         const unders = ['Occupation', 'Skill', 'Education']
@@ -63,6 +60,8 @@ export default class PersonalInformationsController {
 
         return response.ok("Website information successfully saved")
       }
+
+      return response.ok("Personal information successfully saved")
     } catch (e) {
       return response.badRequest('Invalid Profile Request')
     }
