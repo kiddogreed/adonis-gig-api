@@ -8,6 +8,8 @@ import UserRepository from 'App/Repositories/UserRepository';
 import TokenRepository from 'App/Repositories/TokenRepository';
 import { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
 import ClientRepository from 'App/Repositories/ClientRepository';
+import SignUpValidator from 'App/Validators/SignUpValidator';
+import RegisterValidator from 'App/Validators/RegisterValidator';
 
 
 export default class AuthFacebooksController {
@@ -36,7 +38,7 @@ export default class AuthFacebooksController {
         await UserRepository.create({
           "email": inputEmail,
           "profile_id": clientProfile.id,
-          "password": "D3F4ULTP455W0RD",
+          "password": Env.get('DEFAULT_PASSWORD'),
           
         })
 
@@ -97,5 +99,40 @@ export default class AuthFacebooksController {
   return response.unauthorized('Token expired or is invalid!')
     }
 
+  }
+
+  public async gigToDoc({ auth, request, response}:HttpContextContract){
+    const axios = require('axios');
+    await request.validate(SignUpValidator)
+    const data = request.only([
+      "email",
+    ])
+
+    await request.validate(RegisterValidator)
+    const passwordInput = request.input('password');
+    
+    try {
+
+      const datas = {
+        "email": data.email,
+        "password":passwordInput
+      }
+      
+      const config = {
+        method:'POST',
+        url: `https://stg-api.doconchain.io/auth/gig`,
+          headers: { 
+            'Content-Type': 'application/json'
+                },
+             data:datas
+      }
+  
+      const details = await axios(config)
+      return response.ok(details.data)
+      
+    } catch (error) {
+      return response.badRequest('Invalid Verified Request')
+    }
+ 
   }
 }

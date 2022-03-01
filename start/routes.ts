@@ -27,6 +27,7 @@ Route.post('/auth', 'AuthController.login')
 Route.post('/auth/logout', 'AuthController.logout')
 
 Route.post('doc/auth','AuthDoconchainController.login')
+Route.post('doc/login','AuthDoconchainController.gigToDoc')
 
 Route.get('/categories', 'CategoriesController.index')
 Route.post('/categories', 'CategoriesController.set')
