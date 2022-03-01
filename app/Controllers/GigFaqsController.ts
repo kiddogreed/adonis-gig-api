@@ -1,7 +1,6 @@
 import { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
 import GigFaqRepository from 'App/Repositories/GigFaqRepository'
 import GigFaqTransformer from 'App/Transformers/GigFaqTransformer'
-import GigFaqAnswerRepository from 'App/Repositories/GigFaqAnswerRepository'
 
 export default class GigFaqsController {
 
@@ -21,11 +20,12 @@ export default class GigFaqsController {
     try {
       const gigFaq = await GigFaqRepository.create({
         client_id: user.profile_id,
-        question: request.input('question')
+        question: request.input('question'),
+        answer: request.input('answer')
       })
       await gigFaq.save()
 
-      return response.ok('Gig FAQ created')
+      return response.ok('Gig FAQ successfully created')
 
     } catch (e) {
       console.log(e)
@@ -37,9 +37,10 @@ export default class GigFaqsController {
     try {
       const gigFaq = await GigFaqRepository.findByOrFail('id', params.Id)
       gigFaq.question = request.input('question')
+      gigFaq.answer = request.input('answer')
       await gigFaq.save()
 
-      return response.ok('Gig FAQ updated')
+      return response.ok('Gig FAQ successfully updated')
 
     } catch (e) {
       return response.badRequest('Invalid FAQ request')
@@ -51,10 +52,6 @@ export default class GigFaqsController {
       const gigFaq = await GigFaqRepository.findBy('id', params.Id)
       await gigFaq.delete()
 
-      const gigAnswer = await GigFaqAnswerRepository.findBy('faq_id', params.Id)
-      if (gigAnswer) {
-        await gigAnswer.delete()
-      }
       return response.ok('Gig FAQ successfully deleted')
     } catch (e) {
       return response.badRequest('Invalid FAQ request')

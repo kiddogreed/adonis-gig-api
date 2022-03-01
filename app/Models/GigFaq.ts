@@ -11,6 +11,9 @@ export default class GigFaq extends BaseModel {
   @column()
   public question: string
 
+  @column()
+  public answer: string
+
   @column.dateTime({ autoCreate: true })
   public createdAt: DateTime
 

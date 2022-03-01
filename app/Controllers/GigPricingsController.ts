@@ -18,7 +18,6 @@ export default class GigPricingsController {
       
       const data = request.input([`data`])
       for(let value of data){
-        console.log('package',data.inclusion_package)
         const inclusion = await GigPackageInclusionRepository.create({
           client_id: user.profile_id,
           inclusion_name: value.inclusion_name,
@@ -29,6 +28,7 @@ export default class GigPricingsController {
      
       return response.ok('Scope and Pricing successfully saved')
     } catch (e) {
+      console.log(e)
       return response.badRequest('Scope and Pricing Invalid')
     }
   }

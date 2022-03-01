@@ -9,6 +9,7 @@ export default class GigFaqTransformer extends TransformerAbstract {
       id: faq.id,
       client_id: faq.client_id,
       question: faq.question,
+      answer: faq.answer,
       created_at: faq.createdAt,
       updated_at: faq.updatedAt
     }
