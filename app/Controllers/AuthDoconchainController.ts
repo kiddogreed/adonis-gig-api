@@ -103,18 +103,21 @@ export default class AuthFacebooksController {
 
   public async gigToDoc({ auth, request, response}:HttpContextContract){
     const axios = require('axios');
-    await request.validate(SignUpValidator)
-    const data = request.only([
-      "email",
-    ])
+    // await request.validate(SignUpValidator)
+    // const data = request.only([
+    //   "email",
+    // ])
 
-    await request.validate(RegisterValidator)
-    const passwordInput = request.input('password');
+    // await request.validate(RegisterValidator)
+    // const passwordInput = request.input('password');
+
+    const emailInput = request.input("email")
+    const passwordInput = request.input('password')
     
     try {
 
       const datas = {
-        "email": data.email,
+        "email": emailInput,
         "password":passwordInput
       }
       
