@@ -1,5 +1,6 @@
 import GigPricingRepository from "App/Repositories/GigPricingRepository"
 import GigExtraServiceRepository from "App/Repositories/GigExtraServiceRepository"
+import GigPackageInclusionRepository from "App/Repositories/GigPackageInclusionRepository"
 export default class GigPricingsController {
 
   async set({ auth, request, response }) {
@@ -14,6 +15,18 @@ export default class GigPricingsController {
         price: request.input('price')
       })
       await gigPricing.save()
+      
+      const data = request.input([`data`])
+      for(let value of data){
+        console.log('package',data.inclusion_package)
+        const inclusion = await GigPackageInclusionRepository.create({
+          client_id: user.profile_id,
+          inclusion_name: value.inclusion_name,
+          package_name: value.inclusion_package,
+        })
+        await inclusion.save()
+      }
+     
       return response.ok('Scope and Pricing successfully saved')
     } catch (e) {
       return response.badRequest('Scope and Pricing Invalid')
