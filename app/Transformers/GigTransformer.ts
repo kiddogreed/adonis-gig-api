@@ -8,7 +8,8 @@ export default class GigTransformer extends TransformerAbstract {
     return {
       id: gig.id,
       client_id: gig.client_id,
-      name: gig.name,
+      title: gig.name,
+      tag: gig.tag,
       category_id: gig.category_id,
       subcategory_id: gig.subcategory_id
     }
