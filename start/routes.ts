@@ -51,6 +51,7 @@ Route.delete('/education/:Id', 'EducationsController.destroy').middleware('auth:
 
 Route.get('/gig', 'GigsController.show').middleware('auth:api')
 Route.post('/gig', 'GigsController.set').middleware('auth:api')
+Route.put('/gig/:Id', 'GigsController.update').middleware('auth:api')
 Route.get('/gig/category', 'GigsController.gigCategory').middleware('auth:api')
 Route.get('/gig/sub-category', 'GigsController.subCategory').middleware('auth:api')
 

@@ -66,9 +66,25 @@ export default class GigsController {
         tag: request.input('tag')
       })
       await gig.save()
-      return response.ok('Gig information created')
+      return response.ok('Gig information successfully created')
 
     } catch (e) {
+      return response.badRequest('Invalid Gig Request')
+    }
+  }
+
+  async update({request,params,response}){
+    const data = request.only(['title', 'category_id', 'subcategory_id', 'tag'])
+    try{
+      const gig = await GigRepository.findBy('id',params.Id)
+      gig.name = data.title,
+      gig.category_id = data.category_id,
+      gig.subcategory_id = data.subcategory_id,
+      gig.tag = data.tag
+      await gig?.save()
+
+      return response.ok('Gig information successfully updated')
+    }catch(e){
       return response.badRequest('Invalid Gig Request')
     }
   }
