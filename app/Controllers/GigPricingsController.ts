@@ -1,7 +1,19 @@
 import GigPricingRepository from "App/Repositories/GigPricingRepository"
 import GigExtraServiceRepository from "App/Repositories/GigExtraServiceRepository"
 import GigPackageInclusionRepository from "App/Repositories/GigPackageInclusionRepository"
+import GigScopeAndPricingTransformer from "App/Transformers/GigScopeAndPricingTransformer"
 export default class GigPricingsController {
+
+  async show({auth, response, transform}) {
+    const user = auth.user
+    try {
+      const gigPricing = await GigPricingRepository.findBy('client_id', user.profile_id)
+      return response.resource(await transform.item(gigPricing, GigScopeAndPricingTransformer))
+    } catch (e) {
+      console.log(e)
+      return response.badRequest('Scope and Pricing Invalid')
+    }
+  }
 
   async set({ auth, request, response }) {
     const user = auth.user
@@ -15,9 +27,9 @@ export default class GigPricingsController {
         price: request.input('price')
       })
       await gigPricing.save()
-      
+
       const data = request.input([`data`])
-      for(let value of data){
+      for (let value of data) {
         const inclusion = await GigPackageInclusionRepository.create({
           client_id: user.profile_id,
           inclusion_name: value.inclusion_name,
@@ -25,7 +37,7 @@ export default class GigPricingsController {
         })
         await inclusion.save()
       }
-     
+
       return response.ok('Scope and Pricing successfully saved')
     } catch (e) {
       console.log(e)

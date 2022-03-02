@@ -49,6 +49,7 @@ Route.post('/education', 'EducationsController.set').middleware('auth:api')
 Route.put('/education/:Id', 'EducationsController.update').middleware('auth:api')
 Route.delete('/education/:Id', 'EducationsController.destroy').middleware('auth:api')
 
+Route.get('/gig', 'GigsController.show').middleware('auth:api')
 Route.post('/gig', 'GigsController.set').middleware('auth:api')
 Route.get('/gig/category', 'GigsController.gigCategory').middleware('auth:api')
 Route.get('/gig/sub-category', 'GigsController.subCategory').middleware('auth:api')
@@ -70,10 +71,12 @@ Route.put('/gig/answer/:Id/requirement', 'GigRequirementsController.choice').mid
 
 Route.get('/gig/manage/post', 'GigManagePostsController.show').middleware('auth:api')
 
+Route.get('/gig/pricing', 'GigPricingsController.show').middleware('auth:api')
 Route.post('/gig/pricing', 'GigPricingsController.set').middleware('auth:api')
 Route.post('/gig/pricing/extra-service', 'GigPricingsController.extraService').middleware('auth:api')
 Route.delete('/gig/pricing/:Id/extra-service', 'GigPricingsController.destroy').middleware('auth:api')
 
+Route.get('/gig/gallery', 'GigGalleriesController.show').middleware('auth:api')
 Route.post('/gig/gallery', 'GigGalleriesController.set').middleware('auth:api')
 
 Route.get('/language', 'LanguagesController.show').middleware('auth:api')

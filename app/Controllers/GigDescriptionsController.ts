@@ -4,7 +4,7 @@ import GigDescriptionTransformer from 'App/Transformers/GigDescriptionTransforme
 
 export default class GigDescriptionsController {
 
-  async show({auth,response,transform}:HttpContextContract){
+  async show({auth,response,transform}){
     const user = auth.user
     try{
       const description = await GigDescriptionRepository.findByOrFail('client_id', user.profile_id)
