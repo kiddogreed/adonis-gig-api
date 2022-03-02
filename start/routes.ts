@@ -62,6 +62,11 @@ Route.post('/gig/faq', 'GigFaqsController.set').middleware('auth:api')
 Route.put('/gig/:Id/faq', 'GigFaqsController.update').middleware('auth:api')
 Route.delete('/gig/:Id/faq', 'GigFaqsController.destroy').middleware('auth:api')
 
+Route.get('gig/post', 'GigPostsController.index')
+//Route.get('gig/post/:id', 'GigPostsController.get')
+// Route.post('gig/post', 'GigPostsController.index')
+// Route.get('gig/post', 'GigPostsController.index')
+
 Route.get('/gig/requirement', 'GigRequirementsController.index').middleware('auth:api')
 Route.post('/gig/requirement', 'GigRequirementsController.set').middleware('auth:api')
 Route.delete('/gig/:Id/requirement', 'GigRequirementsController.destroy').middleware('auth:api')

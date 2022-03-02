@@ -8,7 +8,7 @@ import SubCategoryTransformer from 'App/Transformers/SubCategoryTransformer'
 
 export default class GigsController {
 
-  async gigCategory({ response, request, transform }) {
+  async gigCategory( { response, request, transform}) {
     try {
       const filter = request.only('name')
       const query = GigCategoryRepository.query()
