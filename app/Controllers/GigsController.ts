@@ -1,12 +1,26 @@
+
 import GigRepository from 'App/Repositories/GigRepository'
 import GigValidator from 'App/Validators/GigCreateValidator'
+import GigTransformer from 'App/Transformers/GigTransformer'
 import { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
 import GigCategoryRepository from 'App/Repositories/GigCategoryRepository'
 import GigCategoryTransformer from 'App/Transformers/GigCategoryTransformer'
 import SubCategorieRepository from 'App/Repositories/SubCategorieRepository'
 import SubCategoryTransformer from 'App/Transformers/SubCategoryTransformer'
 
+
 export default class GigsController {
+
+  async show({ auth, response, transform }) {
+    try {
+      const user = auth.user
+      const gig = await GigRepository.query().where('client_id', user.profile_id).first()
+      return response.resource(await transform.item(gig, GigTransformer))
+    } catch (e) {
+      console.log(e)
+      return response.badRequest('Invalid Gig Request')
+    }
+  }
 
   async gigCategory({ response, request, transform }) {
     try {
