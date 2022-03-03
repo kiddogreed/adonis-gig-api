@@ -1,5 +1,18 @@
 import GigGallerieRepository from "App/Repositories/GigGallerieRepository"
+import GigGalleryTransformer from "App/Transformers/GigGalleryTransformer"
 export default class GigGalleriesController {
+
+
+  async show({ auth, response, transform }) {
+    const user = auth.user
+    try {
+      const gallery = await GigGallerieRepository.query().where('client_id',user.profile_id)
+      return response.resource(await transform.collection(gallery, GigGalleryTransformer))
+    } catch (e) {
+      console.log(e)
+      return response.badRequest('Invalid file Request')
+    }
+  }
 
   async set({ auth, request, response }) {
     const user = auth.user

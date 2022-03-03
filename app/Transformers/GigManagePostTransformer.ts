@@ -6,19 +6,18 @@ import GigGallerieRepository from 'App/Repositories/GigGallerieRepository'
 
 export default class GigManagePostTransformer extends TransformerAbstract {
   public async transform(gig: GigRepository) {
-    const categoryRepository = await GigCategoryRepository.findByOrFail('id', gig.category_id)
+    const categoryRepository = await GigCategoryRepository.query().where('id', gig.category_id)
     const subRepository = await SubCategoryRepository.findByOrFail('id', gig.subcategory_id)
     const gigGallerry = await GigGallerieRepository.findByOrFail('client_id', gig.client_id)
-
 
     return {
       id: gig.id,
       client_id: gig.client_id,
       name: gig.name,
-      category_name: categoryRepository?.name,
-      subcategory_name: subRepository?.name,
       created_at: gig.createdAt,
-      updated_at: gig.updatedAt,
+      updated_a: gig.updatedAt,
+      category_name: categoryRepository,
+      subcategory_name: subRepository,
       gallery: gigGallerry,
     }
   }
