@@ -4,6 +4,7 @@ export default class GigGalleriesController {
   async set({ auth, request, response }) {
     const user = auth.user
     const data = request.input([`data`])
+    
     try {
       for (let value of data) {
         const gallery = await GigGallerieRepository.create({

@@ -1,5 +1,18 @@
 import { DateTime } from 'luxon'
-import { BaseModel, column } from '@ioc:Adonis/Lucid/Orm'
+
+import {
+  BaseModel,
+  column,
+  // hasOne,
+  // HasOne,
+  // HasMany,
+  // hasMany,
+  // belongsTo,
+  // BelongsTo,
+} from '@ioc:Adonis/Lucid/Orm'
+//import UserRepository from 'App/Repositories/UserRepository'
+
+
 
 export default class Client extends BaseModel {
   static get table() {
@@ -55,5 +68,11 @@ export default class Client extends BaseModel {
 
   @column.dateTime({ autoCreate: true, autoUpdate: true })
   public updatedAt: DateTime
+
+  // @hasOne(() => UserRepository, {
+  //   localKey: 'id',
+  //   foreignKey: 'profile_id'
+  // })
+  // public user: HasOne<typeof UserRepository>
 
 }
