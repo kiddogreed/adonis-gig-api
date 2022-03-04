@@ -76,7 +76,7 @@ export default class GigsController {
   async update({request,params,response}){
     const data = request.only(['title', 'category_id', 'subcategory_id', 'tag'])
     try{
-      const gig = await GigRepository.findBy('id',params.Id)
+      const gig = await GigRepository.findBy('id',params.id)
       gig.name = data.title,
       gig.category_id = data.category_id,
       gig.subcategory_id = data.subcategory_id,
