@@ -23,13 +23,14 @@ export default class GigsController {
   async gigCategory({ response, request, transform }) {
     try {
       const filter = request.only('name')
+      console.log(filter.name,'here')
       const query = GigCategoryRepository.query()
       if (filter.name) {
         query.where('name', 'LIKE', `${filter.name}`)
       }
       const gigCategory = await query.orderByRaw('id')
 
-      return response.resource(await transform.collection(gigCategory, SubCategoryTransformer))
+      return response.resource(await transform.collection(gigCategory, GigCategoryTransformer))
 
     } catch (e) {
       return response.badRequest('Invalid GigCategory Request')
@@ -45,7 +46,7 @@ export default class GigsController {
       }
       const subCategory = await query.orderByRaw('id')
 
-      return response.resource(await transform.collection(subCategory, GigCategoryTransformer))
+      return response.resource(await transform.collection(subCategory, SubCategoryTransformer))
 
     } catch (e) {
       return response.badRequest('Invalid SubCategory Request')
