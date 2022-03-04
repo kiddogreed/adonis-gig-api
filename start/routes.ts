@@ -78,6 +78,7 @@ Route.get('/gig/manage/post', 'GigManagePostsController.show').middleware('auth:
 
 Route.get('/gig/:gigId/pricing', 'GigPricingsController.show').middleware('auth:api')
 Route.post('/gig/pricing', 'GigPricingsController.set').middleware('auth:api')
+Route.put('/gig/:id/pricing', 'GigPricingsController.update').middleware('auth:api')
 Route.post('/gig/pricing/extra-service', 'GigPricingsController.extraService').middleware('auth:api')
 Route.delete('/gig/pricing/:Id/extra-service', 'GigPricingsController.destroy').middleware('auth:api')
 
