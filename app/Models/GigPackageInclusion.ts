@@ -9,10 +9,16 @@ export default class GigPackageInclusion extends BaseModel {
   public client_id: number
 
   @column()
-  public inclusion_name: string
+  public gig_id: number
+
+  @column()
+  public package_inclusion: string
 
   @column()
   public package_name: string
+
+  @column()
+  public feature_name: string
 
   @column.dateTime({ autoCreate: true })
   public createdAt: DateTime

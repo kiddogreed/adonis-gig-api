@@ -20,6 +20,7 @@ export default class GigFaqsController {
     try {
       const gigFaq = await GigFaqRepository.create({
         client_id: user.profile_id,
+        gig_id: request.input('gig_id'),
         question: request.input('question'),
         answer: request.input('answer')
       })
