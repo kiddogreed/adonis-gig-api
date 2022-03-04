@@ -9,6 +9,9 @@ export default class GigFaq extends BaseModel {
   public client_id: number
 
   @column()
+  public gig_id: number
+
+  @column()
   public question: string
 
   @column()

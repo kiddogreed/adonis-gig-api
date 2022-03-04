@@ -2,7 +2,6 @@
 import GigRepository from 'App/Repositories/GigRepository'
 import GigValidator from 'App/Validators/GigCreateValidator'
 import GigTransformer from 'App/Transformers/GigTransformer'
-import { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
 import GigCategoryRepository from 'App/Repositories/GigCategoryRepository'
 import GigCategoryTransformer from 'App/Transformers/GigCategoryTransformer'
 import SubCategorieRepository from 'App/Repositories/SubCategorieRepository'
@@ -11,13 +10,10 @@ import SubCategoryTransformer from 'App/Transformers/SubCategoryTransformer'
 
 export default class GigsController {
 
-<<<<<<< HEAD
-  async gigCategory( { response, request, transform}) {
-=======
-  async show({ auth, response, transform }) {
+
+  async show({ params, response, transform }) {
     try {
-      const user = auth.user
-      const gig = await GigRepository.query().where('client_id', user.profile_id).first()
+      const gig = await GigRepository.findBy('id',params.id)
       return response.resource(await transform.item(gig, GigTransformer))
     } catch (e) {
       return response.badRequest('Invalid Gig Request')
@@ -25,16 +21,16 @@ export default class GigsController {
   }
 
   async gigCategory({ response, request, transform }) {
->>>>>>> 1140887731c10b279b2a51f743d35ffed40c575e
     try {
       const filter = request.only('name')
+      console.log(filter.name,'here')
       const query = GigCategoryRepository.query()
       if (filter.name) {
         query.where('name', 'LIKE', `${filter.name}`)
       }
       const gigCategory = await query.orderByRaw('id')
 
-      return response.resource(await transform.collection(gigCategory, SubCategoryTransformer))
+      return response.resource(await transform.collection(gigCategory, GigCategoryTransformer))
 
     } catch (e) {
       return response.badRequest('Invalid GigCategory Request')
@@ -50,14 +46,14 @@ export default class GigsController {
       }
       const subCategory = await query.orderByRaw('id')
 
-      return response.resource(await transform.collection(subCategory, GigCategoryTransformer))
+      return response.resource(await transform.collection(subCategory, SubCategoryTransformer))
 
     } catch (e) {
       return response.badRequest('Invalid SubCategory Request')
     }
   }
 
-  async set({ auth, response, request }: HttpContextContract) {
+  async set({ auth, response, request }) {
     await request.validate(GigValidator)
     const user = auth.user
     try {
@@ -66,10 +62,11 @@ export default class GigsController {
         name: request.input('title'),
         category_id: request.input('category_id'),
         subcategory_id: request.input('subcategory_id'),
-        tag: request.input('tag')
+        tag: request.input('tag'),
+        status: 'draft'
       })
       await gig.save()
-      return response.ok('Gig information successfully created')
+      return response.data({ 'id': gig.id }, 'Gig information successfully created')
 
     } catch (e) {
       return response.badRequest('Invalid Gig Request')

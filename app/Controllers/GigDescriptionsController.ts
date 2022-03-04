@@ -20,6 +20,7 @@ export default class GigDescriptionsController {
     try {
       const gigDescription = await GigDescriptionRepository.create({
         client_id: user.profile_id,
+        
         description: request.input('description'),
       })
       await gigDescription.save()

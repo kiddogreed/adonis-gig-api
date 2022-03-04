@@ -33,6 +33,8 @@ Route.get('/categories', 'CategoriesController.index')
 Route.post('/categories', 'CategoriesController.set')
 Route.put('/categories/:id', 'CategoriesController.update')
 
+Route.get('category', 'GigsController.gigCategory').middleware('auth:api')
+
 Route.get('/certification', 'CertificationsController.index').middleware('auth:api')
 Route.post('/certification', 'CertificationsController.set').middleware('auth:api')
 Route.put('/certification/:Id', 'CertificationsController.update').middleware('auth:api')
@@ -49,11 +51,9 @@ Route.post('/education', 'EducationsController.set').middleware('auth:api')
 Route.put('/education/:Id', 'EducationsController.update').middleware('auth:api')
 Route.delete('/education/:Id', 'EducationsController.destroy').middleware('auth:api')
 
-Route.get('/gig', 'GigsController.show').middleware('auth:api')
+Route.get('/gig/:id', 'GigsController.show').middleware('auth:api')
 Route.post('/gig', 'GigsController.set').middleware('auth:api')
-Route.put('/gig/:Id', 'GigsController.update').middleware('auth:api')
-Route.get('/gig/category', 'GigsController.gigCategory').middleware('auth:api')
-Route.get('/gig/sub-category', 'GigsController.subCategory').middleware('auth:api')
+Route.put('/gig/:id', 'GigsController.update').middleware('auth:api')
 
 Route.get('/gig/description', 'GigDescriptionsController.show').middleware('auth:api')
 Route.post('/gig/description', 'GigDescriptionsController.set').middleware('auth:api')
@@ -76,7 +76,7 @@ Route.put('/gig/answer/:Id/requirement', 'GigRequirementsController.choice').mid
 
 Route.get('/gig/manage/post', 'GigManagePostsController.show').middleware('auth:api')
 
-Route.get('/gig/pricing', 'GigPricingsController.show').middleware('auth:api')
+Route.get('/gig/:gigId/pricing', 'GigPricingsController.show').middleware('auth:api')
 Route.post('/gig/pricing', 'GigPricingsController.set').middleware('auth:api')
 Route.post('/gig/pricing/extra-service', 'GigPricingsController.extraService').middleware('auth:api')
 Route.delete('/gig/pricing/:Id/extra-service', 'GigPricingsController.destroy').middleware('auth:api')
@@ -114,6 +114,8 @@ Route.post('/skill', 'SkillsController.set').middleware('auth:api')
 Route.put('/skill/:Id', 'SkillsController.update').middleware('auth:api')
 Route.delete('/skill/:Id', 'SkillsController.destroy').middleware('auth:api')
 Route.get('/skill/name', 'SkillsController.show').middleware('auth:api')
+
+Route.get('sub-category', 'GigsController.subCategory').middleware('auth:api')
 
 Route.post('two_factor/enable','TwoFactorAuthenticationsController.enable').middleware('auth:api');
 Route.post('two_factor/disable','TwoFactorAuthenticationsController.disable').middleware('auth:api');

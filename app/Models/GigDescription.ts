@@ -9,6 +9,9 @@ export default class GigDescription extends BaseModel {
   public client_id:  number
 
   @column()
+  public gig_id:  number
+
+  @column()
   public description: string
 
   @column.dateTime({ autoCreate: true })
