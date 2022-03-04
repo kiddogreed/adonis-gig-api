@@ -1,13 +1,12 @@
 import GigPricingRepository from "App/Repositories/GigPricingRepository"
 import GigExtraServiceRepository from "App/Repositories/GigExtraServiceRepository"
-import GigPackageInclusionRepository from "App/Repositories/GigPackageInclusionRepository"
 import GigScopeAndPricingTransformer from "App/Transformers/GigScopeAndPricingTransformer"
 export default class GigPricingsController {
 
   async show({ params, response, transform }) {
     try {
-      const gigPricing = await GigPricingRepository.findBy('gig_id', params.gigId)
-      return response.resource(await transform.item(gigPricing, GigScopeAndPricingTransformer))
+      const gigPricing = await GigPricingRepository.query().where('gig_id', params.gigId)
+      return response.resource(await transform.collection(gigPricing, GigScopeAndPricingTransformer))
     } catch (e) {
       console.log(e)
       return response.badRequest('Scope and Pricing Invalid')
@@ -26,24 +25,41 @@ export default class GigPricingsController {
           package_name: value.package_name,
           package_description: value.description,
           delivery_time: value.delivery_time,
-          price: value.price
+          price: value.price,
+          inclusion_one: value.inclusion_one,
+          inclusion_two: value.inclusion_two,
+          inclusion_three: value.inclusion_three
         })
         await gigPricing.save()
-
-        const inclusion = await GigPackageInclusionRepository.create({
-          client_id: user.profile_id,
-          gig_id: value.gig_id,
-          package_inclusion: value.package_inclusion,
-          package_name: value.package_inclusion_name,
-          feature_name: value.feature_name
-        })
-        await inclusion.save()
       }
-      return response.data({ 'Id': request.input('gig_id') }, 'Scope and Pricing successfully saved')
+      return response.data({ 'id': request.input('gig_id') }, 'Scope and Pricing successfully saved')
 
     } catch (e) {
       console.log(e)
       return response.badRequest('Scope and Pricing Invalid')
+    }
+  }
+
+  async update({ auth, request, params, response }) {
+    const user = auth.user
+    try {
+      const data = request.input([`data`])
+      for (let value of data) {
+        const gigPricing = await GigPricingRepository.query().where('id', params.id).where('client_id', user.profile_id).first()
+        gigPricing.package = value.package,
+          gigPricing.package_name = value.package_name,
+          gigPricing.package_description = value.description,
+          gigPricing.delivery_time = value.delivery_time,
+          gigPricing.price = value.price,
+          gigPricing.inclusion_one = value.inclusion_one,
+          gigPricing.inclusion_two = value.inclusion_two,
+          gigPricing.inclusion_three = value.inclusion_three
+
+        await gigPricing?.save()
+      }
+      return response.data({ 'id': request.input('gig_id')}, 'Scope and Pricing successfully saved')
+    } catch (e) {
+
     }
   }
 
