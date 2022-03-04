@@ -4,10 +4,9 @@ import GigPackageInclusionRepository from "App/Repositories/GigPackageInclusionR
 import GigScopeAndPricingTransformer from "App/Transformers/GigScopeAndPricingTransformer"
 export default class GigPricingsController {
 
-  async show({ auth, response, transform }) {
-    const user = auth.user
+  async show({ params, response, transform }) {
     try {
-      const gigPricing = await GigPricingRepository.findBy('client_id', user.profile_id)
+      const gigPricing = await GigPricingRepository.findBy('gig_id', params.gigId)
       return response.resource(await transform.item(gigPricing, GigScopeAndPricingTransformer))
     } catch (e) {
       console.log(e)
@@ -22,6 +21,7 @@ export default class GigPricingsController {
       for (let value of data) {
         const gigPricing = await GigPricingRepository.create({
           client_id: user.profile_id,
+          gig_id: value.gig_id,
           package: value.package,
           package_name: value.package_name,
           package_description: value.description,
@@ -32,12 +32,14 @@ export default class GigPricingsController {
 
         const inclusion = await GigPackageInclusionRepository.create({
           client_id: user.profile_id,
-          inclusion_name: value.inclusion_name,
-          package_name: value.inclusion_package,
+          gig_id: value.gig_id,
+          package_inclusion: value.package_inclusion,
+          package_name: value.package_inclusion_name,
+          feature_name: value.feature_name
         })
         await inclusion.save()
       }
-      return response.ok('Scope and Pricing successfully saved')
+      return response.data({ 'Id': request.input('gig_id') }, 'Scope and Pricing successfully saved')
 
     } catch (e) {
       console.log(e)

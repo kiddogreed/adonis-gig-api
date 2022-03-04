@@ -9,6 +9,9 @@ export default class GigPricing extends BaseModel {
   public client_id: number
 
   @column()
+  public gig_id: number
+
+  @column()
   public package: string
 
   @column()
