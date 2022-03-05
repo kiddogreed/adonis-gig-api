@@ -23,7 +23,7 @@ export default class GigPricingsController {
           gig_id: value.gig_id,
           package: value.package,
           package_name: value.package_name,
-          package_description: value.description,
+          package_description: value.package_description,
           delivery_time: value.delivery_time,
           price: value.price,
           inclusion_one: value.inclusion_one,
@@ -48,7 +48,7 @@ export default class GigPricingsController {
         const gigPricing = await GigPricingRepository.query().where('id', params.id).where('client_id', user.profile_id).first()
         gigPricing.package = value.package,
           gigPricing.package_name = value.package_name,
-          gigPricing.package_description = value.description,
+          gigPricing.package_description = value.package_description,
           gigPricing.delivery_time = value.delivery_time,
           gigPricing.price = value.price,
           gigPricing.inclusion_one = value.inclusion_one,
