@@ -4,10 +4,9 @@ import GigFaqTransformer from 'App/Transformers/GigFaqTransformer'
 
 export default class GigFaqsController {
 
-  async show({ auth, response, transform }) {
-    const user = auth.user
+  async show({ params, response, transform }) {
     try {
-      const description = await GigFaqRepository.query().where('client_id', user.profile_id)
+      const description = await GigFaqRepository.query().where('gig_id', params.gigId)
       return response.resource(await transform.collection(description, GigFaqTransformer))
     }
     catch (e) {

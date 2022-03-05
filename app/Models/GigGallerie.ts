@@ -7,6 +7,9 @@ export default class GigGallerie extends BaseModel {
 
   @column()
   public client_id: number
+
+  @column()
+  public gig_id: number
   
   @column()
   public type: string

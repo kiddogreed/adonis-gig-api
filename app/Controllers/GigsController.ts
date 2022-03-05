@@ -13,7 +13,7 @@ export default class GigsController {
 
   async show({ params, response, transform }) {
     try {
-      const gig = await GigRepository.findBy('id',params.id)
+      const gig = await GigRepository.findBy('id', params.id)
       return response.resource(await transform.item(gig, GigTransformer))
     } catch (e) {
       return response.badRequest('Invalid Gig Request')
@@ -23,7 +23,7 @@ export default class GigsController {
   async gigCategory({ response, request, transform }) {
     try {
       const filter = request.only('name')
-      console.log(filter.name,'here')
+      console.log(filter.name, 'here')
       const query = GigCategoryRepository.query()
       if (filter.name) {
         query.where('name', 'LIKE', `${filter.name}`)
@@ -73,18 +73,23 @@ export default class GigsController {
     }
   }
 
-  async update({request,params,response}){
-    const data = request.only(['title', 'category_id', 'subcategory_id', 'tag'])
-    try{
-      const gig = await GigRepository.findBy('id',params.id)
+  async update({ request, params, response }) {
+    const data = request.only(['title', 'category_id', 'subcategory_id', 'tag', 'description'])
+    try {
+      const gig = await GigRepository.findBy('id', params.id)
       gig.name = data.title,
-      gig.category_id = data.category_id,
-      gig.subcategory_id = data.subcategory_id,
-      gig.tag = data.tag
+        gig.category_id = data.category_id,
+        gig.subcategory_id = data.subcategory_id,
+        gig.tag = data.tag,
+        gig.description = data.description
       await gig?.save()
 
-      return response.ok('Gig information successfully updated')
-    }catch(e){
+      if (data.description) {
+        return response.data({ 'id': gig?.id }, 'Gig Description successfully created')
+      }
+      return response.data({ 'id': gig?.id }, 'Gig information successfully updated')
+
+    } catch (e) {
       return response.badRequest('Invalid Gig Request')
     }
   }
