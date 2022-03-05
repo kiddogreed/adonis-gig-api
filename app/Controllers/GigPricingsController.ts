@@ -57,7 +57,7 @@ export default class GigPricingsController {
 
         await gigPricing?.save()
       }
-      return response.data({ 'id': request.input('gig_id')}, 'Scope and Pricing successfully saved')
+      return response.data({ 'id': request.input('gig_id')}, 'Scope and Pricing successfully updated')
     } catch (e) {
 
     }
