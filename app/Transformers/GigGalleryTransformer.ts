@@ -8,6 +8,7 @@ export default class GigGalleryTransformer extends TransformerAbstract {
     return {
       id: gallery.id,
       client_id: gallery.client_id,
+      gig_id: gallery.gig_id,
       type: gallery.type,
       files: gallery.files,
       created_at: gallery.createdAt,
