@@ -40,12 +40,14 @@ export default class GigPricingsController {
     }
   }
 
-  async update({ auth, request, params, response }) {
+  async update({ auth, request, response }) {
     const user = auth.user
+
     try {
       const data = request.input([`data`])
+
       for (let value of data) {
-        const gigPricing = await GigPricingRepository.query().where('id', params.id).where('client_id', user.profile_id).first()
+        const gigPricing = await GigPricingRepository.query().where('id',value.id).where('client_id', user.profile_id).first()
         gigPricing.package = value.package,
           gigPricing.package_name = value.package_name,
           gigPricing.package_description = value.package_description,
@@ -57,9 +59,9 @@ export default class GigPricingsController {
 
         await gigPricing?.save()
       }
-      return response.data({ 'id': request.input('gig_id')}, 'Scope and Pricing successfully updated')
+      return response.data({ 'id': request.input('gig_id') }, 'Scope and Pricing successfully updated')
     } catch (e) {
-
+      return response.badRequest('Scope and Pricing Invalid')
     }
   }
 
