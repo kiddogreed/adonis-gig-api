@@ -39,7 +39,14 @@ export default class GigPricingsController {
       return response.badRequest('Scope and Pricing Invalid')
     }
   }
+  // async updateCreate({ auth, request, response }) {
+  //   const user = auth.user
+  //   const data = request.input([`data`])
+  //   for (let value of data) {
+  //     await GigPricingRepository.updateOrCreateMany('gig_id',data.gig_id,)
 
+  //   }
+  // }
   async update({ auth, request, response }) {
     const user = auth.user
 

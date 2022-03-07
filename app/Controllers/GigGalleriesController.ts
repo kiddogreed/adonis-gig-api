@@ -27,7 +27,7 @@ export default class GigGalleriesController {
         })
         await gallery.save()
       }
-      return response.ok('Gallery Successfully created')
+      return response.data({'id':request.input('gig_id')},'Gallery Successfully created')
     } catch (e) {
       return response.badRequest('Invalid file Request')
     }
@@ -42,7 +42,7 @@ export default class GigGalleriesController {
           gallery.files = value.files,
           await gallery?.save()
       }
-      return response.ok('Gallery Successfully updated')
+      return response.data({'id': request.input('gig_id')},'Gallery Successfully updated')
 
     } catch (e) {
       return response.badRequest('Invalid file Request')
