@@ -35,7 +35,7 @@ export default class GigFaqsController {
 
   async update({ response, request, params }: HttpContextContract) {
     try {
-      const gigFaq = await GigFaqRepository.findByOrFail('id', params.Id)
+      const gigFaq = await GigFaqRepository.findByOrFail('id', params.id)
       gigFaq.question = request.input('question')
       gigFaq.answer = request.input('answer')
       await gigFaq.save()
@@ -43,6 +43,7 @@ export default class GigFaqsController {
       return response.ok('Gig FAQ successfully updated')
 
     } catch (e) {
+      console.log(e)
       return response.badRequest('Invalid FAQ request')
     }
   }
