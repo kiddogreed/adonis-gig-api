@@ -45,10 +45,10 @@ export default class GigPricingsController {
 
     try {
       const data = request.input([`data`])
-
       for (let value of data) {
-        const gigPricing = await GigPricingRepository.query().where('id',value.id).where('client_id', user.profile_id).first()
-        gigPricing.package = value.package,
+        const gigPricing = await GigPricingRepository.query().where('id', value.id).where('client_id', user.profile_id).first()
+        gigPricing.gig_id = value.gig_id,
+          gigPricing.package = value.package,
           gigPricing.package_name = value.package_name,
           gigPricing.package_description = value.package_description,
           gigPricing.delivery_time = value.delivery_time,
