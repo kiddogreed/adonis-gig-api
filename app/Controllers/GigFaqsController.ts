@@ -50,7 +50,7 @@ export default class GigFaqsController {
 
   async destroy({ response, params }: HttpContextContract) {
     try {
-      const gigFaq = await GigFaqRepository.findBy('id', params.Id)
+      const gigFaq = await GigFaqRepository.findByOrFail('id', params.id)
       await gigFaq.delete()
 
       return response.ok('Gig FAQ successfully deleted')
