@@ -92,7 +92,7 @@ export default class GigPricingsController {
 
   async destroy({ response, params }) {
     try {
-      const service = await GigExtraServiceRepository.findByOrFail('id', params.Id)
+      const service = await GigExtraServiceRepository.findByOrFail('id', params.id)
       await service.delete()
 
       return response.ok('Extra service successfully deleted')
