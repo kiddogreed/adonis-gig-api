@@ -1,6 +1,8 @@
+import QoutationRepository from "App/Repositories/QoutationRepository"
 import GigPricingRepository from "App/Repositories/GigPricingRepository"
 import GigExtraServiceRepository from "App/Repositories/GigExtraServiceRepository"
 import GigScopeAndPricingTransformer from "App/Transformers/GigScopeAndPricingTransformer"
+
 export default class GigPricingsController {
 
   async show({ params, response, transform }) {
@@ -31,7 +33,14 @@ export default class GigPricingsController {
           inclusion_three: value.inclusion_three
         })
         await gigPricing.save()
+
+        const qoutation = await QoutationRepository.create({
+          gig_id: request.input('gig_id'),
+          allow_qoutation: request.input('allow_qoutation')
+        })
+        await qoutation.save()
       }
+
       return response.data({ 'id': request.input('gig_id') }, 'Scope and Pricing successfully saved')
 
     } catch (e) {
@@ -57,9 +66,13 @@ export default class GigPricingsController {
           gigPricing.inclusion_one = value.inclusion_one,
           gigPricing.inclusion_two = value.inclusion_two,
           gigPricing.inclusion_three = value.inclusion_three
-
         await gigPricing?.save()
+
+        const qoutation = await QoutationRepository.findBy('gig_id', request.input('gig_id'))
+        qoutation.allow_qoutation = request.input('allow_qoutation')
+        await qoutation?.save()
       }
+
       return response.data({ 'id': request.input('gig_id') }, 'Scope and Pricing successfully updated')
     } catch (e) {
       return response.badRequest('Scope and Pricing Invalid')
