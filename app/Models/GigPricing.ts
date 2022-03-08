@@ -18,6 +18,15 @@ export default class GigPricing extends BaseModel {
   public package_name: string
 
   @column()
+  public inclusion_one: string
+
+  @column()
+  public inclusion_two: string
+
+  @column()
+  public inclusion_three: string
+
+  @column()
   public package_description: string
 
   @column()

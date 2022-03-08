@@ -4,10 +4,9 @@ import GigFaqTransformer from 'App/Transformers/GigFaqTransformer'
 
 export default class GigFaqsController {
 
-  async show({ auth, response, transform }) {
-    const user = auth.user
+  async show({ params, response, transform }) {
     try {
-      const description = await GigFaqRepository.query().where('client_id', user.profile_id)
+      const description = await GigFaqRepository.query().where('gig_id', params.gigId)
       return response.resource(await transform.collection(description, GigFaqTransformer))
     }
     catch (e) {
@@ -36,7 +35,7 @@ export default class GigFaqsController {
 
   async update({ response, request, params }: HttpContextContract) {
     try {
-      const gigFaq = await GigFaqRepository.findByOrFail('id', params.Id)
+      const gigFaq = await GigFaqRepository.findByOrFail('id', params.id)
       gigFaq.question = request.input('question')
       gigFaq.answer = request.input('answer')
       await gigFaq.save()
@@ -44,13 +43,14 @@ export default class GigFaqsController {
       return response.ok('Gig FAQ successfully updated')
 
     } catch (e) {
+      console.log(e)
       return response.badRequest('Invalid FAQ request')
     }
   }
 
   async destroy({ response, params }: HttpContextContract) {
     try {
-      const gigFaq = await GigFaqRepository.findBy('id', params.Id)
+      const gigFaq = await GigFaqRepository.findByOrFail('id', params.id)
       await gigFaq.delete()
 
       return response.ok('Gig FAQ successfully deleted')

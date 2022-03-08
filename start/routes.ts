@@ -55,14 +55,12 @@ Route.get('/gig/:id', 'GigsController.show').middleware('auth:api')
 Route.post('/gig', 'GigsController.set').middleware('auth:api')
 Route.put('/gig/:id', 'GigsController.update').middleware('auth:api')
 
-Route.get('/gig/description', 'GigDescriptionsController.show').middleware('auth:api')
-Route.post('/gig/description', 'GigDescriptionsController.set').middleware('auth:api')
-Route.put('/gig/:Id/description', 'GigDescriptionsController.update').middleware('auth:api')
+Route.get('/gig/:gigId/description', 'GigDescriptionsController.show').middleware('auth:api')
 
-Route.get('/gig/faq', 'GigFaqsController.show').middleware('auth:api')
+Route.get('/gig/:gigId/faq', 'GigFaqsController.show').middleware('auth:api')
 Route.post('/gig/faq', 'GigFaqsController.set').middleware('auth:api')
-Route.put('/gig/:Id/faq', 'GigFaqsController.update').middleware('auth:api')
-Route.delete('/gig/:Id/faq', 'GigFaqsController.destroy').middleware('auth:api')
+Route.put('/gig/:id/faq', 'GigFaqsController.update').middleware('auth:api')
+Route.delete('/gig/:id/faq', 'GigFaqsController.destroy').middleware('auth:api')
 
 Route.get('gig/post', 'GigPostsController.index').middleware('auth:api')
 Route.get('gig/post/:id', 'GigPostsController.show').middleware('auth:api')
@@ -78,11 +76,13 @@ Route.get('/gig/manage/post', 'GigManagePostsController.show').middleware('auth:
 
 Route.get('/gig/:gigId/pricing', 'GigPricingsController.show').middleware('auth:api')
 Route.post('/gig/pricing', 'GigPricingsController.set').middleware('auth:api')
+Route.put('/gig/scope/pricing', 'GigPricingsController.update').middleware('auth:api')
 Route.post('/gig/pricing/extra-service', 'GigPricingsController.extraService').middleware('auth:api')
 Route.delete('/gig/pricing/:Id/extra-service', 'GigPricingsController.destroy').middleware('auth:api')
 
-Route.get('/gig/gallery', 'GigGalleriesController.show').middleware('auth:api')
+Route.get('/gig/:gigId/gallery', 'GigGalleriesController.show').middleware('auth:api')
 Route.post('/gig/gallery', 'GigGalleriesController.set').middleware('auth:api')
+Route.put('/gig/:id/gallery', 'GigGalleriesController.update').middleware('auth:api')
 
 Route.get('/language', 'LanguagesController.show').middleware('auth:api')
 Route.post('/language', 'LanguagesController.set').middleware('auth:api')

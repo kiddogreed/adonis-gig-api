@@ -21,6 +21,9 @@ export default class Gig extends BaseModel {
   public tag: string
 
   @column()
+  public description: string
+
+  @column()
   public status: string
 
   @column.dateTime({ autoCreate: true })
