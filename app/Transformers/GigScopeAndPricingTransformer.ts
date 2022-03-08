@@ -14,9 +14,7 @@ export default class GigScopeAndPricingTransformer extends TransformerAbstract {
       price: gig.price,
       inclusion_one: gig.inclusion_one,
       inclusion_two: gig.inclusion_two,
-      inclusion_three: gig.inclusion_three,
-      created_at: gig.createdAt,
-      updated_at: gig.updatedAt
+      inclusion_three: gig.inclusion_three
     }
   }
 }
