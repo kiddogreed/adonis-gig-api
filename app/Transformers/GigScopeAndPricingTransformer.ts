@@ -1,8 +1,10 @@
 import { TransformerAbstract } from '@ioc:Adonis/Addons/Bumblebee'
+import QoutationRepository from 'App/Repositories/QoutationRepository'
 import GigScopePricingRepository from 'App/Repositories/GigPricingRepository'
 
 export default class GigScopeAndPricingTransformer extends TransformerAbstract {
   public async transform(gig: GigScopePricingRepository) {
+    const qoutation = await QoutationRepository.query().where('gig_id',gig.id).first()
 
     return {
       id: gig.id,
@@ -15,8 +17,7 @@ export default class GigScopeAndPricingTransformer extends TransformerAbstract {
       inclusion_one: gig.inclusion_one,
       inclusion_two: gig.inclusion_two,
       inclusion_three: gig.inclusion_three,
-      created_at: gig.createdAt,
-      updated_at: gig.updatedAt
+      qoutation: qoutation
     }
   }
 }

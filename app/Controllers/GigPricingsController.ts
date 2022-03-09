@@ -1,6 +1,8 @@
+import QoutationRepository from "App/Repositories/QoutationRepository"
 import GigPricingRepository from "App/Repositories/GigPricingRepository"
 import GigExtraServiceRepository from "App/Repositories/GigExtraServiceRepository"
 import GigScopeAndPricingTransformer from "App/Transformers/GigScopeAndPricingTransformer"
+
 export default class GigPricingsController {
 
   async show({ params, response, transform }) {
@@ -31,7 +33,14 @@ export default class GigPricingsController {
           inclusion_three: value.inclusion_three
         })
         await gigPricing.save()
+
+        const qoutation = await QoutationRepository.create({
+          gig_id: request.input('gig_id'),
+          allow_qoutation: request.input('allow_qoutation')
+        })
+        await qoutation.save()
       }
+
       return response.data({ 'id': request.input('gig_id') }, 'Scope and Pricing successfully saved')
 
     } catch (e) {
@@ -39,14 +48,7 @@ export default class GigPricingsController {
       return response.badRequest('Scope and Pricing Invalid')
     }
   }
-  // async updateCreate({ auth, request, response }) {
-  //   const user = auth.user
-  //   const data = request.input([`data`])
-  //   for (let value of data) {
-  //     await GigPricingRepository.updateOrCreateMany('gig_id',data.gig_id,)
 
-  //   }
-  // }
   async update({ auth, request, response }) {
     const user = auth.user
 
@@ -54,6 +56,7 @@ export default class GigPricingsController {
       const data = request.input([`data`])
       for (let value of data) {
         const gigPricing = await GigPricingRepository.query().where('id', value.id).where('client_id', user.profile_id).first()
+
         gigPricing.gig_id = value.gig_id,
           gigPricing.package = value.package,
           gigPricing.package_name = value.package_name,
@@ -63,9 +66,13 @@ export default class GigPricingsController {
           gigPricing.inclusion_one = value.inclusion_one,
           gigPricing.inclusion_two = value.inclusion_two,
           gigPricing.inclusion_three = value.inclusion_three
-
         await gigPricing?.save()
+
+        const qoutation = await QoutationRepository.findBy('gig_id', request.input('gig_id'))
+        qoutation.allow_qoutation = request.input('allow_qoutation')
+        await qoutation?.save()
       }
+
       return response.data({ 'id': request.input('gig_id') }, 'Scope and Pricing successfully updated')
     } catch (e) {
       return response.badRequest('Scope and Pricing Invalid')
