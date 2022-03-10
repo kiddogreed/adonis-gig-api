@@ -57,7 +57,7 @@ export default class GigsController {
   async set({ auth, response, request }) {
     await request.validate(GigValidator)
     const user = auth.user
-    const data = request.input([`data`])
+    const data = request.input([`tag`])
     try {
       const gig = await GigRepository.create({
         client_id: user.profile_id,
