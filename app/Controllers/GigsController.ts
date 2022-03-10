@@ -6,6 +6,7 @@ import GigCategoryRepository from 'App/Repositories/GigCategoryRepository'
 import GigCategoryTransformer from 'App/Transformers/GigCategoryTransformer'
 import SubCategorieRepository from 'App/Repositories/SubCategorieRepository'
 import SubCategoryTransformer from 'App/Transformers/SubCategoryTransformer'
+import TagRepository from 'App/Repositories/TagRepository'
 
 
 export default class GigsController {
@@ -56,19 +57,29 @@ export default class GigsController {
   async set({ auth, response, request }) {
     await request.validate(GigValidator)
     const user = auth.user
+    const data = request.input([`data`])
     try {
       const gig = await GigRepository.create({
         client_id: user.profile_id,
         name: request.input('title'),
         category_id: request.input('category_id'),
         subcategory_id: request.input('subcategory_id'),
-        tag: request.input('tag'),
         status: 'draft'
       })
       await gig.save()
+
+      for (let value of data) {
+        const tags = await TagRepository.create({
+          gig_id: gig.id,
+          tag: value.tag
+        })
+        await tags.save()
+      }
+
       return response.data({ 'id': gig.id }, 'Gig information successfully created')
 
     } catch (e) {
+      console.log(e)
       return response.badRequest('Invalid Gig Request')
     }
   }

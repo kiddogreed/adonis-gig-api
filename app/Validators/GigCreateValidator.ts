@@ -33,9 +33,6 @@ export default class GigCreateValidator {
     subcategory_id: schema.string({}, [
       rules.required()
     ]),
-    tag: schema.string({}, [
-      rules.required()
-    ]),
   })
 
   /**
@@ -52,7 +49,6 @@ export default class GigCreateValidator {
   public messages = {
     'title.required': 'Please input title.',
     'category_id.required': 'Please select category.',
-    'subcategory_id.required': 'Please select sub category.',
-    'tag.required': 'Please input tag.',
+    'subcategory_id.required': 'Please select sub category.'
   }
 }
