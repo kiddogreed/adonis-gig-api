@@ -91,6 +91,8 @@ Route.delete('/language/:Id', 'LanguagesController.destroy').middleware('auth:ap
 Route.get('/linked', 'LinkAccountsController.show').middleware('auth:api')
 Route.post('/linked', 'LinkAccountsController.set').middleware('auth:api')
 
+Route.get('/my/scholar', 'ScholarsController.index').middleware('auth:api')
+
 Route.get('/occupation', 'OccupationsController.index').middleware('auth:api')
 Route.post('/occupation', 'OccupationsController.set').middleware('auth:api')
 Route.put('/occupation/:Id', 'OccupationsController.update').middleware('auth:api')

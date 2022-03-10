@@ -20,7 +20,7 @@ export default class User extends BaseModel {
 
   @column()
   public profile_id: number
-  
+
   @column()
   public two_factor_auth: number
 

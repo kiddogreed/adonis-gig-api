@@ -11,6 +11,8 @@ export default class PersonalTransformer extends TransformerAbstract {
       id: info.id,
       profile_status: info.profile_status,
       email: user?.email,
+      profile_type: user?.profile_type,
+      profile_role: user?.profile_role,
       contact: info.contact,
       verified: info.verified,
       first_name: info.first_name,
