@@ -55,6 +55,7 @@ Route.get('/gig/:id', 'GigsController.show').middleware('auth:api')
 Route.post('/gig', 'GigsController.set').middleware('auth:api')
 Route.put('/gig/:id', 'GigsController.update').middleware('auth:api')
 
+
 Route.get('/gig/:gigId/description', 'GigDescriptionsController.show').middleware('auth:api')
 
 Route.get('/gig/:gigId/faq', 'GigFaqsController.show').middleware('auth:api')
@@ -124,7 +125,7 @@ Route.post('two_factor/verify','TwoFactorAuthenticationsController.verify').midd
 Route.post('two_factor/auth','TwoFactorAuthenticationsController.authenticate').middleware('auth:api');
 
 Route.get('/my_account', 'MyAccountsController.index')
-
+Route.get('/gig/lists', 'GigsController.gigList').middleware('auth:api');
 
 
 
