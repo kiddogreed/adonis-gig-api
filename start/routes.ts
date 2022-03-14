@@ -123,8 +123,7 @@ Route.post('two_factor/disable','TwoFactorAuthenticationsController.disable').mi
 Route.post('two_factor/verify','TwoFactorAuthenticationsController.verify').middleware('auth:api');
 Route.post('two_factor/auth','TwoFactorAuthenticationsController.authenticate').middleware('auth:api');
 
-Route.get('/my_account', 'MyAccountsController.index').middleware('auth:api');
-
+Route.get('/my_account', 'MyAccountsController.index')
 
 
 
