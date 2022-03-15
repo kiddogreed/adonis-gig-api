@@ -17,6 +17,7 @@ export default class MyAccountTransformer extends TransformerAbstract {
     const client = await ClientRepository.query().where('id', gig.client_id)
     const category = await GigCategoryRepository.query().where('id', gig.category_id)
     const subCategory = await SubCategorieRepository.query().where('id', gig.subcategory_id)
+    console.log('cliend_id: ' + gig.client_id + ' gallery: ' + JSON.stringify(gallery) + ' file: ' + gallery?.files)
 
     return {
       name: gig.name,
