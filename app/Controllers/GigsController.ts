@@ -58,7 +58,7 @@ export default class GigsController {
   }
 
   async set({ auth, response, request }) {
-    await request.validate(GigValidator)
+   // await request.validate(GigValidator)
     const user = auth.user
     const data = request.input([`tag`])
     try {
@@ -100,7 +100,7 @@ export default class GigsController {
       return response.data({ 'id': gig.id }, 'Gig information successfully created')
 
     } catch (e) {
-      console.log(e, 'here')
+      console.log(e)
       return response.badRequest('Invalid Gig Request')
     }
   }
