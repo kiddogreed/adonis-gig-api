@@ -28,7 +28,7 @@ export default class MyAccountTransformer extends TransformerAbstract {
       category: category,
       subCategory: subCategory,
       gig_description: description,
-      gallery: gallery
+      gallery: gallery?.files
     }
   }
 }
