@@ -70,7 +70,8 @@ export default class GigsController {
 
     for (let tag of data) {
       let existTag = await TagRepository.findBy('name', tag.tag)
-      if (existTag == null) {
+      let existingTag = existTag?.name
+      if (existingTag == undefined) {
         //create new tag
 
         const tags = await TagRepository.create({
@@ -84,7 +85,7 @@ export default class GigsController {
         })
         await gigTag.save()
       }
-      if (existTag) {
+      if (existingTag) {
         const existingTag = await GigTagRepository.create({
           gig_id: gig.id,
           tag_id: existTag?.$original.id
