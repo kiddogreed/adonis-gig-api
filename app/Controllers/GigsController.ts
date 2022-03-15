@@ -1,4 +1,5 @@
 
+import { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
 import GigRepository from 'App/Repositories/GigRepository'
 import GigValidator from 'App/Validators/GigCreateValidator'
 import GigTransformer from 'App/Transformers/GigTransformer'
@@ -125,7 +126,7 @@ export default class GigsController {
     }
   }
 
-  public async gigList({ auth, request, response, transform }) {
+ async gigList({ auth, request, response, transform }) {
     console.log("entry")
     const user = auth.user
     console.log("user: " + user.profile_id)
