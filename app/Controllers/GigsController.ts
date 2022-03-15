@@ -125,6 +125,7 @@ export default class GigsController {
   }
 
   public async gigList({ auth, request, response, transform }) {
+    console.log("entry")
     const user = auth.user
     console.log("user: " + user.profile_id)
     try {
