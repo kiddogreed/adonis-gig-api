@@ -9,8 +9,6 @@ import SubCategoryTransformer from 'App/Transformers/SubCategoryTransformer'
 import TagRepository from 'App/Repositories/TagRepository'
 import GigListTransformer from 'App/Transformers/GigListTransformer'
 import GigTagRepository from 'App/Repositories/GigTagRepository'
-import GigTag from 'App/Models/GigTag'
-
 
 export default class GigsController {
 
