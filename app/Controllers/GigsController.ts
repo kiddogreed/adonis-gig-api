@@ -69,29 +69,19 @@ export default class GigsController {
     })
 
     for (let tag of data) {
-      let existTag = await TagRepository.findBy('name', tag.tag)
-      let existingTag = existTag?.name
-      if (existingTag == undefined) {
-        //create new tag
-
+      let existingTag = await TagRepository.findBy('name', tag.tag)
+    
+      if (!existingTag) {
         const tags = await TagRepository.create({
           name: tag.tag
         })
         await tags.save()
-        //create gigtag
-        const gigTag = await GigTagRepository.create({
-          gig_id: gig.id,
-          tag_id: tags.$original.id
-        })
-        await gigTag.save()
       }
-      if (existingTag) {
-        const existingTag = await GigTagRepository.create({
-          gig_id: gig.id,
-          tag_id: existTag?.$original.id
-        })
-        await existingTag.save()
-      }
+    
+      await GigTagRepository.firstOrCreate({
+        gig_id: gig.id,
+        tag_id: existingTag?.id
+      })
     }
 
     await gig.save()
@@ -129,7 +119,7 @@ export default class GigsController {
     return response.resource(await transform.collection(gigs, GigListTransformer))
   }
 
-  async allGigList({response,transform}){
+  async allGigList({ response, transform }) {
     const gigs = await GigRepository.all()
     return response.resource(await transform.collection(gigs, GigListTransformer))
   }
