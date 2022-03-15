@@ -125,11 +125,13 @@ export default class GigsController {
   }
 
   public async gigList({ auth, request, response, transform }) {
+    console.log("entry")
     const user = auth.user
+    console.log("user: " + user.profile_id)
     try {
       const gigs = await GigRepository.query().where('client_id', user.profile_id)
-      var gigResponse = await transform.collection(gigs, GigListTransformer)
-      return response.resource(gigResponse)
+      console.log('gig: ' + JSON.stringify(gigs))
+      return response.resource(await transform.collection(gigs, GigListTransformer))
     }
     catch (error) {
       return response.badRequest('Invalid Request: ' + error)
