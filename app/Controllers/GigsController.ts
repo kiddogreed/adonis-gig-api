@@ -66,7 +66,7 @@ export default class GigsController {
       subcategory_id: request.input('subcategory_id'),
       status: 'draft'
     })
-
+    await gig.save()
     for (let tag of data) {
       let existingTag = await TagRepository.findBy('name', `${tag.tag}`)
 
@@ -75,21 +75,22 @@ export default class GigsController {
           name: tag.tag
         })
         await tags.save()
-
         await GigTagRepository.firstOrCreate({
           gig_id: gig.id,
           tag_id: tags.$original.id
         })
         await gig.save()
       }
-
-      await GigTagRepository.firstOrCreate({
-        gig_id: gig.id,
-        tag_id: existingTag?.$original.id
-      })
+      if (existingTag) {
+        await GigTagRepository.firstOrCreate({
+          gig_id: gig.id,
+          tag_id: existingTag?.$original.id
+        })
+        await gig.save()
+      }
     }
 
-    await gig.save()
+
     return response.data({ 'id': gig.id }, 'Gig information successfully created')
 
     // } catch (e) {
