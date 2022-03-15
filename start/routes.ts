@@ -86,6 +86,8 @@ Route.get('/gig/:gigId/gallery', 'GigGalleriesController.show').middleware('auth
 Route.post('/gig/gallery', 'GigGalleriesController.set').middleware('auth:api')
 Route.put('/gig/:id/gallery', 'GigGalleriesController.update').middleware('auth:api')
 
+Route.get('/gig-listing', 'GigsController.gigList').middleware('auth:api');
+
 Route.get('/language', 'LanguagesController.show').middleware('auth:api')
 Route.post('/language', 'LanguagesController.set').middleware('auth:api')
 Route.put('/language/:Id', 'LanguagesController.update').middleware('auth:api')
@@ -127,7 +129,7 @@ Route.post('two_factor/verify','TwoFactorAuthenticationsController.verify').midd
 Route.post('two_factor/auth','TwoFactorAuthenticationsController.authenticate').middleware('auth:api');
 
 Route.get('/my_account', 'MyAccountsController.index')
-Route.get('/gig/lists', 'GigsController.gigList').middleware('auth:api');
+
 
 
 

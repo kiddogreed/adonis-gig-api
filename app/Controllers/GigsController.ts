@@ -1,5 +1,4 @@
 
-import { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
 import GigRepository from 'App/Repositories/GigRepository'
 import GigValidator from 'App/Validators/GigCreateValidator'
 import GigTransformer from 'App/Transformers/GigTransformer'
@@ -62,41 +61,41 @@ export default class GigsController {
     const data = request.input([`tag`])
     // try {
 
-      const gig = await GigRepository.create({
-        client_id: user.profile_id,
-        name: request.input('title'),
-        category_id: request.input('category_id'),
-        subcategory_id: request.input('subcategory_id'),
-        status: 'draft'
-      })
+    const gig = await GigRepository.create({
+      client_id: user.profile_id,
+      name: request.input('title'),
+      category_id: request.input('category_id'),
+      subcategory_id: request.input('subcategory_id'),
+      status: 'draft'
+    })
 
-      for (let tag of data) {
-        const existTag = await TagRepository.findByOrFail('name', tag.tag)
-        if (existTag?.name == 'undefined') {
-          //create new tag
+    for (let tag of data) {
+      const existTag = await TagRepository.findByOrFail('name', tag.tag)
+      if (!existTag) {
+        //create new tag
 
-          const tags = await TagRepository.create({
-            name: tag.tag
-          })
-          await tags.save()
-          //create gigtag
-          const gigTag = await GigTagRepository.create({
-            gig_id: gig.id,
-            tag_id: tags.$original.id
-          })
-          await gigTag.save()
-        }
-        if (existTag) {
-          const existingTag = await GigTagRepository.create({
-            gig_id: gig.id,
-            tag_id: existTag?.$original.id
-          })
-          await existingTag.save()
-        }
+        const tags = await TagRepository.create({
+          name: tag.tag
+        })
+        await tags.save()
+        //create gigtag
+        const gigTag = await GigTagRepository.create({
+          gig_id: gig.id,
+          tag_id: tags.$original.id
+        })
+        await gigTag.save()
       }
+      if (existTag) {
+        const existingTag = await GigTagRepository.create({
+          gig_id: gig.id,
+          tag_id: existTag?.$original.id
+        })
+        await existingTag.save()
+      }
+    }
 
-      await gig.save()
-      return response.data({ 'id': gig.id }, 'Gig information successfully created')
+    await gig.save()
+    return response.data({ 'id': gig.id }, 'Gig information successfully created')
 
     // } catch (e) {
     //   console.log(e)
@@ -124,18 +123,22 @@ export default class GigsController {
       return response.badRequest('Invalid Gig Request')
     }
   }
-
- async gigList({ auth, request, response, transform }) {
-    console.log("entry")
+  async gigList({auth,response,transform}){
     const user = auth.user
-    console.log("user: " + user.profile_id)
-    try {
-      const gigs = await GigRepository.query().where('client_id', user.profile_id)
-      console.log('gig: ' + JSON.stringify(gigs))
-      return response.resource(await transform.collection(gigs, GigListTransformer))
-    }
-    catch (error) {
-      return response.badRequest('Invalid Request: ' + error)
-    }
+    const gigs = await GigRepository.query().where('client_id', user.profile_id)
+    return response.resource(await transform.collection(gigs, GigListTransformer))
   }
+
+  // async gigListing({ auth, request, response, transform }) {
+  //   console.log("entry")
+  //   const user = auth.user
+  //   try {
+  //     const gigs = await GigRepository.findBy('client_id', user.profile_id)
+  //     console.log(gigs)
+  //     return response.resource(await transform.collection(gigs, GigListTransformer))
+  //   }
+  //   catch (error) {
+  //     return response.badRequest('Invalid Request: ' + error)
+  //   }
+  // }
 }
