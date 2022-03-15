@@ -9,8 +9,6 @@ import SubCategoryTransformer from 'App/Transformers/SubCategoryTransformer'
 import TagRepository from 'App/Repositories/TagRepository'
 import GigListTransformer from 'App/Transformers/GigListTransformer'
 import GigTagRepository from 'App/Repositories/GigTagRepository'
-import CountriesController from './CountriesController'
-
 export default class GigsController {
 
 
@@ -72,8 +70,8 @@ export default class GigsController {
 
     for (let tag of data) {
       const existTag = await TagRepository.findBy('name', tag.tag)
-     
-      if (existTag == null) {
+      let flag = existTag
+      if (flag == null) {
         //create new tag
 
         const tags = await TagRepository.create({
@@ -87,7 +85,7 @@ export default class GigsController {
         })
         await gigTag.save()
       }
-      if (existTag) {
+      if (flag) {
         const existingTag = await GigTagRepository.create({
           gig_id: gig.id,
           tag_id: existTag?.$original.id
@@ -125,7 +123,7 @@ export default class GigsController {
       return response.badRequest('Invalid Gig Request')
     }
   }
-  async gigList({auth,response,transform}){
+  async gigList({ auth, response, transform }) {
     const user = auth.user
     const gigs = await GigRepository.query().where('client_id', user.profile_id)
     return response.resource(await transform.collection(gigs, GigListTransformer))
