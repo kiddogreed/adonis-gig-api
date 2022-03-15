@@ -100,7 +100,7 @@ export default class GigsController {
       return response.data({ 'id': gig.id }, 'Gig information successfully created')
 
     } catch (e) {
-      return response.data({e},'Invalid Gig Request')
+      return response.badRequest(e,'Invalid Gig Request')
     }
   }
 
