@@ -8,6 +8,8 @@ import SubCategorieRepository from 'App/Repositories/SubCategorieRepository'
 import SubCategoryTransformer from 'App/Transformers/SubCategoryTransformer'
 import TagRepository from 'App/Repositories/TagRepository'
 import GigListTransformer from 'App/Transformers/GigListTransformer'
+import GigTagRepository from 'App/Repositories/GigTagRepository'
+import GigTag from 'App/Models/GigTag'
 
 
 export default class GigsController {
@@ -60,7 +62,7 @@ export default class GigsController {
     const user = auth.user
     const data = request.input([`tag`])
     try {
-    
+
       const gig = await GigRepository.create({
         client_id: user.profile_id,
         name: request.input('title'),
@@ -68,49 +70,37 @@ export default class GigsController {
         subcategory_id: request.input('subcategory_id'),
         status: 'draft'
       })
-      // const existTag = await TagRepository.findBy('name', tagInput)
-      // console.log(tagInput);
-      
-      // if(!existTag){
-      //   //create new tag
-
-      //   for (let tag of tagInput){
-      //       console.log(tag);
-            
-      //   }
-      //   const tags = await TagRepository.create({
-      //     name: tagInput
-      //   })
-      //   //create gigtag
-      //   await GigTagRepository.create({
-      //       gig_id: gig.id,
-      //       tag_id: tags.$original.id
-      //     })
-
-      //     return response.data({ 'id': gig.id }, 'Gig information successfully created')
-        
-      // }
-      //even existing stillcreate gigtag
-      // await GigTagRepository.create({
-      //   gig_id: gig.id,
-      //   tag_id: existTag.$original.id
-      // })
-  
-
       await gig.save()
 
-      for (let value of data) {
-        const tags = await TagRepository.create({
-          gig_id: gig.id,
-          tag: value.tag
-        })
-        await tags.save()
+      for (let tag of data) {
+        const existTag = await TagRepository.findBy('name', tag.tag)
+        if (!existTag) {
+          //create new tag
+
+          const tags = await TagRepository.create({
+            name: tag.tag
+          })
+          await tags.save()
+          //create gigtag
+          const gigTag = await GigTagRepository.create({
+            gig_id: gig.id,
+            tag_id: tags.$original.id
+          })
+          await gigTag.save()
+        }
+        if (existTag) {
+          const existingTag = await GigTagRepository.create({
+            gig_id: gig.id,
+            tag_id: existTag?.$original.id
+          })
+          await existingTag.save()
+        }
       }
 
       return response.data({ 'id': gig.id }, 'Gig information successfully created')
 
     } catch (e) {
-      console.log(e)
+      console.log(e, 'here')
       return response.badRequest('Invalid Gig Request')
     }
   }
@@ -136,14 +126,14 @@ export default class GigsController {
     }
   }
 
-  public async gigList ({auth, request, response, transform}) {
+  public async gigList({ auth, request, response, transform }) {
     const user = auth.user
     try {
       const gigs = await GigRepository.query().where('client_id', user.profile_id)
       var gigResponse = await transform.collection(gigs, GigListTransformer)
       return response.resource(gigResponse)
     }
-    catch  (error) {
+    catch (error) {
       return response.badRequest('Invalid Request: ' + error)
     }
   }
