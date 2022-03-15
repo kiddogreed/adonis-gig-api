@@ -50,7 +50,7 @@ export default class SkillsController {
     try {
       const skill = await SkillRepository.findByOrFail('id', params.Id)
       skill.skill_id = request.input('skill_id')
-      skill.level = request.input('level')
+      skill.skill_name = request.input('skill_name')
       await skill?.save()
 
       return response.ok('Skill information saved')
