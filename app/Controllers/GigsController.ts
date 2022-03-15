@@ -101,7 +101,7 @@ export default class GigsController {
 
     } catch (e) {
       console.log(e)
-      return response.badRequest('Invalid Gig Request')
+      return response.badRequest({e},'Invalid Gig Request')
     }
   }
 
