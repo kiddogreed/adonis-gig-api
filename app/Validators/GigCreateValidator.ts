@@ -27,10 +27,10 @@ export default class GigCreateValidator {
     title: schema.string({}, [
       rules.required()
     ]),
-    category_id: schema.string({}, [
+    category_id: schema.number([
       rules.required()
     ]),
-    subcategory_id: schema.string({}, [
+    subcategory_id: schema.number([
       rules.required()
     ]),
     // tag: schema.string({}, [
