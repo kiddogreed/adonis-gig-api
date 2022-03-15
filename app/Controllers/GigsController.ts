@@ -71,7 +71,7 @@ export default class GigsController {
       await gig.save()
 
       for (let tag of data) {
-        const existTag = await TagRepository.query().where('name', tag.tag).first()
+        const existTag = await TagRepository.findByOrFail('name', tag.tag)
         console.log(existTag?.name)
         if (!existTag?.name) {
           //create new tag
