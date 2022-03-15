@@ -59,7 +59,7 @@ export default class GigsController {
     await request.validate(GigValidator)
     const user = auth.user
     const data = request.input([`tag`])
-    try {
+    // try {
 
       const gig = await GigRepository.create({
         client_id: user.profile_id,
@@ -97,10 +97,10 @@ export default class GigsController {
       await gig.save()
       return response.data({ 'id': gig.id }, 'Gig information successfully created')
 
-    } catch (e) {
-      console.log(e)
-      return response.badRequest('Invalid Gig Request')
-    }
+    // } catch (e) {
+    //   console.log(e)
+    //   return response.badRequest('Invalid Gig Request')
+    // }
   }
 
   async update({ request, params, response }) {
