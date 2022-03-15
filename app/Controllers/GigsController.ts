@@ -58,6 +58,7 @@ export default class GigsController {
     await request.validate(GigValidator)
     const user = auth.user
     const data = request.input([`tag`])
+  
     // try {
     const gig = await GigRepository.create({
       client_id: user.profile_id,
@@ -69,7 +70,7 @@ export default class GigsController {
     await gig.save()
 
     for (let tag of data) {
-      let existingTag = await TagRepository.findBy('name', `${tag.tag}`)
+      let existingTag = await TagRepository.findBy('name', `${tag}`)
 
       if (existingTag == undefined) {
         const tags = await TagRepository.create({
