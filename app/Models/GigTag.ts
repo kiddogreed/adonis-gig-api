@@ -1,31 +1,18 @@
 import { DateTime } from 'luxon'
 import { BaseModel, column } from '@ioc:Adonis/Lucid/Orm'
 
-
-export default class Gig extends BaseModel {
+export default class GigTag extends BaseModel {
   @column({ isPrimary: true })
   public id: number
 
-  @column()
-  public client_id: number
 
   @column()
-  public name: string
+  public gig_id: number
+
 
   @column()
-  public category_id: number
+  public tag_id: number
 
-  @column()
-  public subcategory_id: number
-  
-  @column()
-  public tag: string
-
-  @column()
-  public description: string
-
-  @column()
-  public status: string
 
   @column.dateTime({ autoCreate: true })
   public createdAt: DateTime
