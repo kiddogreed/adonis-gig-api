@@ -71,7 +71,8 @@ export default class GigsController {
 
       for (let tag of data) {
         const existTag = await TagRepository.query().where('name', tag.tag).first()
-        if (existTag == undefined) {
+        console.log(existTag?.name,'hereeee')
+        if (existTag?.name == 'undefined') {
           //create new tag
 
           const tags = await TagRepository.create({
