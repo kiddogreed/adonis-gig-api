@@ -9,6 +9,7 @@ import SubCategoryTransformer from 'App/Transformers/SubCategoryTransformer'
 import TagRepository from 'App/Repositories/TagRepository'
 import GigListTransformer from 'App/Transformers/GigListTransformer'
 import GigTagRepository from 'App/Repositories/GigTagRepository'
+import CountriesController from './CountriesController'
 
 export default class GigsController {
 
@@ -129,16 +130,8 @@ export default class GigsController {
     return response.resource(await transform.collection(gigs, GigListTransformer))
   }
 
-  // async gigListing({ auth, request, response, transform }) {
-  //   console.log("entry")
-  //   const user = auth.user
-  //   try {
-  //     const gigs = await GigRepository.findBy('client_id', user.profile_id)
-  //     console.log(gigs)
-  //     return response.resource(await transform.collection(gigs, GigListTransformer))
-  //   }
-  //   catch (error) {
-  //     return response.badRequest('Invalid Request: ' + error)
-  //   }
-  // }
+  async allGigList({response,transform}){
+    const gigs = await GigRepository.all()
+    return response.resource(await transform.collection(gigs, GigListTransformer))
+  }
 }

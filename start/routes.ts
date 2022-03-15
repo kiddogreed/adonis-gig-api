@@ -87,6 +87,7 @@ Route.post('/gig/gallery', 'GigGalleriesController.set').middleware('auth:api')
 Route.put('/gig/:id/gallery', 'GigGalleriesController.update').middleware('auth:api')
 
 Route.get('/gig-listing', 'GigsController.gigList').middleware('auth:api');
+Route.get('/gig-all-listing', 'GigsController.allGigList')
 
 Route.get('/language', 'LanguagesController.show').middleware('auth:api')
 Route.post('/language', 'LanguagesController.set').middleware('auth:api')
