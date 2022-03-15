@@ -59,7 +59,7 @@ export default class GigsController {
     await request.validate(GigValidator)
     const user = auth.user
     const data = request.input([`tag`])
-    // try {
+    try {
 
       const gig = await GigRepository.create({
         client_id: user.profile_id,
@@ -68,12 +68,10 @@ export default class GigsController {
         subcategory_id: request.input('subcategory_id'),
         status: 'draft'
       })
-      await gig.save()
 
       for (let tag of data) {
-        const existTag = await TagRepository.findByOrFail('name', tag.tag)
-        console.log(existTag?.name)
-        if (!existTag?.name) {
+        const existTag = await TagRepository.query().where('name', tag.tag).first()
+        if (existTag == null && existTag == undefined) {
           //create new tag
 
           const tags = await TagRepository.create({
@@ -96,11 +94,13 @@ export default class GigsController {
         }
       }
 
+      await gig.save()
       return response.data({ 'id': gig.id }, 'Gig information successfully created')
 
-    // } catch (e) {
-    //   return response.badRequest('Invalid Gig Request')
-    // }
+    } catch (e) {
+      console.log(e)
+      return response.badRequest('Invalid Gig Request')
+    }
   }
 
   async update({ request, params, response }) {
