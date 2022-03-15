@@ -6,12 +6,14 @@ import GigPricingRepository from 'App/Repositories/GigPricingRepository'
 import GigCategoryRepository from 'App/Repositories/GigCategoryRepository'
 import SubCategorieRepository from 'App/Repositories/SubCategorieRepository'
 import GigDescriptionRepository from 'App/Repositories/GigDescriptionRepository'
+import GigGallerieRepository from 'App/Repositories/GigGallerieRepository'
 
 export default class MyAccountTransformer extends TransformerAbstract {
   public async transform(gig: GigRepository) {
     
     const description = await GigDescriptionRepository.query().where('gig_id', gig.id)
     const pricing = await GigPricingRepository.query().where('gig_id', gig.id)
+    const gallery = await GigGallerieRepository.query().where('gig_id', gig.id).first()
     const client = await ClientRepository.query().where('id', gig.client_id)
     const category = await GigCategoryRepository.query().where('id', gig.category_id)
     const subCategory = await SubCategorieRepository.query().where('id', gig.subcategory_id)
@@ -26,6 +28,7 @@ export default class MyAccountTransformer extends TransformerAbstract {
       category: category,
       subCategory: subCategory,
       gig_description: description,
+      gallery: gallery
     }
   }
 }
