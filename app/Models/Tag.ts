@@ -3,17 +3,13 @@ import { BaseModel, column } from '@ioc:Adonis/Lucid/Orm'
 
 export default class Tag extends BaseModel {
   static get table (){
-    return ('gig_tags')
+    return ('tags')
   }
-
   @column({ isPrimary: true })
   public id: number
 
   @column()
-  public gig_id: number
-
-  @column()
-  public tag: string
+  public name: string
 
   @column.dateTime({ autoCreate: true })
   public createdAt: DateTime
