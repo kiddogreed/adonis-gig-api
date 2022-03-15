@@ -57,9 +57,9 @@ export default class GigsController {
   async set({ auth, response, request }) {
     await request.validate(GigValidator)
     const user = auth.user
-    const data = request.input([`tag`])
+    const data = request.input([`data`])
+  
     // try {
-
     const gig = await GigRepository.create({
       client_id: user.profile_id,
       name: request.input('title'),
@@ -67,34 +67,32 @@ export default class GigsController {
       subcategory_id: request.input('subcategory_id'),
       status: 'draft'
     })
+    await gig.save()
 
     for (let tag of data) {
-      let existTag = await TagRepository.findBy('name', tag.tag)
-     // let flag = existTag
-      if (existTag == null) {
-        //create new tag
+      let existingTag = await TagRepository.findBy('name', tag.tag)
 
+      if (existingTag == undefined) {
         const tags = await TagRepository.create({
           name: tag.tag
         })
         await tags.save()
-        //create gigtag
-        const gigTag = await GigTagRepository.create({
+        await GigTagRepository.firstOrCreate({
           gig_id: gig.id,
-          tag_id: tags.$original.id
+          tag_id: tags.id
         })
-        await gigTag.save()
+        await gig.save()
       }
-      if (existTag) {
-        const existingTag = await GigTagRepository.create({
+      if (existingTag) {
+        await GigTagRepository.firstOrCreate({
           gig_id: gig.id,
-          tag_id: existTag?.$original.id
+          tag_id: existingTag.id
         })
-        await existingTag.save()
+        await gig.save()
       }
     }
 
-    await gig.save()
+
     return response.data({ 'id': gig.id }, 'Gig information successfully created')
 
     // } catch (e) {
@@ -129,7 +127,7 @@ export default class GigsController {
     return response.resource(await transform.collection(gigs, GigListTransformer))
   }
 
-  async allGigList({response,transform}){
+  async allGigList({ response, transform }) {
     const gigs = await GigRepository.all()
     return response.resource(await transform.collection(gigs, GigListTransformer))
   }
