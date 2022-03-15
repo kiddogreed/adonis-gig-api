@@ -67,6 +67,7 @@ export default class GigsController {
       status: 'draft'
     })
     await gig.save()
+
     for (let tag of data) {
       let existingTag = await TagRepository.findBy('name', `${tag.tag}`)
 
@@ -77,14 +78,14 @@ export default class GigsController {
         await tags.save()
         await GigTagRepository.firstOrCreate({
           gig_id: gig.id,
-          tag_id: tags.$original.id
+          tag_id: tags.id
         })
         await gig.save()
       }
       if (existingTag) {
         await GigTagRepository.firstOrCreate({
           gig_id: gig.id,
-          tag_id: existingTag?.$original.id
+          tag_id: existingTag.id
         })
         await gig.save()
       }
