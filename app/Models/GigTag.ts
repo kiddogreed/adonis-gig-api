@@ -10,7 +10,7 @@ export default class GigTag extends BaseModel {
 
 
   @column()
-  public gig_id: number
+  public gigs_id: number
 
 
   @column()
