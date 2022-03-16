@@ -18,9 +18,6 @@ export default class Gig extends BaseModel {
 
   @column()
   public subcategory_id: number
-  
-  @column()
-  public tag: string
 
   @column()
   public description: string

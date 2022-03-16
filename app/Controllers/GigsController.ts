@@ -59,38 +59,38 @@ export default class GigsController {
     const user = auth.user
     const data = request.input(['tag'])
     try {
-    const gig = await GigRepository.create({
-      client_id: user.profile_id,
-      name: request.input('title'),
-      category_id: request.input('category_id'),
-      subcategory_id: request.input('subcategory_id'),
-      status: 'draft'
-    })
-    await gig.save()
+      const gig = await GigRepository.create({
+        client_id: user.profile_id,
+        name: request.input('title'),
+        category_id: request.input('category_id'),
+        subcategory_id: request.input('subcategory_id'),
+        status: 'draft'
+      })
+      await gig.save()
 
-    for (let tag of data) {
-      let existingTag = await TagRepository.findBy('name', tag)
-      if (!existingTag) {
-        const tags = await TagRepository.create({
-          name: tag
-        })
-        await tags.save()
+      for (let tag of data) {
+        let existingTag = await TagRepository.findBy('name', tag)
+        if (!existingTag) {
+          const tags = await TagRepository.create({
+            name: tag
+          })
+          await tags.save()
 
-        const gigTag = await GigTagRepository.firstOrCreate({
-          gigs_id: gig.id,
-          tag_id: tags.id
-        })
-        await gigTag.save()
+          const gigTag = await GigTagRepository.firstOrCreate({
+            gig_id: gig.id,
+            tag_id: tags.id
+          })
+          await gigTag.save()
+        }
+        if (existingTag) {
+          const gigs = await GigTagRepository.firstOrCreate({
+            gig_id: gig.id,
+            tag_id: existingTag.id
+          })
+          await gigs.save()
+        }
       }
-      if (existingTag) {
-        const gigs = await GigTagRepository.firstOrCreate({
-          gigs_id: gig.id,
-          tag_id: existingTag.id
-        })
-        await gigs.save()
-      }
-    }
-    return response.data({ 'id': gig.id }, 'Gig information successfully created')
+      return response.data({ 'id': gig.id }, 'Gig information successfully created')
 
     } catch (e) {
       console.log(e)
@@ -99,17 +99,42 @@ export default class GigsController {
   }
 
   async update({ request, params, response }) {
-    const data = request.only(['title', 'category_id', 'subcategory_id', 'description'])
+    const data = request.input(['tag'])
     try {
       const gig = await GigRepository.findBy('id', params.id)
-      gig.name = data.title,
-        gig.category_id = data.category_id,
-        gig.subcategory_id = data.subcategory_id,
-        gig.tag = data.tag,
-        gig.description = data.description
+      gig.name = request.input('title')
+      gig.category_id = request.input('category_id')
+      gig.subcategory_id = request.input('subcategory_id')
+      gig.description = request.input('description')
       await gig?.save()
-      
-      if (data.description) {
+
+      for (let tag of data) {
+        let existingTag = await TagRepository.findBy('name', tag)
+        let gigTagExisting = await GigTagRepository.query().where('tag_id', existingTag?.id).where('gig_id', gig?.id)
+        if (gigTagExisting) {
+          continue;
+        }
+        if (!gigTagExisting) {
+          const tags = await TagRepository.create({
+            name: tag
+          })
+          await tags.save()
+
+          const gigTag = await GigTagRepository.firstOrCreate({
+            gigs_id: gig?.id,
+            tag_id: tags.id
+          })
+          await gigTag.save()
+        }
+        if (gigTagExisting) {
+          const gigs = await GigTagRepository.firstOrCreate({
+            gigs_id: gig?.id,
+            tag_id: existingTag?.id
+          })
+          await gigs.save()
+        }
+      }
+      if (request.input('description')) {
         return response.data({ 'id': gig?.id }, 'Gig Description successfully created')
       }
       return response.data({ 'id': gig?.id }, 'Gig information successfully updated')
@@ -118,6 +143,8 @@ export default class GigsController {
       return response.badRequest('Invalid Gig Request')
     }
   }
+
+
   async gigList({ auth, response, transform }) {
     const user = auth.user
     const gigs = await GigRepository.query().where('client_id', user.profile_id)
