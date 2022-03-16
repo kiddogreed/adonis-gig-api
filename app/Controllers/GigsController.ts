@@ -59,41 +59,39 @@ export default class GigsController {
     await request.validate(GigValidator)
     const user = auth.user
     const data = request.input(['tag'])
-    console.log(data,'herere')
     try {
-      const gig = await GigRepository.create({
-        client_id: user.profile_id,
-        name: request.input('title'),
-        category_id: request.input('category_id'),
-        subcategory_id: request.input('subcategory_id'),
-        status: 'draft'
-      })
-      await gig.save()
+    const gig = await GigRepository.create({
+      client_id: user.profile_id,
+      name: request.input('title'),
+      category_id: request.input('category_id'),
+      subcategory_id: request.input('subcategory_id'),
+      status: 'draft'
+    })
+    await gig.save()
 
+    for (let tag of data) {
+      let existingTag = await TagRepository.findBy('name', tag)
+      if (!existingTag) {
+        const tags = await TagRepository.create({
+          name: tag
+        })
+        await tags.save()
 
-      for (let tag of data) {
-
-        let existingTag = await TagRepository.findBy('name', tag)
-        if (!existingTag) {
-          const tags = await TagRepository.create({
-            name: tag
-          })
-          await tags.save()
-
-          await GigTagRepository.firstOrCreate({
-            gig_id: gig.id,
-            tag_id: tags.id
-          })
-        }
-        if (existingTag) {
-          const gigs = await GigTagRepository.firstOrCreate({
-            gig_id: gig.id,
-            tag_id: existingTag.id
-          })
-          await gigs.save()
-        }
+        const gigTag = await GigTagRepository.firstOrCreate({
+          gigs_id: gig.id,
+          tag_id: tags.id
+        })
+        await gigTag.save()
       }
-      return response.data({ 'id': gig.id }, 'Gig information successfully created')
+      if (existingTag) {
+        const gigs = await GigTagRepository.firstOrCreate({
+          gigs_id: gig.id,
+          tag_id: existingTag.id
+        })
+        await gigs.save()
+      }
+    }
+    return response.data({ 'id': gig.id }, 'Gig information successfully created')
 
     } catch (e) {
       console.log(e)

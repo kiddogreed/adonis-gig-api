@@ -2,7 +2,6 @@ import SkillRepository from 'App/Repositories/SkillRepository'
 import ClientRepository from 'App/Repositories/ClientRepository'
 import { TransformerAbstract } from '@ioc:Adonis/Addons/Bumblebee'
 import LanguageRepository from 'App/Repositories/LanguageRepository'
-import GigDescriptionRepository from 'App/Repositories/GigDescriptionRepository'
 import LinkAccountRepository from 'App/Repositories/LinkAccountRepository'
 import EducationRepository from 'App/Repositories/EducationRepository'
 import CertificationRepository from 'App/Repositories/CertificationRepository'
@@ -10,7 +9,6 @@ import CertificationRepository from 'App/Repositories/CertificationRepository'
 export default class MyAccountTransformer extends TransformerAbstract {
   public async transform(client: ClientRepository) {
     
-    const gigDescriptions = await GigDescriptionRepository.query().where('client_id', client.id)
     const languages = await LanguageRepository.query().where('client_id', client.id)
     const linkAccounts = await LinkAccountRepository.query().where('client_id', client.id)
     const skills = await SkillRepository.query().where('client_id', client.id)
@@ -31,7 +29,6 @@ export default class MyAccountTransformer extends TransformerAbstract {
       personal_website: client.personal_website,
       language: client.language,
       level: client.level,
-      descriptions: gigDescriptions,
       languages: languages,
       linked_accounts: linkAccounts,
       skills: skills,
