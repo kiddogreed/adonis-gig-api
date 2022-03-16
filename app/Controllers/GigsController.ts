@@ -17,7 +17,6 @@ export default class GigsController {
       const gig = await GigRepository.findBy('id', params.id)
       return response.resource(await transform.item(gig, GigTransformer))
     } catch (e) {
-      console.log(e)
       return response.badRequest('Invalid Gig Request')
     }
   }
@@ -100,7 +99,7 @@ export default class GigsController {
   }
 
   async update({ request, params, response }) {
-    const data = request.only(['title', 'category_id', 'subcategory_id', 'tag', 'description'])
+    const data = request.only(['title', 'category_id', 'subcategory_id', 'description'])
     try {
       const gig = await GigRepository.findBy('id', params.id)
       gig.name = data.title,
@@ -109,7 +108,7 @@ export default class GigsController {
         gig.tag = data.tag,
         gig.description = data.description
       await gig?.save()
-
+      
       if (data.description) {
         return response.data({ 'id': gig?.id }, 'Gig Description successfully created')
       }

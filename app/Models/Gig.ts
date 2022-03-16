@@ -1,5 +1,7 @@
 import { DateTime } from 'luxon'
-import { BaseModel, column } from '@ioc:Adonis/Lucid/Orm'
+import { BaseModel, column,hasManyThrough,HasManyThrough } from '@ioc:Adonis/Lucid/Orm'
+import TagRepository from 'App/Repositories/TagRepository'
+import GigTagRepository from 'App/Repositories/GigTagRepository'
 
 export default class Gig extends BaseModel {
   @column({ isPrimary: true })
@@ -31,5 +33,14 @@ export default class Gig extends BaseModel {
 
   @column.dateTime({ autoCreate: true, autoUpdate: true })
   public updatedAt: DateTime
+
+
+  @hasManyThrough([() => TagRepository, () => GigTagRepository], {
+    localKey: 'id',
+    foreignKey: 'gigs_id',
+    throughLocalKey: 'tag_id',
+    throughForeignKey: 'id', 
+  })
+  public tags: HasManyThrough<typeof TagRepository>
 
 }
