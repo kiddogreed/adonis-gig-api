@@ -11,10 +11,10 @@ export default class PersonalTransformer extends TransformerAbstract {
 
     const language = await LanguageRepository.query().where('client_id', info.id)
     const user = await UserRepository.findBy('profile_id', info.id)
-    const linkAccounts = await LinkAccountRepository.query().where('client_id', client.id)
-    const skills = await SkillRepository.query().where('client_id', client.id)
-    const educations = await EducationRepository.query().where('client_id', client.id)
-    const certifications = await CertificationRepository.query().where('client_id', client.id)
+    const linkAccounts = await LinkAccountRepository.query().where('client_id', info.id)
+    const skills = await SkillRepository.query().where('client_id', info.id)
+    const educations = await EducationRepository.query().where('client_id', info.id)
+    const certifications = await CertificationRepository.query().where('client_id', info.id)
 
     return {
       id: info.id,
