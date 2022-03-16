@@ -82,18 +82,15 @@ export default class GigsController {
             gig_id: gig.id,
             tag_id: tags.id
           })
-          await gig.save()
         }
         if (existingTag) {
           await GigTagRepository.firstOrCreate({
             gig_id: gig.id,
             tag_id: existingTag.id
           })
-          await gig.save()
         }
+        await gig.save()
       }
-
-
       return response.data({ 'id': gig.id }, 'Gig information successfully created')
 
     } catch (e) {
