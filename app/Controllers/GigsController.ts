@@ -17,6 +17,7 @@ export default class GigsController {
       const gig = await GigRepository.findBy('id', params.id)
       return response.resource(await transform.item(gig, GigTransformer))
     } catch (e) {
+      console.log(e)
       return response.badRequest('Invalid Gig Request')
     }
   }

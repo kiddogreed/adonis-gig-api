@@ -2,7 +2,7 @@ import { DateTime } from 'luxon'
 import { BaseModel, column } from '@ioc:Adonis/Lucid/Orm'
 
 export default class GigTag extends BaseModel {
-  static get table (){
+  static get table() {
     return ('gig_tags')
   }
   @column({ isPrimary: true })
@@ -22,4 +22,5 @@ export default class GigTag extends BaseModel {
 
   @column.dateTime({ autoCreate: true, autoUpdate: true })
   public updatedAt: DateTime
+
 }
