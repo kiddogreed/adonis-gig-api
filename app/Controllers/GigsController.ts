@@ -17,6 +17,7 @@ export default class GigsController {
       const gig = await GigRepository.findBy('id', params.id)
       return response.resource(await transform.item(gig, GigTransformer))
     } catch (e) {
+      console.log(e)
       return response.badRequest('Invalid Gig Request')
     }
   }
@@ -57,48 +58,47 @@ export default class GigsController {
   async set({ auth, response, request }) {
     await request.validate(GigValidator)
     const user = auth.user
-    const data = request.input([`data`])
-  
-    // try {
-    const gig = await GigRepository.create({
-      client_id: user.profile_id,
-      name: request.input('title'),
-      category_id: request.input('category_id'),
-      subcategory_id: request.input('subcategory_id'),
-      status: 'draft'
-    })
-    await gig.save()
+    const data = request.input(['tag'])
+    console.log(data,'herere')
+    try {
+      const gig = await GigRepository.create({
+        client_id: user.profile_id,
+        name: request.input('title'),
+        category_id: request.input('category_id'),
+        subcategory_id: request.input('subcategory_id'),
+        status: 'draft'
+      })
+      await gig.save()
 
-    for (let tag of data) {
-      let existingTag = await TagRepository.findBy('name', tag.tag)
 
-      if (existingTag == undefined) {
-        const tags = await TagRepository.create({
-          name: tag.tag
-        })
-        await tags.save()
-        await GigTagRepository.firstOrCreate({
-          gig_id: gig.id,
-          tag_id: tags.id
-        })
-        await gig.save()
+      for (let tag of data) {
+
+        let existingTag = await TagRepository.findBy('name', tag)
+        if (!existingTag) {
+          const tags = await TagRepository.create({
+            name: tag
+          })
+          await tags.save()
+
+          await GigTagRepository.firstOrCreate({
+            gig_id: gig.id,
+            tag_id: tags.id
+          })
+        }
+        if (existingTag) {
+          const gigs = await GigTagRepository.firstOrCreate({
+            gig_id: gig.id,
+            tag_id: existingTag.id
+          })
+          await gigs.save()
+        }
       }
-      if (existingTag) {
-        await GigTagRepository.firstOrCreate({
-          gig_id: gig.id,
-          tag_id: existingTag.id
-        })
-        await gig.save()
-      }
+      return response.data({ 'id': gig.id }, 'Gig information successfully created')
+
+    } catch (e) {
+      console.log(e)
+      return response.badRequest('Invalid Gig Request')
     }
-
-
-    return response.data({ 'id': gig.id }, 'Gig information successfully created')
-
-    // } catch (e) {
-    //   console.log(e)
-    //   return response.badRequest('Invalid Gig Request')
-    // }
   }
 
   async update({ request, params, response }) {
