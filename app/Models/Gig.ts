@@ -1,5 +1,10 @@
 import { DateTime } from 'luxon'
-import { BaseModel, column } from '@ioc:Adonis/Lucid/Orm'
+import { BaseModel, column, manyToMany, ManyToMany, } from '@ioc:Adonis/Lucid/Orm'
+import Tag from './Tag'
+import Tags from 'Database/migrations/1646810658618_tags'
+
+
+
 
 
 export default class Gig extends BaseModel {
@@ -32,4 +37,12 @@ export default class Gig extends BaseModel {
 
   @column.dateTime({ autoCreate: true, autoUpdate: true })
   public updatedAt: DateTime
+
+  
+
+  @manyToMany(() => Tag, {
+    pivotTable: 'gig_tags',
+  })
+  public tags: ManyToMany<typeof this.tags>
+
 }

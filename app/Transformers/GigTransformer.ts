@@ -3,24 +3,59 @@ import GigRepository from 'App/Repositories/GigRepository'
 import GigCategoryRepository from 'App/Repositories/GigCategoryRepository'
 import SubCategorieRepository from 'App/Repositories/SubCategorieRepository'
 import TagRepository from 'App/Repositories/TagRepository'
+import GigTagRepository from 'App/Repositories/GigTagRepository'
+import GigGallerieRepository from 'App/Repositories/GigGallerieRepository'
+import GigDescriptionRepository from 'App/Repositories/GigDescriptionRepository'
+import GigPricingRepository from 'App/Repositories/GigPricingRepository'
 
 
 export default class GigTransformer extends TransformerAbstract {
   public async transform(gig: GigRepository) {
-    const category = await GigCategoryRepository.findBy('id',gig.category_id)
-    const subcategory = await SubCategorieRepository.findBy('id',gig.subcategory_id)
-    const tags = await TagRepository.findBy('gig_id',gig.id)
+   //  const category = await GigCategoryRepository.findBy('id',gig.category_id)
+
+      const gigGallerry = await GigGallerieRepository.query()
+        .where('client_id', gig.client_id)
+        .orderBy('id','asc')
+
+      const category = await GigCategoryRepository.query()
+        .where('id',gig.category_id)
+        .orderBy('id','asc') 
+
+      const subcategory = await SubCategorieRepository.query()
+        .where('id',gig.subcategory_id)
+        .orderBy('id','asc') 
+
+
+      const gigDescription  = await GigDescriptionRepository.query()
+        .where('id',gig.description)
+        .orderBy('id','asc') 
+
+      
+      const gigPrice = await GigPricingRepository.query()
+        .where('client_id', gig.client_id)
+        .orderBy('id','asc')  
+
+      const gigTag = await GigTagRepository.query()
+        .where('gig_id',gig.id)
+        .orderBy('id','asc') 
+
+      const tags = TagRepository.$getRelation
 
     return {
       id: gig.id,
+      gallery: gigGallerry,
+      category: category,
+      subcategory: subcategory,
+      description: gigDescription,
+      pricing: gigPrice,
       client_id: gig.client_id,
       title: gig.name,
-      tag: gig.tag,
-      category_id: gig.category_id,
-      category: category?.name,
-      subcategory_id: gig.subcategory_id,
-      subcategory: subcategory?.name,
-      tags: tags
+      tag: gigTag,
+      tags: tags,
+      //reviews:'reviews'
+      status:gig.status,
+      name:gig.name
+
     }
   }
 }
