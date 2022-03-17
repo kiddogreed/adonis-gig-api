@@ -14,43 +14,26 @@ import GigRepository from 'App/Repositories/GigRepository'
 
 export default class TagTransformer extends TransformerAbstract {
   public async transform(tag: TagRepository) {
-   
-    const gigTag = await GigTagRepository.query()
-      .where('tag_id', tag.id)
-     .orderBy('id','asc')
-
-
-     
-     
-    let gigs = await GigRepository.query()
-      .where('id', gigTag[0].gig_id)
-      .orderBy('id','asc')    
-   
     
-      
-    // const gigDesc = await GigDescriptionRepository.query()
-    //   .where('client_id', gig.client_id)
-    //   .orderBy('id','asc')  
-
-    // const gigPrice = await GigPricingRepository.query()
-    //   .where('client_id', gig.client_id)
-    //   .orderBy('id','asc')  
+    // const category = await GigCategoryRepository.findBy('id',tag.$original.category_id)
+    // const subcategory = await SubCategoryRepository.findBy('id',tag.$original.subcategory_id)
+    // const tags = await TagRepository.findBy('gig_id',tag.id)
+    // console.log(tag);
     
-    // const gigReq = await GigRequirementRepository.query()  
-    //   .where('client_id', gig.client_id)
-    //   .orderBy('id','asc')  
-
-    // const extraService = await GigExtraServiceRepository.query()  
-    //   .where('client_id', gig.client_id)
-    //   .orderBy('id','asc')  
     
+    return{
+      tag
+    }
     return {
-    //  tag_id: tag.id,
-      gig_tags: gigTag,
-      gigs :gigs
-     // tag:gigs
-      // created_at: tag.createdAt,
-      // updated_at: tag.updatedAt,
+      id: tag.id,
+      client_id: tag.$original.client_id,
+      title: tag.name,
+      tag: tag.$original.tag,
+      category_id: tag.$original.category_id,
+      category: category?.name,
+      subcategory_id: tag.$original.subcategory_id,
+      subcategory: subcategory?.name,
+      tags: tags
     }
   }
 }

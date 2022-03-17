@@ -1,58 +1,75 @@
 import { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
+import Database from '@ioc:Adonis/Lucid/Database';
 import Tag from 'App/Models/Tag';
 import GigRepository from 'App/Repositories/GigRepository';
 import TagRepository from 'App/Repositories/TagRepository'
+import GigTransformer from 'App/Transformers/GigTransformer';
 import TagTransformer from 'App/Transformers/TagTransformer';
 
 export default class GigSearchesController {
 
-   public async find({response, request, transform}:HttpContextContract){
+  public async index({response, request, transform}:HttpContextContract){
     
-   
-    const tagInput = request.input('tags');
-    // const existTag = await TagRepository.findBy('name', tagInput)
+    // const gigs = GigRepository.all()
 
-    // console.log(existTag);
+ 
+    const page = request.input('page', 1)
+    const limit = 10
+
+    const gigs = await Database.from('gigs').paginate(page, limit)
+
     
-     const existTag = await TagRepository.query()
-    //     .from('tags')
-        //  .where('name', tagInput)
-        .where('name', 'like', `%${tagInput}%`)
-        .orderBy('id','asc')
-        .limit(4)
-    
+  //  // console.log(gigs)
+   // const gigs = await GigRepository
+    // .query()
+    // .preload('tags')
+    //console.log(gigs);
      
-      //  for( const tag of existTag){
-      //    //log tagid with input names match
-      //    let testdata = {
+    //  let data = {
 
-      //     id: tag.id,
-      //     tag_name: tag.name
+    //   id:gigs.
+    //   // client_id: tag.$original.client_id,
+    //   // title: tag.name,
+    //   // tag: tag.$original.tag,
+    //   // category_id: tag.$original.category_id,
+    //   // category: category?.name,
+    //   // subcategory_id: tag.$original.subcategory_id,
+    //   // subcategory: subcategory?.name,
+    //   // tags: tags
 
-         
-  
-      //   }
-      //   console.log(testdata);
-      //   //return response.data(testdata)
-        
-        return response.resource(await transform.collection(existTag, TagTransformer))
-      }
+    // }
+    
+    //     return response.data(gigs)
+    return response.resource(await transform.collection(gigs, GigTransformer))
       
-
-
-     
-
-   // const gigs = await GigRepository.all
- //------------------------------using many to many relation----------------------------//
-    // const gigtags = await GigRepository.findByOrFail('tag', tagInput)
-    // //console.log(gigtags);
-    
-    //  await gigtags?.load('tags')
-    //  console.log(gigtags?.tags);
-  //------------------------------using many to many relation----------------------------//
-    
-    
-    
     
   }
+
+  public async show({ response, params:{gig_id}, transform}:HttpContextContract){
+   // const user = auth.user
+   const gigs = await GigRepository.findByOrFail('id', gig_id)
+   return gigs
+    // const gigs = await GigRepository.findBy('id',params.id)
+    // console.log( gigs);
+    // return gigs
+    // try {
+    //   const gigs = await GigRepository.findBy('id',params.id)
+    //   console.log( gigs);
+      
+    //   if(!gigs){
+    //     return response.badRequest('Gig not found!')
+    //    }
+    //    return response.resource(await transform.item(gigs, GigTransformer))
+    // } catch (error) {
+    //   return response.badRequest('Invalid Request')
+    // }
+    // // const gig = await GigRepository.findByOrFail('id', params.gig_id)
+    // // console.log(gig);
+    // // console.log(gig_id);
+    
+    // console.log(params);
+    
+    
+
+    }
 }

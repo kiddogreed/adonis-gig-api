@@ -1,6 +1,5 @@
 
 import GigRepository from 'App/Repositories/GigRepository'
-import GigValidator from 'App/Validators/GigCreateValidator'
 import GigTransformer from 'App/Transformers/GigTransformer'
 import GigCategoryRepository from 'App/Repositories/GigCategoryRepository'
 import GigCategoryTransformer from 'App/Transformers/GigCategoryTransformer'
@@ -55,7 +54,6 @@ export default class GigsController {
   }
 
   async set({ auth, response, request }) {
-    await request.validate(GigValidator)
     const user = auth.user
     const data = request.input(['tag'])
     try {
