@@ -77,14 +77,14 @@ export default class GigsController {
           await tags.save()
 
           const gigTag = await GigTagRepository.firstOrCreate({
-            gigs_id: gig.id,
+            gig_id: gig.id,
             tag_id: tags.id
           })
           await gigTag.save()
         }
         if (existingTag) {
           const gigs = await GigTagRepository.firstOrCreate({
-            gigs_id: gig.id,
+            gig_id: gig.id,
             tag_id: existingTag.id
           })
           await gigs.save()
@@ -100,16 +100,39 @@ export default class GigsController {
 
   async update({ request, params, response }) {
     try {
+      const data = request.input(['tag'])
       const gig = await GigRepository.findBy('id', params.id)
       gig.name = request.input('title')
       gig.category_id = request.input('category_id')
       gig.subcategory_id = request.input('subcategory_id')
-      gig.description = request.input('description')
       await gig?.save()
+     
+      for (let tag of data) {
+        let existingTag = await TagRepository.findBy('name', tag)
+        let existingGigTag = await GigTagRepository.findBy('tag_id',existingTag?.id)
+        if (!existingGigTag) {
+          const tags = await TagRepository.create({
+            name: tag
+          })
+          await tags.save()
 
-      if (request.input('description')) {
+          const gigTag = await GigTagRepository.firstOrCreate({
+            gig_id: gig?.id,
+            tag_id: tags.id
+          })
+          await gigTag.save()
+        }
+      }
+     
+      let description = request.input('description')
+      if (description) {
+        const desc = await GigRepository.create({
+          description: description
+        })
+        await desc.save()
         return response.data({ 'id': gig?.id }, 'Gig Description successfully created')
       }
+
       return response.data({ 'id': gig?.id }, 'Gig information successfully updated')
 
     } catch (e) {
