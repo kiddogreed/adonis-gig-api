@@ -1,7 +1,8 @@
+import GigRepository from "App/Repositories/GigRepository"
 import GigGallerieRepository from "App/Repositories/GigGallerieRepository"
 import GigGalleryTransformer from "App/Transformers/GigGalleryTransformer"
-export default class GigGalleriesController {
 
+export default class GigGalleriesController {
 
   async show({ params, response, transform }) {
     try {
@@ -16,7 +17,6 @@ export default class GigGalleriesController {
   async set({ auth, request, response }) {
     const user = auth.user
     const data = request.input([`data`])
-    
     try {
       for (let value of data) {
         const gallery = await GigGallerieRepository.create({
@@ -27,8 +27,13 @@ export default class GigGalleriesController {
         })
         await gallery.save()
       }
+      const gig = await GigRepository.findByOrFail('id',request.input('gig_id'))
+      gig.status = 'completed'
+      await gig.save()
+
       return response.data({'id':request.input('gig_id')},'Gallery Successfully created')
     } catch (e) {
+      console.log(e)
       return response.badRequest('Invalid file Request')
     }
   }
