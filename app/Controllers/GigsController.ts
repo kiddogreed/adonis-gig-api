@@ -77,14 +77,14 @@ export default class GigsController {
           await tags.save()
 
           const gigTag = await GigTagRepository.firstOrCreate({
-            gigs_id: gig.id,
+            gig_id: gig.id,
             tag_id: tags.id
           })
           await gigTag.save()
         }
         if (existingTag) {
           const gigs = await GigTagRepository.firstOrCreate({
-            gigs_id: gig.id,
+            gig_id: gig.id,
             tag_id: existingTag.id
           })
           await gigs.save()
