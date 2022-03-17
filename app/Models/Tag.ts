@@ -1,6 +1,6 @@
 import { DateTime } from 'luxon'
-import { BaseModel, column, belongsTo, BelongsTo } from '@ioc:Adonis/Lucid/Orm'
-import Gig from './Gig'
+import { BaseModel, column } from '@ioc:Adonis/Lucid/Orm'
+
 
 export default class Tag extends BaseModel {
   static get table (){
@@ -18,6 +18,4 @@ export default class Tag extends BaseModel {
   @column.dateTime({ autoCreate: true, autoUpdate: true })
   public updatedAt: DateTime
 
-  @belongsTo(() => Gig)
-  public gigs: BelongsTo<typeof this.gigs>
 }

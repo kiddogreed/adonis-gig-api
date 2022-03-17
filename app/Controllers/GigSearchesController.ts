@@ -17,6 +17,8 @@ export default class GigSearchesController {
     const limit = 10
 
     const gigs = await Database.from('gigs').paginate(page, limit)
+
+    
   //  // console.log(gigs)
    // const gigs = await GigRepository
     // .query()

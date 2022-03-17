@@ -1,11 +1,7 @@
 import { DateTime } from 'luxon'
-import { BaseModel, column, manyToMany, ManyToMany, } from '@ioc:Adonis/Lucid/Orm'
-import Tag from './Tag'
-import Tags from 'Database/migrations/1646810658618_tags'
-
-
-
-
+import { BaseModel, column,hasManyThrough,HasManyThrough } from '@ioc:Adonis/Lucid/Orm'
+import TagRepository from 'App/Repositories/TagRepository'
+import GigTagRepository from 'App/Repositories/GigTagRepository'
 
 export default class Gig extends BaseModel {
   @column({ isPrimary: true })
@@ -22,9 +18,6 @@ export default class Gig extends BaseModel {
 
   @column()
   public subcategory_id: number
-  
-  @column()
-  public tag: string
 
   @column()
   public description: string
@@ -38,11 +31,13 @@ export default class Gig extends BaseModel {
   @column.dateTime({ autoCreate: true, autoUpdate: true })
   public updatedAt: DateTime
 
-  
 
-  @manyToMany(() => Tag, {
-    pivotTable: 'gig_tags',
+  @hasManyThrough([() => TagRepository, () => GigTagRepository], {
+    localKey: 'id',
+    foreignKey: 'gigs_id',
+    throughLocalKey: 'tag_id',
+    throughForeignKey: 'id', 
   })
-  public tags: ManyToMany<typeof this.tags>
+  public tags: HasManyThrough<typeof TagRepository>
 
 }

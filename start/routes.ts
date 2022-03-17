@@ -127,6 +127,8 @@ Route.get('/skill/name', 'SkillsController.show').middleware('auth:api')
 
 Route.get('sub-category', 'GigsController.subCategory').middleware('auth:api')
 
+Route.delete('tag/:id','TagsController.destroy').middleware('auth:api');
+
 Route.post('two_factor/enable','TwoFactorAuthenticationsController.enable').middleware('auth:api');
 Route.post('two_factor/disable','TwoFactorAuthenticationsController.disable').middleware('auth:api');
 Route.post('two_factor/verify','TwoFactorAuthenticationsController.verify').middleware('auth:api');
