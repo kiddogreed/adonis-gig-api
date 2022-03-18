@@ -65,11 +65,6 @@ Route.delete('/gig/:id/faq', 'GigFaqsController.destroy').middleware('auth:api')
 
 Route.get('gig/post', 'GigPostsController.index').middleware('auth:api')
 Route.get('gig/post/:id', 'GigPostsController.show').middleware('auth:api')
-//Route.get("search/gig", 'GigSearchesController.find')
-Route.get("gig-search", 'GigSearchesController.index').middleware('auth:api')
-//Route.get("gig-search/:tag", 'GigSearchesController.show')
-Route.get("gig-search/:gig_id", 'GigSearchesController.show').middleware('auth:api')
-
 
 Route.get('/gig/requirement', 'GigRequirementsController.index').middleware('auth:api')
 Route.post('/gig/requirement', 'GigRequirementsController.set').middleware('auth:api')
@@ -91,6 +86,7 @@ Route.put('/gig/:id/gallery', 'GigGalleriesController.update').middleware('auth:
 
 Route.get('/gig-listing', 'GigsController.gigList').middleware('auth:api');
 Route.get('/gig-all-listing', 'GigsController.allGigList')
+Route.get('/gig-all-listing/filter', 'GigSearchesController.find')
 
 Route.get('/language', 'LanguagesController.show').middleware('auth:api')
 Route.post('/language', 'LanguagesController.set').middleware('auth:api')

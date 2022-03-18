@@ -1,5 +1,6 @@
 import { DateTime } from 'luxon'
-import { BaseModel, column } from '@ioc:Adonis/Lucid/Orm'
+import { BaseModel, column, hasMany, HasMany, belongsTo, BelongsTo} from '@ioc:Adonis/Lucid/Orm'
+import GigTagRepository from 'App/Repositories/GigTagRepository'
 
 
 export default class Tag extends BaseModel {
@@ -17,5 +18,12 @@ export default class Tag extends BaseModel {
 
   @column.dateTime({ autoCreate: true, autoUpdate: true })
   public updatedAt: DateTime
+
+  @belongsTo(() => GigTagRepository, {
+    localKey: 'id',
+    foreignKey: 'tag_id'
+  })
+  public tag: BelongsTo<typeof GigTagRepository>
+
 
 }
