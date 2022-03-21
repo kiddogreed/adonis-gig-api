@@ -22,7 +22,7 @@ export default class PersonalInformationsController {
       client.first_name = data.first_name,
         client.last_name = data.last_name,
         client.photo = data.photo,
-        client?.country = data.country,
+        client.country = data.country,
         client.description = data.description
       client.profile_status = 'inProgress-professional'
       await client?.save()
