@@ -71,7 +71,7 @@ return
 return data
   }
 
-  public async find({response, request, transform}:HttpContextContract){
+  public async testfind({response, request, transform}:HttpContextContract){
 
     const meta = request.only(["page", "per_page"]);
     const filters = request.only(["by_name", "by_tag"]);
@@ -81,22 +81,52 @@ return data
       .where('name', 'like', `%${filters.by_name}%`)
       .orderBy("id", "desc")
       .paginate(meta.page, meta.per_page)
-      //  gig.related('tags').query() // 
-      //console.log(testgig);
-
+  
       return response.resource(await transform.collection(gigs, GigListTransformer))
       
     }
     //search by tag query
- if(filters.by_tag){
-  const tags = await TagRepository.query()
-  .where('name', 'like', `%${filters.by_tag}%`)
-  .orderBy("id", "desc")
-  .paginate(meta.page, meta.per_page)
+    if(filters.by_tag){
+      const tags = await TagRepository.query()
+      .where('name', 'like', `%${filters.by_tag}%`)
+      .orderBy("id", "desc")
+      .paginate(meta.page, meta.per_page)
 
- return tags
+    return tags
   //return response.resource(await transform.collection(tags, GigListTransformer))
  }
+
+   
+  }
+
+  public async find({response, request, transform}:HttpContextContract){
+    
+    const meta = request.only(["page", "per_page"]);
+    const filters = request.only(["category_id", "sub_category_id", "keyword", "tags"]);
+    const query = GigRepository.query()//.preload('gig').pre //.preload('tags')/
+
+    if (filters.category_id) {
+      query.where('category_id', filters.category_id)
+    }
+
+    if (filters.sub_category_id) {
+      query.where('subcategory_id', filters.sub_category_id)
+    }
+
+    if (filters.keyword) {
+      query.where('name', 'like', `%${filters.keyword}%`)
+    }
+
+    if(filters.tags){
+      query.whereHas('gig', tagQuery => {
+        tagQuery.whereIn('name', filters.tags)
+      })
+    }
+
+    const gigs = await query.orderBy("id", "desc").paginate(meta.page, meta.per_page)
+    return response.resource(await transform.collection(gigs, GigListTransformer))
+    
+    //return gigs
 
    
   }

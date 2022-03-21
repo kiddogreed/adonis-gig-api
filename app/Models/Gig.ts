@@ -39,8 +39,8 @@ export default class Gig extends BaseModel {
   // public tag: HasMany<typeof TagRepository>
 
   @belongsTo(() => GigTagRepository, {
-    localKey: 'id', // id column on "User" model
-    foreignKey: 'gigs_id'
+    localKey: 'gigs_id', // id column on "User" model
+    foreignKey: 'id'
   })
   public gig: BelongsTo<typeof GigTagRepository>
 
