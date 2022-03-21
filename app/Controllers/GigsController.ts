@@ -1,16 +1,15 @@
 
+import TagRepository from 'App/Repositories/TagRepository'
 import GigRepository from 'App/Repositories/GigRepository'
 import GigTransformer from 'App/Transformers/GigTransformer'
+import GigTagRepository from 'App/Repositories/GigTagRepository'
+import GigListTransformer from 'App/Transformers/GigListTransformer'
 import GigCategoryRepository from 'App/Repositories/GigCategoryRepository'
 import GigCategoryTransformer from 'App/Transformers/GigCategoryTransformer'
 import SubCategorieRepository from 'App/Repositories/SubCategorieRepository'
 import SubCategoryTransformer from 'App/Transformers/SubCategoryTransformer'
-import TagRepository from 'App/Repositories/TagRepository'
-import GigListTransformer from 'App/Transformers/GigListTransformer'
-import GigTagRepository from 'App/Repositories/GigTagRepository'
+
 export default class GigsController {
-
-
   async show({ params, response, transform }) {
     try {
       const gig = await GigRepository.findBy('id', params.id)
@@ -75,14 +74,14 @@ export default class GigsController {
           await tags.save()
 
           const gigTag = await GigTagRepository.firstOrCreate({
-            gigs_id: gig.id,
+            gig_id: gig.id,
             tag_id: tags.id
           })
           await gigTag.save()
         }
         if (existingTag) {
           const gigs = await GigTagRepository.firstOrCreate({
-            gigs_id: gig.id,
+            gig_id: gig.id,
             tag_id: existingTag.id
           })
           await gigs.save()

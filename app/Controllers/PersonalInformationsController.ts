@@ -14,7 +14,7 @@ export default class PersonalInformationsController {
 
   async set({ auth, request, response }: HttpContextContract) {
     await request.validate(ProfileSetupValidator)
-    const data = request.only(['first_name', 'last_name', 'photo', 'description'])
+    const data = request.only(['first_name', 'last_name', 'photo', 'country', 'description'])
 
     try {
       const user = auth.user
@@ -22,6 +22,7 @@ export default class PersonalInformationsController {
       client.first_name = data.first_name,
         client.last_name = data.last_name,
         client.photo = data.photo,
+        client?.country = data.country,
         client.description = data.description
       client.profile_status = 'inProgress-professional'
       await client?.save()
@@ -34,7 +35,7 @@ export default class PersonalInformationsController {
   }
 
   async update({ auth, request, response }: HttpContextContract) {
-    const data = request.only(['first_name', 'last_name', 'photo', 'description', 'website'])
+    const data = request.only(['first_name', 'last_name', 'photo', 'country', 'description', 'website'])
     try {
       const user = auth.user
 
@@ -43,6 +44,7 @@ export default class PersonalInformationsController {
       client.first_name = data.first_name,
         client.last_name = data.last_name,
         client.photo = data.photo,
+        client.country = data.country,
         client.description = data.description
       await client?.save()
 

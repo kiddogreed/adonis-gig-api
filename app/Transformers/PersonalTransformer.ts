@@ -23,6 +23,7 @@ export default class PersonalTransformer extends TransformerAbstract {
       username: user?.username,
       profile_type: user?.profile_type,
       profile_role: user?.profile_role,
+      country: info.country,
       contact: info.contact,
       verified: info.verified,
       first_name: info.first_name,
@@ -34,7 +35,8 @@ export default class PersonalTransformer extends TransformerAbstract {
       linked_accounts: linkAccounts,
       skills: skills,
       educations: educations,
-      certifications: certifications
+      certifications: certifications,
+      member_since: info.createdAt
     }
   }
 }

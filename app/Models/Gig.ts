@@ -34,7 +34,7 @@ export default class Gig extends BaseModel {
 
   @hasManyThrough([() => TagRepository, () => GigTagRepository], {
     localKey: 'id',
-    foreignKey: 'gigs_id',
+    foreignKey: 'gig_id',
     throughLocalKey: 'tag_id',
     throughForeignKey: 'id', 
   })

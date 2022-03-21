@@ -1,12 +1,11 @@
-import { TransformerAbstract } from '@ioc:Adonis/Addons/Bumblebee'
 import GigRepository from 'App/Repositories/GigRepository'
+import { TransformerAbstract } from '@ioc:Adonis/Addons/Bumblebee'
+import GigPricingRepository from 'App/Repositories/GigPricingRepository'
+import GigGallerieRepository from 'App/Repositories/GigGallerieRepository'
 import GigCategoryRepository from 'App/Repositories/GigCategoryRepository'
 import SubCategorieRepository from 'App/Repositories/SubCategorieRepository'
-import TagRepository from 'App/Repositories/TagRepository'
-import GigTagRepository from 'App/Repositories/GigTagRepository'
-import GigGallerieRepository from 'App/Repositories/GigGallerieRepository'
 import GigDescriptionRepository from 'App/Repositories/GigDescriptionRepository'
-import GigPricingRepository from 'App/Repositories/GigPricingRepository'
+
 
 
 // export default class GigTransformer extends TransformerAbstract {
@@ -57,19 +56,18 @@ export default class GigTransformer extends TransformerAbstract {
   
     return {
       id: gig.id,
-      gallery: gigGallerry,
+      title: gig.name,
+      tag: tag,
+      tags: tags,
       category: category,
       subcategory: subcategory,
       description: gigDescription,
       pricing: gigPrice,
       client_id: gig.client_id,
-      title: gig.name,
-      tag: tag,
-      tags: tags,
       //reviews:'reviews'
       status:gig.status,
+      gallery: gigGallerry,
       name:gig.name
-
     }
   }
 }
