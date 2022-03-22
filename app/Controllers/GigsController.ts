@@ -22,7 +22,6 @@ export default class GigsController {
   async gigCategory({ response, request, transform }) {
     try {
       const filter = request.only('name')
-      console.log(filter.name, 'here')
       const query = GigCategoryRepository.query()
       if (filter.name) {
         query.where('name', 'LIKE', `${filter.name}`)
