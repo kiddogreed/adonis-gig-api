@@ -23,7 +23,7 @@ export default class PersonalInformationsController {
         client.last_name = data.last_name,
         client.photo = data.photo,
         client.country = data.country,
-        client.description = data.description
+        client.description = data.description,
       client.profile_status = 'inProgress-professional'
       await client?.save()
       return response.ok("Personal information successfully saved")
@@ -45,7 +45,8 @@ export default class PersonalInformationsController {
         client.last_name = data.last_name,
         client.photo = data.photo,
         client.country = data.country,
-        client.description = data.description
+        client.description = data.description,
+        client.profile_status = 'inProgress-professional'
       await client?.save()
 
       if (data.website) {
@@ -69,7 +70,7 @@ export default class PersonalInformationsController {
     }
   }
 
-  async draftProfile({ auth, request, response }) {
+  async draftProfile({ auth, request, response }){
     const data = request.only(['first_name', 'last_name', 'photo', 'description'])
     try {
       const user = auth.user
