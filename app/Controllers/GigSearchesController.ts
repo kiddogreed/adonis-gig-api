@@ -103,7 +103,7 @@ return data
     
     const meta = request.only(["page", "per_page"]);
     const filters = request.only(["category_id", "sub_category_id", "keyword", "tags"]);
-    const query = GigRepository.query()//.preload('gig').pre //.preload('tags')/
+    const query = GigRepository.query().preload('manyTag')//.pre //.preload('tags')/
 
     if (filters.category_id) {
       query.where('category_id', filters.category_id)
