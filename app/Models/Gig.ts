@@ -1,7 +1,8 @@
 import { DateTime } from 'luxon'
-import { BaseModel, column,hasManyThrough,HasManyThrough , hasMany, HasMany, belongsTo, BelongsTo} from '@ioc:Adonis/Lucid/Orm'
+import { BaseModel, column, hasManyThrough, HasManyThrough, belongsTo, BelongsTo, manyToMany, ManyToMany} from '@ioc:Adonis/Lucid/Orm'
 import TagRepository from 'App/Repositories/TagRepository'
 import GigTagRepository from 'App/Repositories/GigTagRepository'
+import Tag from './Tag'
 
 
 export default class Gig extends BaseModel {
@@ -43,6 +44,15 @@ export default class Gig extends BaseModel {
     foreignKey: 'id'
   })
   public gig: BelongsTo<typeof GigTagRepository>
+
+  @manyToMany(() => TagRepository, {
+    localKey: 'id',
+    pivotForeignKey: 'gigs_id',
+    relatedKey: 'id',
+    pivotRelatedForeignKey: 'tag_id',
+    pivotTable: 'gig_tags',
+  })
+  public manyTag: ManyToMany<typeof TagRepository>
 
   @hasManyThrough([() => TagRepository, () => GigTagRepository], {
     localKey: 'id',
