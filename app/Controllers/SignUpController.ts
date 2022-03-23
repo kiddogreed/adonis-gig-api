@@ -58,7 +58,8 @@ export default class SignUpController {
         return response.badRequest('Incorrect verification token.');
       }
       const client = await ClientRepository.create({
-        verified: 1
+        verified: 1,
+        profile_status: 'inProgress-personal' 
       })
       await client?.save()
 

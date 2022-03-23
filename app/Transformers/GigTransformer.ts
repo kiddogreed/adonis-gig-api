@@ -52,7 +52,6 @@ export default class GigTransformer extends TransformerAbstract {
     const subcategory = await SubCategorieRepository.findBy('id',gig.subcategory_id)
     const tags = await GigRepository.findByOrFail('id', gig.id)
     const tag = await tags.related('tags').query()
-
   
     return {
       id: gig.id,
